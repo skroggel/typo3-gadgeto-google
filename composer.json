@@ -1,0 +1,33 @@
+{
+    "name": "madj2k/t3-gadgeto-google",
+    "type": "typo3-cms-extension",
+    "description": "Extension with Utilites and ViewHelper for accession Google API and Google Maps",
+    "homepage": "https://www.steffenkroggel.de",
+    "license": ["GPL-2.0+"],
+    "keywords": ["TYPO3 CMS", "Google Maps", "Google Geo", "Geolocation"],
+    "support": {
+        "email": "developer@steffenkroggel.de"
+    },
+    "authors": [
+        {
+            "name": "Steffen Kroggel",
+            "email": "developer@steffenkroggel.de",
+            "homepage": "https://www.steffenkroggel.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "typo3/cms-core": "~10.4.0 || ~11.5.0 || ~12.4.0",
+	},
+    "autoload": {
+        "psr-4": {
+            "Madj2k\\GadgetoGoogle\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "gadgeto_google"
+        }
+    }
+}
