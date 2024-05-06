@@ -1,0 +1,40 @@
+plugin.tx_gadgetogoogle {
+
+	view {
+		layoutRootPaths {
+			0 = EXT:gadgeto_google/Resources/Private/Layouts/
+			10 = {$plugin.tx_gadgetogoogle.view.layoutRootPath}
+
+		}
+		templateRootPaths {
+			0 = EXT:gadgeto_google/Resources/Private/Templates/
+            10 = {$plugin.tx_gadgetogoogle.view.templateRootPath}
+
+        }
+		partialRootPaths {
+			0 = EXT:gadgeto_google/Resources/Private/Partials/
+			10 = {$plugin.tx_gadgetogoogle.view.partialRootPath}
+        }
+	}
+
+	persistence {
+		storagePid = {$plugin.tx_gadgetogoogle.persistence.storagePid}
+
+		# In order to make the manual selection in BE work, we need to completely remove this setting here
+		# storagePid >
+	}
+
+	settings {
+
+	}
+}
+
+module.tx_gadgetogoogle < plugin.tx_gadgetogoogle
+
+plugin.tx_gadgetogoogle_map < plugin.tx_gadgetogoogle
+plugin.tx_gadgetogoogle_map {
+    view {
+        pluginNamespace = gadgetogoogle_map
+    }
+}
+

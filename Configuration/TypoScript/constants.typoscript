@@ -1,0 +1,22 @@
+plugin.tx_gadgetogoogle {
+
+	view {
+		# cat=plugin.tx_gadgetogoogle/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:gadgeto_google/Resources/Private/Templates/
+
+		# cat=plugin.tx_gadgetogoogle/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:gadgeto_google/Resources/Private/Partials/
+
+		# cat=plugin.tx_gadgetogoogle/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:gadgeto_google/Resources/Private/Layouts/
+	}
+
+	persistence {
+		# cat=plugin.tx_gadgetogoogle//a; type=string; label=Default storage PID
+		storagePid =
+	}
+
+	settings {
+
+	}
+}

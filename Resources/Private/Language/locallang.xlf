@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" >
+        <body>
+
+			<trans-unit id="label.showAll">
+				<source>All</source>
+			</trans-unit>
+			<trans-unit id="label.consentMap">
+				<source><![CDATA[A map from Google Maps is integrated here.<br>When loading the map, data may be transmitted to Google.]]></source>
+			</trans-unit>
+			<trans-unit id="label.loadMap">
+				<source>Load Map</source>
+			</trans-unit>
+
+
+			<trans-unit id="adminModuleController.error.valuesNotSet">
+				<source>Please check that all fields are set correctly.</source>
+			</trans-unit>
+			<trans-unit id="adminModuleController.message.valuesSaved">
+				<source>Successfully saved.</source>
+			</trans-unit>
+
+
+			<trans-unit id="templates.adminModule.keys.headline">
+				<source>API-Keys and Configuration for Google Maps</source>
+			</trans-unit>
+			<trans-unit id="templates.adminModule.keys.apiKey">
+				<source>API-Key</source>
+			</trans-unit>
+			<trans-unit id="templates.adminModule.keys.mapId">
+				<source>Map-Id</source>
+			</trans-unit>
+			<trans-unit id="templates.adminModule.keys.save">
+				<source>Save</source>
+			</trans-unit>
+        </body>
+    </file>
+</xliff>

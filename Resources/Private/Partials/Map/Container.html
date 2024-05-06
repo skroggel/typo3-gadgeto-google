@@ -1,0 +1,23 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <f:comment>
+        <!--
+        This is the container of the map. Per default it contains the consent-screen.
+        -->
+    </f:comment>
+    <div class="map-container" id="tx-gadgetogoogle-map">
+        <div class="map-consent">
+            <div class="map-consent-inner">
+                <p class="map-consent-text">
+                    <f:format.raw><f:translate key="label.consentMap" extensionName="gageto_google" /></f:format.raw>
+                </p>
+                <button class="map-consent-button" title="{f:translate(key:\'label.loadMap\')}">
+                    <f:translate key="label.loadMap" extensionName="gageto_google" />
+                </button>
+            </div>
+        </div>
+    </div>
+
+</html>

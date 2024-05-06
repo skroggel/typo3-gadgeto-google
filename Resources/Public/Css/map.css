@@ -1,0 +1,101 @@
+.map-consent,
+.map-container {
+    height: 600px;
+    width: 100%;
+    background-color: lightgrey;
+}
+
+/** consent */
+.map-consent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.map-consent-inner {
+    text-align: center;
+    padding: 16px;
+}
+
+.map-consent-text {
+    margin-bottom: 24px;
+}
+
+
+/** marker on map */
+.map-marker {
+    align-items: flex-end;
+    background-color: darkred;
+    border-radius: 50%;
+    color: black;
+    display: flex;
+    font-size: 14px;
+    gap: 15px;
+    height: 30px;
+    justify-content: center;
+    padding: 4px;
+    position: relative;
+    transition: all 0.3s ease-out;
+    width: 30px;
+}
+
+.map-marker::after {
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 9px solid  darkred;
+    content: "";
+    height: 0;
+    left: 50%;
+    position: absolute;
+    top: 90%;
+    transform: translate(-50%, 0);
+// transition: all 0.3s ease-out;
+    width: 0;
+    z-index: 1;
+}
+
+.map-container:has(.open) {
+    .map-marker:not(.open) {
+        opacity: 0.6;
+    }
+}
+
+.map-marker-icon {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.map-marker-icon-label {
+    display:none;
+}
+
+/** overlay with details */
+.map-marker-details {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* styles in opened state */
+.map-marker.open {
+    // box-shadow: 10px 10px 5px rgba(255 ,255, 255, 0.2);
+    background-color: darkred;
+    border-radius:0;
+    border-top-right-radius: 24px;
+
+    gap: 0;
+    height: auto;
+    width: auto;
+    top: 150px;
+    max-width: 390px;
+    padding: 30px 20px 30px 20px;
+}
+
+.map-marker.open::after {
+    visibility: hidden;
+}
+
+.map-marker.open .map-marker-details {
+    display: flex;
+    top:50%;
+}

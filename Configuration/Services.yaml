@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Madj2k\GadgetoGoogle\:
+    resource: '../Classes/*'
+
+  Madj2k\GadgetoGoogle\Service\Geolocation:
+    public: true
+
+  Madj2k\GadgetoGoogle\Controller\AdminModuleController:
+    tags: ['backend.controller']

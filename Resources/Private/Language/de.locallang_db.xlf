@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" >
+        <body>
+
+			<!-- tx_gadgetogoogle_domain_model_filtercategory -->
+			<trans-unit id="tx_gadgetogoogle_domain_model_filtercategory">
+				<source>Category for Search</source>
+				<target>Kategorie für Suche</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_filtercategory.label">
+				<source>Label</source>
+				<target>Bezeichnung</target>
+			</trans-unit>
+
+
+			<!-- tx_gadgetogoogle_domain_model_location -->
+			<trans-unit id="tx_gadgetogoogle_domain_model_location">
+				<source>Location</source>
+				<target>Standort</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.label">
+				<source>Label</source>
+				<target>Bezeichnung</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.street">
+				<source>Street</source>
+				<target>Straße</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.street_number">
+				<source>Street Number</source>
+				<target>Hausnummer</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.zip">
+				<source>ZIP</source>
+				<target>PLZ</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.city">
+				<source>City</source>
+				<target>Stadt</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.longitude">
+				<source>Longitude</source>
+				<target>Längengrad</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.latitude">
+				<source>Latitude</source>
+				<target>Breitengrad</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.filter_category">
+				<source>Category for Filter</source>
+				<target>Kategorie für Filter</target>
+			</trans-unit>
+
+
+			<trans-unit id="plugin.map.title">
+				<source>Google Map</source>
+				<target>Google Map</target>
+			</trans-unit>
+
+			<!-- Flexform -->
+			<trans-unit id="flexform.map.headline">
+				<source>Google Map</source>
+				<target>Google Map</target>
+			</trans-unit>
+			<trans-unit id="flexform.map.locationCenter">
+				<source>Location in Center of Map</source>
+				<target>Standort im Zentrum der Karte</target>
+			</trans-unit>
+			<trans-unit id="flexform.map.locations">
+				<source>Locations</source>
+				<target>Standorte</target>
+			</trans-unit>
+
+        </body>
+    </file>
+</xliff>

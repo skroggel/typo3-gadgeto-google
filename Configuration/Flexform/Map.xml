@@ -1,0 +1,43 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<sheetTitle>
+					LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_db.xlf:flexform.map.headline
+				</sheetTitle>
+				<type>array</type>
+				<el>
+                    <settings.locationCenter>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_db.xlf:flexform.map.locationCenter
+                        </label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <maxitems>1</maxitems>
+                            <minitems>0</minitems>
+                            <foreign_table>tx_gadgetogoogle_domain_model_location</foreign_table>
+                            <foreign_table_where> AND tx_gadgetogoogle_domain_model_location.hidden = 0 AND tx_gadgetogoogle_domain_model_location.deleted = 0 AND tx_gadgetogoogle_domain_model_location.sys_language_uid IN (0,-1)</foreign_table_where>
+                        </config>
+                    </settings.locationCenter>
+                    <settings.locations>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_db.xlf:flexform.map.locations
+                        </label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectMultipleSideBySide</renderType>
+                            <maxitems>9999</maxitems>
+                            <minitems>0</minitems>
+                            <foreign_table>tx_gadgetogoogle_domain_model_location</foreign_table>
+                            <foreign_table_where> AND tx_gadgetogoogle_domain_model_location.hidden = 0 AND tx_gadgetogoogle_domain_model_location.deleted = 0 AND tx_gadgetogoogle_domain_model_location.sys_language_uid IN (0,-1)</foreign_table_where>
+                        </config>
+                    </settings.locations>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

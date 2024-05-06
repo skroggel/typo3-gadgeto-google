@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2023-09-17UTC13:49:100">
+        <body>
+
+			<!-- tx_gadgetogoogle_domain_model_filtercategory -->
+			<trans-unit id="tx_gadgetogoogle_domain_model_filtercategory">
+				<source>Category for Search</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_filtercategory.label">
+				<source>Label</source>
+			</trans-unit>
+
+
+			<!-- tx_gadgetogoogle_domain_model_location -->
+			<trans-unit id="tx_gadgetogoogle_domain_model_location">
+				<source>Location</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.label">
+				<source>Label</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.street">
+				<source>Street</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.street_number">
+				<source>Street Number</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.zip">
+				<source>ZIP</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.city">
+				<source>City</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.longitude">
+				<source>Longitude</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.latitude">
+				<source>Latitude</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.filter_category">
+				<source>Category for Filter</source>
+			</trans-unit>
+
+
+			<trans-unit id="plugin.map.title">
+				<source>Google Map</source>
+			</trans-unit>
+
+
+			<!-- Flexform -->
+			<trans-unit id="flexform.map.headline">
+				<source>Google Map</source>
+			</trans-unit>
+			<trans-unit id="flexform.map.locationCenter">
+				<source>Location in Center of Map</source>
+			</trans-unit>
+			<trans-unit id="flexform.map.locations">
+				<source>Locations</source>
+			</trans-unit>
+
+        </body>
+    </file>
+</xliff>
