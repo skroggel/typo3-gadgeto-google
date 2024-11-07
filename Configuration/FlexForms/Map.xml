@@ -10,6 +10,20 @@
 				</sheetTitle>
 				<type>array</type>
 				<el>
+                    <settings.hideFilter>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_db.xlf:flexform.map.hideFilter
+                        </label>
+                        <config>
+                            <type>check</type>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <numIndex index="0"></numIndex>
+                                    <numIndex index="1"></numIndex>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </settings.hideFilter>
                     <settings.locationCenter>
                         <label>
                             LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_db.xlf:flexform.map.locationCenter
