@@ -3,7 +3,9 @@
       data-namespace-typo3-fluid="true">
 
     <f:comment><!-- Add filters for your map --></f:comment>
-    <f:render partial="Map/Filters" arguments="{filterCategories: filterCategories}" />
+    <f:if condition="!{settings.hideFilter}">
+        <f:render partial="Map/Filters" arguments="{filterCategories: filterCategories}" />
+    </f:if>
 
     <f:comment><!-- Now add some HTML for the overlays --></f:comment>
     <f:if condition="{locations}">
@@ -26,9 +28,6 @@
                 <gadgetoGoogle:googleMaps locations="{locations}" />
             </f:else>
         </f:if>
-
-
-
 
         <f:comment><!-- Set container of the map. --></f:comment>
         <f:render partial="Map/Container"  />

@@ -58,10 +58,15 @@
 				<target>Google Map</target>
 			</trans-unit>
 
+
 			<!-- Flexform -->
 			<trans-unit id="flexform.map.headline">
 				<source>Google Map</source>
 				<target>Google Map</target>
+			</trans-unit>
+			<trans-unit id="flexform.map.hideFilter">
+				<source>Hide Filter</source>
+				<target>Filter ausblenden</target>
 			</trans-unit>
 			<trans-unit id="flexform.map.locationCenter">
 				<source>Location in Center of Map</source>
