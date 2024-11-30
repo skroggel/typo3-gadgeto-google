@@ -26,7 +26,7 @@ call_user_func(
         //=================================================================
         $GLOBALS['TYPO3_CONF_VARS']['LOG']['Madj2k']['GadgetoGoogle']['writerConfiguration'] = [
 
-            \TYPO3\CMS\Core\Log\LogLevel::INFO => [
+            \TYPO3\CMS\Core\Log\LogLevel::WARNING => [
                 // add a FileWriter
                 'TYPO3\\CMS\\Core\\Log\\Writer\\FileWriter' => [
                     // configuration for the writer
