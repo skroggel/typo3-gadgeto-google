@@ -14,6 +14,26 @@
 				<source>Load Map</source>
 				<target>Karte laden</target>
 			</trans-unit>
+			<trans-unit id="label.locations">
+				<source>Locations</source>
+				<target>Standorte</target>
+			</trans-unit>
+			<trans-unit id="label.findLocation">
+				<source>Find Location</source>
+				<target>Standort finden</target>
+			</trans-unit>
+			<trans-unit id="label.search">
+				<source>Search</source>
+				<target>Suchen</target>
+			</trans-unit>
+			<trans-unit id="label.searchByCurrentPosition">
+				<source>Search by current position</source>
+				<target>Suche mit aktueller Position</target>
+			</trans-unit>
+			<trans-unit id="label.noResults">
+				<source>Unfortunately, no matching results could be found.</source>
+				<target>Leider konnten keine passenden Ergebnisse gefunden werden.</target>
+			</trans-unit>
 
 
 			<trans-unit id="adminModuleController.error.valuesNotSet">

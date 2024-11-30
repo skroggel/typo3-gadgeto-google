@@ -6,17 +6,17 @@
 		<sDEF>
 			<ROOT>
 				<sheetTitle>
-					LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_db.xlf:flexform.map.headline
+					LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.tab.common
 				</sheetTitle>
 				<type>array</type>
 				<el>
                     <settings.locationCenter>
                         <label>
-                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_db.xlf:flexform.map.locationCenter
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.locationCenter
                         </label>
                         <config>
-                            <type>select</type>
-                            <renderType>selectSingle</renderType>
+                            <type>group</type>
+                            <allowed>tx_gadgetogoogle_domain_model_location</allowed>
                             <maxitems>1</maxitems>
                             <minitems>0</minitems>
                             <foreign_table>tx_gadgetogoogle_domain_model_location</foreign_table>
@@ -25,7 +25,7 @@
                     </settings.locationCenter>
                     <settings.locations>
                         <label>
-                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_db.xlf:flexform.map.locations
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.locations
                         </label>
                         <config>
                             <type>select</type>
@@ -39,5 +39,83 @@
 				</el>
 			</ROOT>
 		</sDEF>
+        <search>
+            <ROOT>
+                <sheetTitle>
+                    LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.tab.search
+                </sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.showSearch>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.showSearch
+                        </label>
+                        <config>
+                            <type>check</type>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <numIndex index="0"></numIndex>
+                                    <numIndex index="1"></numIndex>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </settings.showSearch>
+                    <settings.maxSearchRadius>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.maxSearchRadius
+                        </label>
+                        <config>
+                            <type>input</type>
+                            <eval>trim,int</eval>
+                            <default>0</default>
+                        </config>
+                    </settings.maxSearchRadius>
+                    <settings.maxSearchDisplayRadius>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.maxSearchDisplayRadius
+                        </label>
+                        <config>
+                            <type>input</type>
+                            <eval>trim,int</eval>
+                            <default>100</default>
+                        </config>
+                    </settings.maxSearchDisplayRadius>
+                    <settings.defaultCountry>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.defaultCountry
+                        </label>
+                        <config>
+                            <type>input</type>
+                            <eval>trim,alpha</eval>
+                        </config>
+                    </settings.defaultCountry>
+                </el>
+            </ROOT>
+        </search>
+        <view>
+            <ROOT>
+                <sheetTitle>
+                    LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.tab.view
+                </sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.hideFilter>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.hideFilter
+                        </label>
+                        <config>
+                            <type>check</type>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <numIndex index="0"></numIndex>
+                                    <numIndex index="1"></numIndex>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </settings.hideFilter>
+                </el>
+            </ROOT>
+        </view>
+
 	</sheets>
 </T3DataStructure>

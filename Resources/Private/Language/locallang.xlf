@@ -12,6 +12,21 @@
 			<trans-unit id="label.loadMap">
 				<source>Load Map</source>
 			</trans-unit>
+			<trans-unit id="label.locations">
+				<source>Locations</source>
+			</trans-unit>
+			<trans-unit id="label.findLocation">
+				<source>Find Location</source>
+			</trans-unit>
+			<trans-unit id="label.search">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="label.searchByCurrentPosition">
+				<source>Search by current position</source>
+			</trans-unit>
+			<trans-unit id="label.noResults">
+				<source>Unfortunately, no matching results could be found.</source>
+			</trans-unit>
 
 
 			<trans-unit id="adminModuleController.error.valuesNotSet">

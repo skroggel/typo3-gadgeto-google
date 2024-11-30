@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+	<file source-language="en" datatype="plaintext">
+		<body>
+
+			<!-- extConf -->
+			<trans-unit id="extConf.apiHookTables">
+				<source>Comma-separated list of tables for which an API request should start when saving in the backend</source>
+			</trans-unit>
+			<trans-unit id="extConf.defaultCountry">
+				<source>ISO country code of the country that is used by default for all addresses if no other value is specified</source>
+			</trans-unit>
+			<trans-unit id="extConf.removeFields">
+				<source>Comma-separated list of fields that are to be hidden in the data record "Location".</source>
+				<target>Komma-separarierte Liste von Feldern, die im Datensatz "Location" ausgeblendet werden sollen.</target>
+			</trans-unit>
+
+
+			<!-- plugin -->
+			<trans-unit id="plugin.tx_gadgetogoogle_map">
+				<source>Google Map</source>
+			</trans-unit>
+
+
+			<!-- Flexform -->
+			<trans-unit id="flexform.tab.common">
+				<source>Common</source>
+			</trans-unit>
+			<trans-unit id="flexform.tab.view">
+				<source>View</source>
+			</trans-unit>
+			<trans-unit id="flexform.tab.search">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.locationCenter">
+				<source>Location in Center of Map (otherwise map scales so that all locations are visible)</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.locations">
+				<source>Shown Locations</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.showSearch">
+				<source>Show Search</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.hideFilter">
+				<source>Hide Filter</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.maxSearchRadius">
+				<source>Maximum radius for search (in kilometers, 0 = unlimited)</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.maxSearchDisplayRadius">
+				<source>Maximum radius of results that is shown on the map (in kilometers, 0 = unlimited)</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.defaultCountry">
+				<source>Default Country for search (e.g. "DE")</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

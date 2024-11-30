@@ -1,7 +1,10 @@
 <?php
+declare(strict_types=1);
+
+$ll = 'LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_db.xlf:';
 return [
     'ctrl' => [
-        'title'	=> 'LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_db.xlf:tx_gadgetogoogle_domain_model_filtercategory',
+        'title'	=> $ll . 'tx_gadgetogoogle_domain_model_filtercategory',
         'label' => 'label',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -18,15 +21,18 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => 'label',
-        'iconfile' => 'EXT:gadgeto_google/Resources/Public/Icons/tx_gadgetogoogle_domain_model_filtercategory.gif'
+        'iconfile' => 'EXT:gadgeto_google/Resources/Public/Icons/tx_gadgetogoogle_domain_model_filtercategory.svg'
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, label, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'label,
+                    --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource,
+                    --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden, starttime, endtime
+                '],
     ],
     'columns' => [
 
         'sys_language_uid' => [
-            'exclude' => 0,
+            'exclude' => false,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
             'config' => [
                 'type' => 'select',
@@ -42,7 +48,7 @@ return [
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'exclude' => 0,
+            'exclude' => false,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
@@ -51,7 +57,7 @@ return [
                     ['', 0],
                 ],
                 'foreign_table' => 'tx_gadgetogoogle_domain_model_filtercategory',
-                'foreign_table_where' => 'AND tx_gadgetogoogle_domain_model_filtercategory.pid=###CURRENT_PID### AND tx_gadgetogoogle_domain_model_filtercategory.sys_language_uid IN (-1,0)',
+                'foreign_table_where' => 'AND {#tx_gadgetogoogle_domain_model_filtercategory}.{#pid}=###CURRENT_PID### AND {#tx_gadgetogoogle_domain_model_filtercategory}.{#sys_language_uid} IN (-1,0)',
             ],
         ],
         'l10n_diffsource' => [
@@ -60,14 +66,14 @@ return [
             ],
         ],
         'hidden' => [
-            'exclude' => 0,
+            'exclude' => false,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
             ],
         ],
         'starttime' => [
-            'exclude' => 0,
+            'exclude' => false,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
             'config' => [
                 'type' => 'input',
@@ -76,16 +82,13 @@ return [
                 'eval' => 'datetime',
                 'checkbox' => 0,
                 'default' => 0,
-                'range' => [
-                    'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-                ],
                 'behaviour' => [
                     'allowLanguageSynchronization' => true
                 ]
             ],
         ],
         'endtime' => [
-            'exclude' => 0,
+            'exclude' => false,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
             'config' => [
                 'type' => 'input',
@@ -94,17 +97,14 @@ return [
                 'eval' => 'datetime',
                 'checkbox' => 0,
                 'default' => 0,
-                'range' => [
-                    'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-                ],
                 'behaviour' => [
                     'allowLanguageSynchronization' => true
                 ]
             ],
         ],
         'label' => [
-            'exclude' => 0,
-            'label' => 'LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_db.xlf:tx_gadgetogoogle_domain_model_filtercategory.label',
+            'exclude' => false,
+            'label' => $ll . 'tx_gadgetogoogle_domain_model_filtercategory.label',
             'config' => [
                 'type' => 'input',
                 'eval' => 'required,trim'

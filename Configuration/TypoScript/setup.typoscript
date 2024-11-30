@@ -25,7 +25,13 @@ plugin.tx_gadgetogoogle {
 	}
 
 	settings {
-
+        maxSearchRadius = {$plugin.tx_gadgetogoogle.settings.maxSearchRadius}
+        maxSearchDisplayRadius = {$plugin.tx_gadgetogoogle.settings.maxSearchDisplayRadius}
+        defaultCountry = {$plugin.tx_gadgetogoogle.settings.defaultCountry}
+        proxy = {$plugin.tx_gadgetogoogle.settings.proxy}
+        proxyPort = {$plugin.tx_gadgetogoogle.settings.proxyPort}
+        proxyUsername = {$plugin.tx_gadgetogoogle.settings.proxyUsername}
+        proxyPassword = {$plugin.tx_gadgetogoogle.settings.proxyPassword}
 	}
 }
 

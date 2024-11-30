@@ -1,0 +1,8 @@
+# cat=Api; type=string; label=LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:extConf.apiHookTables
+apiHookTables = tx_gadgetogoogle_domain_model_location
+
+# cat=Search; type=string; label=LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:extConf.defaultCountry
+defaultCountry = DE
+
+# cat=Tca; type=string; label=LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:extConf.removeFields
+removeFields = 

@@ -15,10 +15,8 @@ namespace Madj2k\GadgetoGoogle\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Resource\Exception\InvalidFileException;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
@@ -66,12 +64,14 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
     {
         parent::initializeArguments();
         $this->registerArgument('locations', QueryResultInterface::class, 'The locations to display', true);
-        $this->registerArgument('locationCenter', FilterableInterface::class, 'The location that builds the center of the map');
+        $this->registerArgument('locationCenter', FilterableInterface::class, 'The location that builds the center of the map', false, null);
         $this->registerArgument('mapConfig', 'array', 'The configuration for the Google Map', false, ['zoom' => 12, 'mapTypeControl' => false, 'streetViewControl' => false, 'scrollwheel' => false, 'options' => ['gestureHandling' => 'cooperative']]);
-        $this->registerArgument('mapContainerId', 'string', 'The id of the DIV for the map', false, 'tx-madj2k-map');
+        $this->registerArgument('mapContainerId', 'string', 'The id of the DIV for the map', false, 'tx-gadgetogoogle-map');
+        $this->registerArgument('clusterMarkerContainerId', 'string', 'The id of the DIV for the cluster-marker', false, 'tx-gadgetogoogle-map-cluster-marker');
+        $this->registerArgument('overlayContainerIdPrefix', 'string', 'The prefix for the DIVs which contain the content for the overlay', false, 'tx-gadgetogoogle-map-overlay');
         $this->registerArgument('filterButtonClass', 'string', 'The class of the buttons for filtering the map', false, 'map-filter-button');
         $this->registerArgument('consentButtonClass', 'string', 'The class of the consent button', false, 'map-consent-button');
-        $this->registerArgument('overlayContainerIdPrefix', 'string', 'The prefix for the DIVs which contain the content for  the overlay', false, 'tx-madj2k-map-overlay');
+        $this->registerArgument('settings', 'array', 'The settings array', false, []);
     }
 
 
@@ -87,15 +87,28 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface<\Madj2k\GadgetoGoogle\Domain\Model\FilterableInterface> $locations */
         $locations = $this->arguments['locations'];
 
-        /**
-         * @var \Madj2k\GadgetoGoogle\Domain\Model\FilterableInterface $locationCenter
-         */
+        /** @var \Madj2k\GadgetoGoogle\Domain\Model\FilterableInterface $locationCenter */
         $locationCenter = $this->arguments['locationCenter'];
+
+        /** @var array $mapConfig */
         $mapConfig = $this->arguments['mapConfig'];
+
+        /** @var string $mapContainerId */
         $mapContainerId = $this->arguments['mapContainerId'];
+
+        /** @var string $clusterMarkerContainerId */
+        $clusterMarkerContainerId = $this->arguments['clusterMarkerContainerId'];
+
+        /** @var string $filterButtonClass */
         $filterButtonClass = $this->arguments['filterButtonClass'];
+
+        /** @var string $consentButtonClass */
         $consentButtonClass = $this->arguments['consentButtonClass'];
-        $jsFile = PathUtility::getPublicResourceWebPath('EXT:gadgeto_google/Resources/Public/JavaScript/Map.mjs');
+
+        /** @var array $settings */
+        $settings = $this->arguments['settings'];
+
+        $jsFile = PathUtility::getPublicResourceWebPath('EXT:gadgeto_google/Resources/Public/JavaScript/Map.js');
 
         $centerLongitude = $locations[0]->getLongitude();
         $centerLatitude = $locations[0]->getLatitude();
@@ -116,6 +129,7 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         $configuration = [
             'apiKey' => $googleMapsConfig['apiKey'],
             'mapContainerId' => $mapContainerId,
+            'clusterMarkerContainerId' => $clusterMarkerContainerId,
             'filterButtonClass' => $filterButtonClass,
             'consentButtonClass' => $consentButtonClass,
             'mapConfig' => array_merge(
@@ -127,35 +141,36 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
                     ],
                 ]
             ),
-            'data' => []
+            'data' => [],
+            'boundaryPositions' => []
         ];
 
+        /*
         if ($locationCenter) {
-            $this->buildItemDataArray($locationCenter, $configuration);
-        }
+            $this->buildItemDataArray($locationCenter, $configuration, $settings);
+        }*/
 
         /** @var \TYPO3\CMS\Extbase\DomainObject\AbstractEntity $facility */
         foreach ($locations as $location) {
-            $this->buildItemDataArray($location, $configuration);
+            $this->buildItemDataArray($location, $configuration, $settings);
         }
 
-        $javaScript = '
+        return '
             <script type="module">
-                import Madj2kGoogleMaps from "' . $jsFile . '";
-                let Map = new Madj2kGoogleMaps(' . json_encode($configuration) . ');
+                import GadgetoGoogleMaps from "' . $jsFile . '";
+                let Map = new GadgetoGoogleMaps(' . json_encode($configuration) . ');
             </script>
         ';
-
-        return $javaScript . '';
     }
 
 
     /**
      * @param \Madj2k\GadgetoGoogle\Domain\Model\FilterableInterface $item
      * @param array $configuration
+     * @param array $settings
      * @return bool
      */
-    protected function buildItemDataArray (FilterableInterface $item, array &$configuration): bool
+    protected function buildItemDataArray (FilterableInterface $item, array &$configuration, array $settings = []): bool
     {
         if (
             ($item->getFilterCategory())
@@ -165,7 +180,11 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
             )
         ) {
 
+            /** @var string $overlayContainerIdPrefix */
             $overlayContainerIdPrefix = $this->arguments['overlayContainerIdPrefix'];
+
+            /** @var bool $boundariesByMarkers */
+            $boundariesByMarkers = ! $this->arguments['locationCenter'];
 
             // build string of selected searchTypes
             $categories = [];
@@ -184,10 +203,26 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
                 'categories' => implode(',', $categories),
                 'overlayContainerId' => $overlayContainerIdPrefix . '-' . md5(spl_object_hash($item)),
                 'position' => [
-                    'lat' => (float)$item->getLatitude(),
-                    'lng' => (float)$item->getLongitude(),
+                    'lat' => $item->getLatitude(),
+                    'lng' => $item->getLongitude(),
                 ]
             ];
+
+            // are the map boundaries to be set by the markers
+            if ($boundariesByMarkers) {
+
+                // check for maxSearchDisplayRadius
+                if (!empty($settings['maxSearchDisplayRadius'])) {
+                    if ($item->getDistance() > (int) $settings['maxSearchDisplayRadius']) {
+                        return true;
+                    }
+                }
+
+                $configuration['boundaryPositions'][] = [
+                    'lat' => $item->getLatitude(),
+                    'lng' => $item->getLongitude(),
+                ];
+            }
 
             return true;
         }

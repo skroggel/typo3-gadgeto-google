@@ -23,9 +23,9 @@ namespace Madj2k\GadgetoGoogle\Domain\Model;
  * @package Madj2k_GadetoGoogle
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-interface GeoPositionInterface 
+interface GeoPositionInterface
 {
-    
+
     /**
      * Returns the longitude
      *
@@ -40,7 +40,7 @@ interface GeoPositionInterface
      * @param float $longitude
      * @return void
      */
-    public function setLongitude(float $longitude);
+    public function setLongitude(float $longitude): void;
 
 
     /**
@@ -48,7 +48,7 @@ interface GeoPositionInterface
      *
      * @return float $latitude
      */
-    public function getLatitude();
+    public function getLatitude(): float;
 
 
     /**
@@ -57,6 +57,24 @@ interface GeoPositionInterface
      * @param float $latitude
      * @return void
      */
-    public function setLatitude(float $latitude);
+    public function setLatitude(float $latitude): void;
+
+
+    /**
+     * Returns the distance
+     *
+     * @return float $distance
+     */
+    public function getDistance(): float;
+
+
+    /**
+     * Sets the distance
+     *
+     * @param float $distance
+     * @return void
+     */
+    public function setDistance(float $distance): void;
+
 
 }

@@ -4,47 +4,86 @@ defined('TYPO3') or die('Access denied.');
 call_user_func(
 	function($extensionKey)
 	{
-        $pluginConfig = ['map'];
-        foreach ($pluginConfig as $pluginName) {
+        $pluginConfig = [
+            'Map' => [
+                'flexFormFile' => 'Map',
+                'includeHeaderFields' => false
+            ],
+        ];
+
+        foreach ($pluginConfig as $pluginName => $pluginSettings) {
+
+            $pluginTitle = 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_' .
+                strtolower($pluginName). '.title';
+
+            $pluginIcon =  'gadgetogoogle-plugin-' . strtolower($pluginName);
 
             // register normal plugin
             $pluginSignature = \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
                 $extensionKey,
-                \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($pluginName),
-                'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_db.xlf:plugin.' .
-                    \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($pluginName). '.title'
+                $pluginName,
+                $pluginTitle,
+                $pluginIcon
             );
 
-            // add flexform to plugin
-            $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-            \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
-                '*', // wildcard when using third parameter, else use pluginSignature
-                'FILE:EXT:'. $extensionKey . '/Configuration/FlexForms/' .
-                \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($pluginName) . '.xml',
-                $pluginSignature // third parameter adds flexform to content-element below, too!
-            );
-            
-            
+            $flexFormFile = $pluginName;
+            $hasFlexForm = true;
+            if (isset($pluginSettings['flexFormFile'])) {
+                $flexFormFile = $pluginSettings['flexFormFile'];
+            }
+
+            $flexFormFile = 'EXT:'. $extensionKey . '/Configuration/FlexForms/' . $flexFormFile . '.xml';
+            $file = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($flexFormFile);
+            if (
+                ($file)
+                && (file_exists($file))
+            ) {
+
+                // add flexform to plugin
+                $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+                \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+                    '*', // wildcard when using third parameter, else use pluginSignature
+                    'FILE:' . $flexFormFile,
+                    $pluginSignature // third parameter adds flexform to content-element below, too!
+                );
+            } else {
+                $hasFlexForm = false;
+            }
+
             // add content element
             \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
                 'tt_content',
                 'CType',
                 [
-                    'label' => 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_db.xlf:plugin.' .
-                        TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($pluginName). '.title',
+                    'label' => $pluginTitle,
                     'value' => $pluginSignature,
-                    'icon'  => 'EXT:' . $extensionKey . '/Resources/Public/Icons/Extension.svg',
+                    'icon'  => $pluginIcon,
                     'group' => $extensionKey,
                 ]
             );
+
+            $flexFormTab = '';
+            if ($hasFlexForm) {
+                $flexFormTab = '--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,
+                    pi_flexform,';
+            }
+
+            $flexFormHeader = '';
+            if (! empty($pluginSettings['includeHeaderFields'])){
+                $flexFormHeader = 'header;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_formlabel,
+                    --linebreak--,
+                    header_layout;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_layout_formlabel,
+                    --linebreak--,
+                    subheader;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:subheader_formlabel,';
+            }
 
             // define TCA-fields
             // $GLOBALS['TCA']['tt_content']['types'][$pluginSignature] = $GLOBALS['TCA']['tt_content']['types']['list'];
             $GLOBALS['TCA']['tt_content']['types'][$pluginSignature]['showitem'] = '
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                     --palette--;;general,
-                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,
-                    pi_flexform,
+                    ' . $flexFormHeader . $flexFormTab . '
+                    pages;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:pages.ALT.list_formlabel,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
                     --palette--;;language,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,

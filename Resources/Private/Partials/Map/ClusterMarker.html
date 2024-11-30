@@ -1,0 +1,17 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <f:comment>
+        <!--
+        This are the overlays for the pins, each with an unique id.
+        data-class is added as class to the container on intitialization
+        -->
+    </f:comment>
+    <template id="tx-gadgetogoogle-map-cluster-marker" data-class="map-marker">
+        <div class="map-marker-icon" title="###counter### {f:translate(key:'label.locations', extensionName:'gadgeto_google')}">
+            <span class="map-marker-icon-label cluster">###counter###</span>
+        </div>
+    </template>
+
+</html>

@@ -41,7 +41,7 @@
 .map-marker::after {
     border-left: 9px solid transparent;
     border-right: 9px solid transparent;
-    border-top: 9px solid  darkred;
+    border-top: 9px solid darkred;
     content: "";
     height: 0;
     left: 50%;
@@ -69,6 +69,12 @@
     display:none;
 }
 
+.map-marker-icon-label.cluster {
+    display: inline;
+    color: #fff;
+    font-weight:bold;
+}
+
 /** overlay with details */
 .map-marker-details {
     display: none;
@@ -81,7 +87,6 @@
     // box-shadow: 10px 10px 5px rgba(255 ,255, 255, 0.2);
     background-color: darkred;
     border-radius:0;
-    border-top-right-radius: 24px;
 
     gap: 0;
     height: auto;
@@ -98,4 +103,5 @@
 .map-marker.open .map-marker-details {
     display: flex;
     top:50%;
+    color: #fff;
 }

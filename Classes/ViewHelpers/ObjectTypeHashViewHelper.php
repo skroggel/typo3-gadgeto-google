@@ -34,7 +34,7 @@ class ObjectTypeHashViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abstrac
     public function initializeArguments(): void
     {
         parent::initializeArguments();
-        $this->registerArgument('object', AbstractEntity::class, 'The object for the hash');
+        $this->registerArgument('object', AbstractEntity::class, 'The object or array for the hash');
     }
 
 
@@ -52,7 +52,9 @@ class ObjectTypeHashViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abstrac
 
         /** @var \TYPO3\CMS\Extbase\DomainObject\AbstractEntity $object */
         $object = $arguments['object'];
+
         return md5(spl_object_hash($object));
+
     }
 
 }

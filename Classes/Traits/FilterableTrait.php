@@ -16,7 +16,10 @@ namespace Madj2k\GadgetoGoogle\Traits;
  */
 
 use Madj2k\GadgetoGoogle\Domain\Model\FilterableInterface;
+use Madj2k\GadgetoGoogle\Domain\Model\FilterCategory;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
+use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -39,9 +42,18 @@ trait FilterableTrait
 
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\GadgetoGoogle\Domain\Model\FilterCategory>|null
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\GadgetoGoogle\Domain\Model\FilterCategory>|\TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy|null
+    */
+    protected ObjectStorage|LazyLoadingProxy|null $filterCategory = null;
+
+
+    /**
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>|\TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy|null
      */
-    protected ?ObjectStorage $filterCategory = null;
+    protected ObjectStorage|LazyLoadingProxy|null $categories = null;
+
 
 
     /**
@@ -52,7 +64,8 @@ trait FilterableTrait
      */
     public function injectObjectStorage(ObjectStorage $objectStorage):void
     {
-        $this->filterCategory = $objectStorage;
+        $this->filterCategory = $this->filterCategory ?? $objectStorage;
+        $this->categories = $this->categories ?? $objectStorage;
     }
 
 
@@ -86,7 +99,15 @@ trait FilterableTrait
      */
     public function getFilterCategory(): ObjectStorage
     {
-        return $this->filterCategory;
+        if ($this->filterCategory instanceof LazyLoadingProxy) {
+            $this->filterCategory->_loadRealInstance();
+        }
+
+        if ($this->filterCategory instanceof ObjectStorage) {
+            return $this->filterCategory;
+        }
+
+        return $this->filterCategory= new ObjectStorage();
     }
 
 
@@ -100,5 +121,60 @@ trait FilterableTrait
     {
         $this->filterCategory = $filterCategory;
     }
-    
+
+
+    /**
+     * Adds a category
+     *
+     * @param \TYPO3\CMS\Extbase\Domain\Model\Category $category
+     * @return void
+     */
+    public function addCategory(Category $category): void
+    {
+        $this->categories->attach($category);
+    }
+
+
+    /**
+     * Removes a category
+     *
+     * @param \TYPO3\CMS\Extbase\Domain\Model\Category $category
+     * @return void
+     */
+    public function removeCategory(Category $category): void
+    {
+        $this->categories->detach($category);
+    }
+
+
+    /**
+     * Returns the categories
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
+     */
+    public function getCategories(): ObjectStorage
+    {
+        if ($this->categories instanceof LazyLoadingProxy) {
+            $this->categories->_loadRealInstance();
+        }
+
+        if ($this->categories instanceof ObjectStorage) {
+            return $this->categories;
+        }
+
+        return $this->categories = new ObjectStorage();
+    }
+
+
+    /**
+     * Sets the categories
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
+     * @return void
+     */
+    public function setCategories(ObjectStorage $categories): void
+    {
+        $this->categories = $categories;
+    }
+
 }
