@@ -42,19 +42,19 @@ class GeolocationService implements SingletonInterface
     /**
      * @const string
      */
-    const string GOOGLE_API_URL = 'https://maps.google.com/maps/api/geocode/json';
+    const GOOGLE_API_URL = 'https://maps.google.com/maps/api/geocode/json';
 
 
     /**
      * @const string
      */
-    const string API_CALL_TYPE_LNGLAT = 'latlng';
+    const API_CALL_TYPE_LNGLAT = 'latlng';
 
 
     /**
      * @const string
      */
-    const string API_CALL_TYPE_ADDRESS = 'address';
+    const API_CALL_TYPE_ADDRESS = 'address';
 
 
     /**
