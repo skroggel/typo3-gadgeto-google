@@ -10,5 +10,8 @@ services:
   Madj2k\GadgetoGoogle\Service\Geolocation:
     public: true
 
+  Madj2k\GadgetoGoogle\Service\GeolocationService:
+    public: true
+
   Madj2k\GadgetoGoogle\Controller\AdminModuleController:
     tags: ['backend.controller']

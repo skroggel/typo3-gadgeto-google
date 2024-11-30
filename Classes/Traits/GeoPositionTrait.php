@@ -39,6 +39,12 @@ trait GeoPositionTrait
 
 
     /**
+     * @var float
+     */
+    protected float $distance = 0.0;
+
+
+    /**
      * Returns the longitude
      *
      * @return float $longitude
@@ -81,6 +87,29 @@ trait GeoPositionTrait
     public function setLatitude(float $latitude): void
     {
         $this->latitude = $latitude;
+    }
+
+
+    /**
+     * Returns the distance
+     *
+     * @return float $distance
+     */
+    public function getDistance(): float
+    {
+        return $this->distance;
+    }
+
+
+    /**
+     * Sets the distance
+     *
+     * @param float $distance
+     * @return void
+     */
+    public function setDistance(float $distance): void
+    {
+        $this->distance = $distance;
     }
 
 }

@@ -14,7 +14,8 @@ namespace Madj2k\GadgetoGoogle\Hooks;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Madj2k\GadgetoGoogle\Service\Geolocation;
+use Madj2k\GadgetoGoogle\Service\GeolocationService;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -41,15 +42,24 @@ class TceMainHooks
     function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$reference): void
     {
         try {
-            if ($table == 'tx_gadgetogoogle_domain_model_location') {
 
-                /** @var \Madj2k\GadgetoGoogle\Service\Geolocation $geolocation */
-                $geolocation = GeneralUtility::makeInstance(Geolocation::class);
-                if ($geolocation->insertDataFromRecord($table, $id, $fieldArray)) {
-                    $geolocation->setApiCallType(Geolocation::API_CALL_TYPE_ADDRESS)
+            $configReader = GeneralUtility::makeInstance(ExtensionConfiguration::class);
+            $extensionConfig = $configReader->get('gadgeto_google');
+
+            $apiHookTables = [];
+            if (! empty($extensionConfig['apiHookTables'])) {
+                $apiHookTables = GeneralUtility::trimExplode(',', $extensionConfig['apiHookTables'], true);
+            }
+
+            if (in_array($table, $apiHookTables)) {
+
+                /** @var \Madj2k\GadgetoGoogle\Service\GeolocationService $geolocationService*/
+                $geolocationService = GeneralUtility::makeInstance(GeolocationService::class);
+                if ($geolocationService->insertDataFromRecord($table, $id, $fieldArray)) {
+                    $geolocationService->setApiCallType(GeolocationService::API_CALL_TYPE_ADDRESS)
                         ->fetchData();
-                    $fieldArray['longitude'] = $geolocation->getLongitude();
-                    $fieldArray['latitude'] = $geolocation->getLatitude();
+                    $fieldArray['longitude'] = $geolocationService->getLocation()->getLongitude();
+                    $fieldArray['latitude'] = $geolocationService->getLocation()->getLatitude();
                 }
             }
         } catch (\Exception $e) {

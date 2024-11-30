@@ -2,38 +2,24 @@
       xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-    <f:comment><!-- Add filters for your map --></f:comment>
-    <f:render partial="Map/Filters" arguments="{filterCategories: filterCategories}" />
 
-    <f:comment><!-- Now add some HTML for the overlays --></f:comment>
-    <f:if condition="{locations}">
-
-        <f:for each="{locations}" as="location">
-            <f:render partial="Map/Overlay" arguments="{location: location}" />
-        </f:for>
-
-
-        <f:comment><!--
-            Init the map. Optionally you can add a "locationCenter" to explicitl define the center of the map.
-            Otherwise the first place is used. Don't forget to add an overlay-element for it!
-        --></f:comment>
-        <f:if condition="{locationCenter}">
-            <f:then>
-                <f:render partial="Map/Overlay" arguments="{location: locationCenter}" />
-                <gadgetoGoogle:googleMaps locations="{locations}" locationCenter="{locationCenter}" />
-            </f:then>
-            <f:else>
-                <gadgetoGoogle:googleMaps locations="{locations}" />
-            </f:else>
-        </f:if>
-
-
-
-
-        <f:comment><!-- Set container of the map. --></f:comment>
-        <f:render partial="Map/Container"  />
-
+    <f:comment><!-- Add search for your map --></f:comment>
+    <f:if condition="{settings.showSearch}">
+        <f:render partial="Top/Search" arguments="{search: search, data: data, settings: settings}" />
     </f:if>
 
+    <f:comment><!-- Add filters for your map --></f:comment>
+    <f:if condition="!{settings.hideFilter}">
+        <f:render partial="Top/Filters" arguments="{filterCategories: filterCategories, data: data, settings: settings}" />
+    </f:if>
+
+    <f:comment><!-- Show map --></f:comment>
+    <f:render partial="Map" arguments="{locations: locations, locationCenter: locationCenter, search: search, data: data, settings: settings}" />
+
     <f:asset.css identifier="gadgeto-google" href="EXT:gadgeto_google/Resources/Public/Css/map.css" />
+    <f:asset.script identifier="gadgeto-google" src="EXT:gadgeto_google/Resources/Public/JavaScript/GeoPosition.js" />
+    <f:asset.script identifier="gadgeto-google">
+        const GadgetoGoogleGeoPosition = new GeoPosition();
+    </f:asset.script>
+    
 </html>

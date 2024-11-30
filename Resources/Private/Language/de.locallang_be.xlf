@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+	<file source-language="en" target-language="de" datatype="plaintext">
+		<body>
+
+			<!-- extConf -->
+			<trans-unit id="extConf.apiHookTables">
+				<source>Comma-separated list of tables for which an API request should start when saving in the backend</source>
+				<target>Kommaseparaierte Liste der Tabellen, für die bei der Speicherung im Backend eine API-Abfrage starten soll</target>
+			</trans-unit>
+			<trans-unit id="extConf.defaultCountry">
+				<source>ISO country code of the country that is used by default for all addresses if no other value is specified</source>
+				<target>ISO-Ländercode des Landes, dass standardmäßig für alle Adressen verwendet wird, sofern kein anderer Wert angegeben ist</target>
+			</trans-unit>
+			<trans-unit id="extConf.removeFields">
+				<source>Comma-separated list of fields that are to be hidden in the data record "Location".</source>
+				<target>Komma-separarierte Liste von Feldern, die im Datensatz "Location" ausgeblendet werden sollen.</target>
+			</trans-unit>
+
+
+			<!-- plugin -->
+			<trans-unit id="plugin.tx_gadgetogoogle_map">
+				<source>Google Map</source>
+				<target>Google Map</target>
+			</trans-unit>
+
+
+			<!-- Flexform -->
+			<trans-unit id="flexform.tab.common">
+				<source>Common</source>
+				<target>Allgemein</target>
+			</trans-unit>
+			<trans-unit id="flexform.tab.view">
+				<source>View</source>
+				<target>Ansicht</target>
+			</trans-unit>
+			<trans-unit id="flexform.tab.search">
+				<source>Search</source>
+				<target>Suche</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.locationCenter">
+				<source>Location in Center of Map (otherwise map scales so that all locations are visible)</source>
+				<target>Standort im Zentrum der Karte (sonst skaliert Karte sich so, dass alle Standorte sichtbar sind)</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.locations">
+				<source>Shown Locations</source>
+				<target>Angezeigte Standorte</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.showSearch">
+				<source>Show Search</source>
+				<target>Suche anzeigen</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.hideFilter">
+				<source>Hide Filter</source>
+				<target>Filter ausblenden</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.maxSearchRadius">
+				<source>Maximum radius for search (in kilometers, 0 = unlimited)</source>
+				<target>Maximaler Suchradius (in Kilometer, 0 = unbegrenzt)</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.maxSearchDisplayRadius">
+				<source>Maximum radius of results that is shown on the map (in kilometers, 0 = unlimited)</source>
+				<target>Maximaler Radius für Anzeige der Suchergebnisse auf der Karte (in Kilometer, 0 = unbegrenzt)</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.defaultCountry">
+				<source>Default Country for search (e.g. "DE")</source>
+				<target>Standard-Land für Suche (z.B. "DE")</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

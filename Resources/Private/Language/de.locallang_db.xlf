@@ -23,6 +23,42 @@
 				<source>Label</source>
 				<target>Bezeichnung</target>
 			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.title">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.gender">
+				<source>Gender / Salutation</source>
+				<target>Gender / Anrede</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.gender.0">
+				<source>Mr.</source>
+				<target>Herr</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.gender.1">
+				<source>Mrs. / Ms.</source>
+				<target>Frau</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.gender.2">
+				<source>Mx.</source>
+				<target>Divers</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.gender.99">
+				<source>not set</source>
+				<target>nicht gesetzt</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.firstname">
+				<source>Firstname</source>
+				<target>Vorname</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.lastname">
+				<source>Lastname</source>
+				<target>Nachname</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.company">
+				<source>Company</source>
+				<target>Firma</target>
+			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.street">
 				<source>Street</source>
 				<target>Straße</target>
@@ -39,6 +75,22 @@
 				<source>City</source>
 				<target>Stadt</target>
 			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.country">
+				<source>Country</source>
+				<target>Land</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.phone">
+				<source>Phone</source>
+				<target>Telefon</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.mobile">
+				<source>Mobile</source>
+				<target>Mobil</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.fax">
+				<source>Fax</source>
+				<target>Fax</target>
+			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.longitude">
 				<source>Longitude</source>
 				<target>Längengrad</target>
@@ -50,26 +102,6 @@
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.filter_category">
 				<source>Category for Filter</source>
 				<target>Kategorie für Filter</target>
-			</trans-unit>
-
-
-			<trans-unit id="plugin.map.title">
-				<source>Google Map</source>
-				<target>Google Map</target>
-			</trans-unit>
-
-			<!-- Flexform -->
-			<trans-unit id="flexform.map.headline">
-				<source>Google Map</source>
-				<target>Google Map</target>
-			</trans-unit>
-			<trans-unit id="flexform.map.locationCenter">
-				<source>Location in Center of Map</source>
-				<target>Standort im Zentrum der Karte</target>
-			</trans-unit>
-			<trans-unit id="flexform.map.locations">
-				<source>Locations</source>
-				<target>Standorte</target>
 			</trans-unit>
 
         </body>

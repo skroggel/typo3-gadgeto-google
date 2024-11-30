@@ -1,0 +1,29 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
+      data-namespace-typo3-fluid="true"
+>
+    <gadgetoGoogle:searchForm action="show" class="map-search" name="search" object="{search}" section="c{data.uid}" method="POST">
+        <div class="map-search-location form-element">
+        
+            <label for="tx-gadgetogoogle-search-location-{data.uid}">
+                <f:translate key="label.findLocation" extensionName="gadgeto_google" />
+            </label>
+            
+            <f:form.textfield property="addressQuery"
+                              id="tx-gadgetogoogle-search-location-{data.uid}"
+                              class="map-search-input form-control" />
+    
+            <f:form.hidden property="lngLatQuery"
+                           class="js-gadgetogoogle-geoposition-field" />            
+            
+            <button type="submit" class="btn btn-primary">                
+                <f:translate key="label.search" extensionName="gadgeto_google" />
+            </button>
+
+            <button type="submit" class="btn btn-primary js-gadgetogoogle-geoposition-btn">
+                <f:translate key="label.searchByCurrentPosition" extensionName="gadgeto_google" />
+            </button>
+            
+        </div>
+    </gadgetoGoogle:searchForm >
+</html>

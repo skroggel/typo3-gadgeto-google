@@ -12,12 +12,40 @@
 			</trans-unit>
 
 
+
 			<!-- tx_gadgetogoogle_domain_model_location -->
 			<trans-unit id="tx_gadgetogoogle_domain_model_location">
 				<source>Location</source>
 			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.label">
 				<source>Label</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.gender">
+				<source>Gender / Salutation</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.gender.0">
+				<source>Mr.</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.gender.1">
+				<source>Mrs. / Ms.</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.gender.2">
+				<source>Mx.</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.gender.99">
+				<source>not set</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.firstname">
+				<source>Firstname</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.lastname">
+				<source>Lastname</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.company">
+				<source>Company</source>
 			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.street">
 				<source>Street</source>
@@ -31,6 +59,18 @@
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.city">
 				<source>City</source>
 			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.country">
+				<source>Country</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.phone">
+				<source>Phone</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.mobile">
+				<source>Mobile</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.fax">
+				<source>Fax</source>
+			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.longitude">
 				<source>Longitude</source>
 			</trans-unit>
@@ -39,23 +79,6 @@
 			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.filter_category">
 				<source>Category for Filter</source>
-			</trans-unit>
-
-
-			<trans-unit id="plugin.map.title">
-				<source>Google Map</source>
-			</trans-unit>
-
-
-			<!-- Flexform -->
-			<trans-unit id="flexform.map.headline">
-				<source>Google Map</source>
-			</trans-unit>
-			<trans-unit id="flexform.map.locationCenter">
-				<source>Location in Center of Map</source>
-			</trans-unit>
-			<trans-unit id="flexform.map.locations">
-				<source>Locations</source>
 			</trans-unit>
 
         </body>

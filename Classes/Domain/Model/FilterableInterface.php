@@ -33,7 +33,7 @@ interface FilterableInterface extends GeoPositionInterface
      *
      * @return string
      */
-    public function getLabel();
+    public function getLabel(): string;
 
 
     /**
@@ -42,9 +42,9 @@ interface FilterableInterface extends GeoPositionInterface
      * @param string $label
      * @return void
      */
-    public function setLabel(string $label);
-    
-       
+    public function setLabel(string $label): void;
+
+
     /**
      * Returns the searchCategory
      *

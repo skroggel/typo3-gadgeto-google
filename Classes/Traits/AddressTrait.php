@@ -25,7 +25,7 @@ namespace Madj2k\GadgetoGoogle\Traits;
  */
 trait AddressTrait
 {
- 
+
     /**
      * @var string
      */
@@ -48,6 +48,12 @@ trait AddressTrait
      * @var string
      */
     protected string $city = '';
+
+
+    /**
+     * @var string
+     */
+    protected string $country = '';
 
 
     /**
@@ -141,4 +147,26 @@ trait AddressTrait
         $this->city = $city;
     }
 
+
+    /**
+     * Returns the country
+     *
+     * @return string
+     */
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+
+    /**
+     * Sets the country
+     *
+     * @param string $country
+     * @return void
+     */
+    public function setCountry(string $country): void
+    {
+        $this->country = $country;
+    }
 }

@@ -11,7 +11,7 @@ call_user_func(
             [\Madj2k\GadgetoGoogle\Controller\MapController::class => 'show'],
 
             // non-cacheable actions
-            [\Madj2k\GadgetoGoogle\Controller\ContactController::class => ''],
+            [\Madj2k\GadgetoGoogle\Controller\MapController::class => ''],
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
         );
 
@@ -20,7 +20,7 @@ call_user_func(
         //=================================================================
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['example'] =
             \Madj2k\GadgetoGoogle\Hooks\TceMainHooks::class;
-        
+
         //=================================================================
         // Register Logger
         //=================================================================
