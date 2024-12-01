@@ -1,8 +1,8 @@
 /*!
  * Author: Steffen Kroggel <developer@steffenkroggel.de>
  *
- * Last updated: 28.04.2024
- * v1.0.1
+ * Last updated: 01.12.2024
+ * v1.0.2
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -118,6 +118,8 @@ export default class GadgetoGoogleMaps {
   markers = [];
   consent = [];
   filters = [];
+  clusterRenderer = null;
+  markerClusterer = null;
   map = null;
 
   /**
@@ -173,10 +175,36 @@ export default class GadgetoGoogleMaps {
       // set all markers
       if (this.settings.data.length) {
         for (const property of this.settings.data) {
+
+          let latNew = property.position.lat;
+          let lngNew = property.position.lng;
+
+          // check if there is already a marker on the position in question
+          // than add a random threshold!
+          // see: https://gis.stackexchange.com/questions/15436/google-markers-at-same-address-not-showing-all-markers
+          for (const existingMarker of this.markers) {
+            let latExist = existingMarker.position.lat;
+            let lngExists = existingMarker.position.lng;
+            let minThreshold = .999999;
+            let maxThreshold = 1.000001;
+
+            if (
+              (latExist === latNew)
+              && (lngExists === lngNew)
+            ) {
+              latNew = latNew * (Math.random() * (maxThreshold - minThreshold) + minThreshold);
+              lngNew = lngNew * (Math.random() * (maxThreshold - minThreshold) + minThreshold);
+              break;
+            }
+          }
+
           const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
             map: this.map,
             content: this.#buildContent(property),
-            position: property.position,
+            position: {
+              lat: latNew,
+              lng: lngNew
+            },
             title: property.label,
           });
 
@@ -203,7 +231,7 @@ export default class GadgetoGoogleMaps {
         }
 
         // cluster marker
-        let clusterRenderer = {
+        this.clusterRenderer = {
           render({ count, position }, stats) {
             return new google.maps.marker.AdvancedMarkerElement({
               map: this.map,
@@ -214,10 +242,10 @@ export default class GadgetoGoogleMaps {
         }
 
         // add clustering
-        new MarkerClusterer({
+        this.markerClusterer = new MarkerClusterer({
           markers: this.markers,
           map: this.map,
-          renderer: clusterRenderer
+          renderer: this.clusterRenderer
         });
 
         // re-center and reset zoom
@@ -253,8 +281,8 @@ export default class GadgetoGoogleMaps {
 
   /**
    *
-   * @param property
    * @returns {HTMLDivElement}
+   * @param counter
    */
   #buildClusterMarkerContent(counter) {
     const content = document.createElement('div');
@@ -266,6 +294,7 @@ export default class GadgetoGoogleMaps {
       content.innerHTML = innerHTML;
       content.classList.add(clusterContainer.getAttribute('data-class'));
     }
+
     return content;
   }
 
@@ -359,6 +388,7 @@ export default class GadgetoGoogleMaps {
       marker.content.classList.remove('open');
       marker.map = null;
     }
+    this.markerClusterer.removeMarkers(this.markers);
   }
 
 
@@ -371,6 +401,8 @@ export default class GadgetoGoogleMaps {
       marker.map = this.map;
     }
 
+    this.markerClusterer.addMarkers(this.markers);
+
     // re-center and reset zoom
     this.centerMap();
   }
@@ -381,6 +413,8 @@ export default class GadgetoGoogleMaps {
    * @param category
    */
   showMarkersOfCategory (category) {
+
+    let markers = [];
     for (let i= 0; i < this.markers.length; i++) {
       let marker = this.markers[i];
       let markerCategory = marker.content.getAttribute('data-categories');
@@ -388,9 +422,13 @@ export default class GadgetoGoogleMaps {
         let markerCategories = markerCategory.split(',');
         if (markerCategories.includes(category)) {
           marker.map = this.map;
+          markers.push(marker);
         }
       }
     }
+
+    this.markerClusterer.removeMarkers(this.markers);
+    this.markerClusterer.addMarkers(markers);
 
     // re-center and reset zoom
     this.centerMap();
