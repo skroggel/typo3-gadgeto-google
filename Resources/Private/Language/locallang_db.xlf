@@ -5,7 +5,7 @@
 
 			<!-- tx_gadgetogoogle_domain_model_filtercategory -->
 			<trans-unit id="tx_gadgetogoogle_domain_model_filtercategory">
-				<source>Category for Search</source>
+				<source>Filter-Category for Map</source>
 			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_filtercategory.label">
 				<source>Label</source>
