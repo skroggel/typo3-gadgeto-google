@@ -1,0 +1,72 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+        <view>
+            <ROOT>
+                <sheetTitle>
+                    LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.tab.view
+                </sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.maxResultsPerPage>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.maxResultsPerPage
+                        </label>
+                        <config>
+                            <type>input</type>
+                            <size>30</size>
+                            <default>10</default>
+                            <eval>num,trim</eval>
+                        </config>
+                    </settings.maxResultsPerPage>
+                    <settings.maxPages>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.maxPages
+                        </label>
+                        <config>
+                            <type>input</type>
+                            <size>30</size>
+                            <default>10</default>
+                            <eval>num,trim</eval>
+                        </config>
+                    </settings.maxPages>
+                    <settings.hidePagination>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.hidePagination
+                        </label>
+                        <config>
+                            <type>check</type>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <numIndex index="0"></numIndex>
+                                    <numIndex index="1"></numIndex>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </settings.hidePagination>
+                    <settings.layout>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout
+                        </label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <numIndex index="0">LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.default</numIndex>
+                                    <numIndex index="1">default</numIndex>
+                                </numIndex>
+                                <numIndex index="1" type="array">
+                                    <numIndex index="0">LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.big</numIndex>
+                                    <numIndex index="1">big</numIndex>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </settings.layout>
+                </el>
+            </ROOT>
+        </view>
+	</sheets>
+</T3DataStructure>

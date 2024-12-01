@@ -6,3 +6,6 @@ defaultCountry = DE
 
 # cat=Tca; type=string; label=LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:extConf.removeFields
 removeFields = 
+
+# cat=Tca; type=string; label=LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:extConf.pluginsWithHeader
+pluginsWithHeader = Map, List

@@ -184,7 +184,7 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
             $overlayContainerIdPrefix = $this->arguments['overlayContainerIdPrefix'];
 
             /** @var bool $boundariesByMarkers */
-            $boundariesByMarkers = ! $this->arguments['locationCenter'];
+            $boundariesByMarkers = !$this->arguments['locationCenter'];
 
             // build string of selected searchTypes
             $categories = [];

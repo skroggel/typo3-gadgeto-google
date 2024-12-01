@@ -1,0 +1,25 @@
+mod.wizards.newContentElement.wizardItems.gadgetogoogle {
+    header = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:contentElementWizward.header
+    elements {
+		map {
+			iconIdentifier = gadgetogoogle-plugin-map
+			title = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_map.title
+			description = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_map.description
+			tt_content_defValues {
+				CType = gadgetogoogle_map
+			}
+		}
+        list {
+            iconIdentifier = gadgetogoogle-plugin-list
+            title = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_list.title
+            description = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_list.description
+            tt_content_defValues {
+                CType = gadgetogoogle_list
+            }
+        }
+    }
+
+    show = *
+}
+
+

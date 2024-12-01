@@ -54,7 +54,6 @@ class ObjectTypeHashViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abstrac
         $object = $arguments['object'];
 
         return md5(spl_object_hash($object));
-
     }
 
 }

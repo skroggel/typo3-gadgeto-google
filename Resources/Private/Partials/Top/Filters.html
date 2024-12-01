@@ -19,7 +19,8 @@
                 <f:for each="{filterCategories}" as="filterCategory">
                     <li class="map-filter-item">
                         <f:comment><!-- The category data-attribute sets the filter --></f:comment>
-                        <button class="map-filter-button js-gadgetogoogle-map-filter-btn" data-category="{filterCategory.uid}">{filterCategory.label}</button>
+                        <button class="map-filter-button js-gadgetogoogle-map-filter-btn" 
+                                data-category="{filterCategory.uid}">{filterCategory.label}</button>
                     </li>
                 </f:for>
             </ul>

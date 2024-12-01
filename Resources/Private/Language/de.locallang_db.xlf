@@ -91,6 +91,18 @@
 				<source>Fax</source>
 				<target>Fax</target>
 			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.email">
+				<source>E-Mail</source>
+				<target>E-Mail</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.url">
+				<source>Url</source>
+				<target>Url</target>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.image">
+				<source>Image</source>
+				<target>Bild</target>
+			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.longitude">
 				<source>Longitude</source>
 				<target>Längengrad</target>

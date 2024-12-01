@@ -71,6 +71,15 @@
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.fax">
 				<source>Fax</source>
 			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.email">
+				<source>E-Mail</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.url">
+				<source>Url</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.image">
+				<source>Image</source>
+			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.longitude">
 				<source>Longitude</source>
 			</trans-unit>
@@ -80,7 +89,6 @@
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.filter_category">
 				<source>Category for Filter</source>
 			</trans-unit>
-
         </body>
     </file>
 </xliff>

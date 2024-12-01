@@ -10,20 +10,6 @@
 				</sheetTitle>
 				<type>array</type>
 				<el>
-                    <settings.hideFilter>
-                        <label>
-                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_db.xlf:flexform.map.hideFilter
-                        </label>
-                        <config>
-                            <type>check</type>
-                            <items type="array">
-                                <numIndex index="0" type="array">
-                                    <numIndex index="0"></numIndex>
-                                    <numIndex index="1"></numIndex>
-                                </numIndex>
-                            </items>
-                        </config>
-                    </settings.hideFilter>
                     <settings.locationCenter>
                         <label>
                             LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.locationCenter
@@ -127,6 +113,25 @@
                             </items>
                         </config>
                     </settings.hideFilter>
+                    <settings.layout>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout
+                        </label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <numIndex index="0">LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.default</numIndex>
+                                    <numIndex index="1">default</numIndex>
+                                </numIndex>
+                                <numIndex index="1" type="array">
+                                    <numIndex index="0">LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.big</numIndex>
+                                    <numIndex index="1">big</numIndex>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </settings.layout>
                 </el>
             </ROOT>
         </view>

@@ -6,7 +6,8 @@
     <f:if condition="{locations}">
         <f:then>
             <f:for each="{locations}" as="location">
-                <f:render partial="Map/Overlay" arguments="{location: location, data: data, settings: settings}" />
+                <f:render partial="Map/Overlay"
+                          arguments="{location: location, data: data, settings: settings, settingsForLayout: settingsForLayout}" />
             </f:for>
     
             <f:comment><!--
@@ -15,18 +16,23 @@
             --></f:comment>
             <f:if condition="{locationCenter}">
                 <f:then>
-                    <f:render partial="Map/Overlay" arguments="{location: locationCenter, data: data, settings: settings}" />
-                    <f:render partial="Map/ClusterMarker" arguments="{data: data, settings: settings}" />
+                    <f:render partial="Map/Overlay" 
+                              arguments="{location: locationCenter, data: data, settings: settings, settingsForLayout: settingsForLayout}" />
+                    
+                    <f:render partial="Map/ClusterMarker" 
+                              arguments="{data: data, settings: settings, settingsForLayout: settingsForLayout}" />
                     <gadgetoGoogle:googleMaps locations="{locations}" locationCenter="{locationCenter}" settings="{settings}" />
                 </f:then>
                 <f:else>
-                    <f:render partial="Map/ClusterMarker" arguments="{data: data, settings: settings}" />
+                    <f:render partial="Map/ClusterMarker" 
+                              arguments="{data: data, settings: settings, settingsForLayout: settingsForLayout}" />
                     <gadgetoGoogle:googleMaps locations="{locations}" settings="{settings}" />
                 </f:else>
             </f:if>
     
             <f:comment><!-- Set container of the map. --></f:comment>
-            <f:render partial="Map/Container" arguments="{data: data, settings: settings}" />
+            <f:render partial="Map/Container" 
+                      arguments="{data: data, settings: settings, settingsForLayout: settingsForLayout}" />
         </f:then>
         <f:else>
             <f:if condition="{search.isActive}">

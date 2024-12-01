@@ -17,16 +17,12 @@ namespace Madj2k\GadgetoGoogle\Service;
 
 use Madj2k\GadgetoGoogle\Domain\DTO\Location;
 use Madj2k\GadgetoGoogle\Exception;
-use Madj2k\GadgetoGoogle\Traits\GeoPositionTrait;
-use Madj2k\GadgetoGoogle\Traits\AddressTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * GeolocationService
@@ -73,7 +69,6 @@ class GeolocationService implements SingletonInterface
      * @var string
      */
     protected string $rawQuery = '';
-
 
 
     /**
@@ -393,6 +388,7 @@ class GeolocationService implements SingletonInterface
 
     /**
      * Build url for API call
+     *
      * @param string $apiQueryString
      * @return string
      * @throws \Madj2k\GadgetoGoogle\Exception

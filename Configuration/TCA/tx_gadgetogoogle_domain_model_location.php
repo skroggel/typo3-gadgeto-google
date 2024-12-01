@@ -26,7 +26,7 @@ return [
 	'types' => [
         '1' => ['showitem' =>
             TcaUtility::removeFieldsByExtConf(
-                'label, company, --palette--;;person, --palette--;;address, --palette--;;phone, --palette--;;geo_position, --palette--;;filter,
+                'label, company, --palette--;;person, --palette--;;address, --palette--;;phone, --palette--;;contact, image, --palette--;;geo_position, --palette--;;filter,
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource,
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden, starttime, endtime
                 '
@@ -41,7 +41,10 @@ return [
             'showitem' => TcaUtility::removeFieldsByExtConf('street, street_number, --linebreak--, zip, city, --linebreak--, country'),
         ],
         'phone' => [
-            'showitem' => TcaUtility::removeFieldsByExtConf('phone, --linebreak--,fax'),
+            'showitem' => TcaUtility::removeFieldsByExtConf('phone, mobile, --linebreak--,fax'),
+        ],
+        'contact' => [
+            'showitem' => TcaUtility::removeFieldsByExtConf('email, url'),
         ],
         'filter' => [
             'showitem' => TcaUtility::removeFieldsByExtConf('categories, --linebreak--, filter_category'),
@@ -269,6 +272,22 @@ return [
                 'eval' => 'trim',
             ],
         ],
+        'email' => [
+            'exclude' => false,
+            'label' => $ll . 'tx_gadgetogoogle_domain_model_location.email',
+            'config' => [
+                'type' => 'email',
+                'eval' => 'trim',
+            ],
+        ],
+        'url' => [
+            'exclude' => false,
+            'label' => $ll . 'tx_gadgetogoogle_domain_model_location.url',
+            'config' => [
+                'type' => 'link',
+                'eval' => 'trim',
+            ],
+        ],
         'longitude' => [
             'l10n_mode' => 'exclude',
             'exclude' => false,
@@ -329,6 +348,16 @@ return [
                     ],
                 ],
             ],
+        ],
+        'image' => [
+            'exclude' => false,
+            'l10n_mode' => 'exclude',
+            'label' => $ll . 'tx_gadgetogoogle_domain_model_location.image',
+            'config' => [
+                'type' => 'file',
+                'allowed' => ['jpeg','jpg','png','gif','svg','webp'],
+                'maxitems' => 1,
+            ]
         ],
 	]
 ];

@@ -15,6 +15,16 @@ call_user_func(
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
         );
 
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            $extKey,
+            'List',
+            [\Madj2k\GadgetoGoogle\Controller\LocationController::class => 'list'],
+
+            // non-cacheable actions
+            [\Madj2k\GadgetoGoogle\Controller\LocationController::class => ''],
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        );
+
         //=================================================================
         // Hooks
         //=================================================================

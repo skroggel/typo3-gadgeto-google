@@ -1,0 +1,33 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <f:variable name="level" value="{level + 1}" />
+
+    <ul class="category-list level-{level}">
+        <f:for each="{categories}" as="category">
+            <li class="category-item level-{level}">
+
+                <h3>{category.object.title}</h3>
+
+                <f:if condition="{category.locations}">
+                    <ul class="location-list">
+                        <f:for each="{category.locations}" as="location">
+                            <li class="location-item">
+                                <f:render partial="Location/Item"
+                                          arguments="{location: location, data: data, settings: settings, 
+                                                     settingsForLayout: settingsForLayout}" />
+                            </li>
+                        </f:for>
+                    </ul>
+                </f:if>
+
+                <f:if condition="{category.children}">
+                    <f:render partial="CategoryList/Sublevel"
+                              arguments="{categories: category.children, parent: category, level: level, data: data, 
+                                          settings: settings, settingsForLayout: settingsForLayout}" />
+                </f:if>
+            </li>
+        </f:for>
+    </ul>
+    
+</html>
