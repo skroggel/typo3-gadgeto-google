@@ -3,7 +3,7 @@ routeEnhancers:
     type: Extbase
     namespace: 'tx_gadgetogoogle_map'
     routes:
-      - routePath: '/map/'
+      - routePath: '/map-search/'
         _controller: 'Map::show'
     defaultController: 'Map::show'
 
