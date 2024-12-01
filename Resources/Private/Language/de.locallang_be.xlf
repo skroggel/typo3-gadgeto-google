@@ -58,8 +58,8 @@
 				<target>Standort im Zentrum der Karte (sonst skaliert Karte sich so, dass alle Standorte sichtbar sind)</target>
 			</trans-unit>
 			<trans-unit id="flexform.settings.locations">
-				<source>Shown Locations</source>
-				<target>Angezeigte Standorte</target>
+				<source>Shown Locations (if empty, all locations are shown)</source>
+				<target>Angezeigte Standorte (wenn leer, werden alle angezeigt)</target>
 			</trans-unit>
 			<trans-unit id="flexform.settings.showSearch">
 				<source>Show Search</source>

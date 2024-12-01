@@ -120,7 +120,11 @@ final class MapController extends AbstractController
             $search = GeneralUtility::makeInstance(\Madj2k\GadgetoGoogle\Domain\DTO\Search::class);
 
             /** @var array $allLocations */
-            $locations = $this->locationRepository->findByUids($this->settings['locations']);
+            if (! empty($this->settings['locations'])) {
+                $locations = $this->locationRepository->findByUids($this->settings['locations']);
+            } else {
+                $locations = $this->locationRepository->findAll();
+            }
         }
 
         /**
