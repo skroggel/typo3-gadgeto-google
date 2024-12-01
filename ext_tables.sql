@@ -5,6 +5,10 @@ CREATE TABLE tx_gadgetogoogle_domain_model_location
 (
 	label           varchar(255) DEFAULT '' NOT NULL,
 
+	gender          int(11) unsigned NOT NULL default '99',
+	title           varchar(255) DEFAULT '' NOT NULL,
+	firstname       varchar(255) DEFAULT '' NOT NULL,
+	lastname        varchar(255) DEFAULT '' NOT NULL,
 	company         varchar(255) DEFAULT '' NOT NULL,
 	street          varchar(255) DEFAULT '' NOT NULL,
 	street_number   varchar(255) DEFAULT '' NOT NULL,

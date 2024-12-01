@@ -5,8 +5,8 @@
 
 			<!-- tx_gadgetogoogle_domain_model_filtercategory -->
 			<trans-unit id="tx_gadgetogoogle_domain_model_filtercategory">
-				<source>Category for Search</source>
-				<target>Kategorie für Suche</target>
+				<source>Filter-Category for Map</source>
+				<target>Filter-Kategorie für Karte</target>
 			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_filtercategory.label">
 				<source>Label</source>
