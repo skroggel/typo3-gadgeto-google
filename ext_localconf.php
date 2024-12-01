@@ -32,6 +32,11 @@ call_user_func(
             \Madj2k\GadgetoGoogle\Hooks\TceMainHooks::class;
 
         //=================================================================
+        // cHash
+        //=================================================================
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = '^tx_gadgetogoogle_map[search]';
+
+        //=================================================================
         // Register Logger
         //=================================================================
         $GLOBALS['TYPO3_CONF_VARS']['LOG']['Madj2k']['GadgetoGoogle']['writerConfiguration'] = [
