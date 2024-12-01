@@ -17,11 +17,8 @@ namespace Madj2k\GadgetoGoogle\Domain\DTO;
 
 use Madj2k\GadgetoGoogle\Traits\AddressTrait;
 use Madj2k\GadgetoGoogle\Traits\GeoPositionTrait;
-use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
-use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 
 /**
  * Class Location

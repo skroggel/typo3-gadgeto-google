@@ -16,12 +16,27 @@
 				<source>Comma-separated list of fields that are to be hidden in the data record "Location".</source>
 				<target>Komma-separarierte Liste von Feldern, die im Datensatz "Location" ausgeblendet werden sollen.</target>
 			</trans-unit>
+			<trans-unit id="extConf.pluginsWithHeader">
+				<source>Comma-separated list of plugins with header-field in the backend.</source>
+				<target>Komma-separarierte Liste von Plugins mit Überschrift-Feld im Backend.</target>
+			</trans-unit>
 
 
-			<!-- plugin -->
-			<trans-unit id="plugin.tx_gadgetogoogle_map">
+			<!-- Plugins -->
+			<trans-unit id="plugin.tx_gadgetogoogle_map.title">
 				<source>Google Map</source>
 				<target>Google Map</target>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_list.title">
+				<source>Listof locations</source>
+				<target>Liste der Standorte</target>
+			</trans-unit>
+
+
+			<!-- Content Element Wizard -->
+			<trans-unit id="contentElementWizward.header">
+				<source>Locations</source>
+				<target>Standorte</target>
 			</trans-unit>
 
 
@@ -65,6 +80,30 @@
 			<trans-unit id="flexform.settings.defaultCountry">
 				<source>Default Country for search (e.g. "DE")</source>
 				<target>Standard-Land für Suche (z.B. "DE")</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.maxResultsPerPage">
+				<source>Maximum number of results per Page</source>
+				<target>Maximale Anzahl an Ergebnissen je Seite</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.maxPages">
+				<source>Maximum number of pages shown</source>
+				<target>Maximale Anzahl an Seiten</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.hidePagination">
+				<source>Hide pagination</source>
+				<target>Pagination ausblenden</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.layout">
+				<source>Layout</source>
+				<target>Darstellung</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.layout.default">
+				<source>Default</source>
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.layout.big">
+				<source>Big</source>
+				<target>Groß</target>
 			</trans-unit>
 		</body>
 	</file>

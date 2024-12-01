@@ -7,7 +7,9 @@ call_user_func(
         $pluginConfig = [
             'Map' => [
                 'flexFormFile' => 'Map',
-                'includeHeaderFields' => false
+            ],
+            'List' => [
+                'flexFormFile' => 'List',
             ],
         ];
 
@@ -69,7 +71,7 @@ call_user_func(
             }
 
             $flexFormHeader = '';
-            if (! empty($pluginSettings['includeHeaderFields'])){
+            if (\Madj2k\GadgetoGoogle\Utilities\TcaUtility::isPluginHeaderAllowed($pluginName)){
                 $flexFormHeader = 'header;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_formlabel,
                     --linebreak--,
                     header_layout;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_layout_formlabel,

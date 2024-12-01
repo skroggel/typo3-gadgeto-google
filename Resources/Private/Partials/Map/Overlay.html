@@ -13,11 +13,7 @@
             <span class="map-marker-icon-label">{location.label}</span>
         </div>
         <div class="map-marker-details">
-            <!-- Details here -->
-            {location.label}<br>
-            {location.street} {location.streetNumber}<br>
-            {location.zip} {location.city}<br>
-            {location.country}
+            <f:render partial="Location/Item" arguments="{location: location, settings: settings, data: data}" />
         </div>
     </template>
 

@@ -17,6 +17,7 @@ namespace Madj2k\GadgetoGoogle\Domain\Model;
 
 use Madj2k\GadgetoGoogle\Traits\AddressTrait;
 use Madj2k\GadgetoGoogle\Traits\FilterableTrait;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
  * Class Location
@@ -31,6 +32,43 @@ class Location extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements
 
     use FilterableTrait;
     use AddressTrait;
+
+
+    /**
+     * @var string
+     */
+    protected string $phone = '';
+
+
+    /**
+     * @var string
+     */
+    protected string $mobile = '';
+
+
+    /**
+     * @var string
+     */
+    protected string $fax = '';
+
+
+    /**
+     * @var string
+     */
+
+    protected string $email = '';
+
+
+    /**
+     * @var string
+     */
+    protected string $url = '';
+
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference|null
+     */
+    protected ?FileReference $image = null;
 
 
     /**
@@ -55,5 +93,143 @@ class Location extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements
     {
         $this->filterCategory->detach($filterCategory);
     }
+
+    /**
+     * Returns the phone
+     *
+     * @return string
+     */
+    public function getPhone(): string
+    {
+        return $this->phone;
+    }
+
+
+    /**
+     * Sets the phone
+     *
+     * @param string $phone
+     * @return void
+     */
+    public function setPhone(string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+
+    /**
+     * Returns the mobile
+     *
+     * @return string
+     */
+    public function getMobile(): string
+    {
+        return $this->mobile;
+    }
+
+
+    /**
+     * Sets the mobile
+     *
+     * @param string $mobile
+     * @return void
+     */
+    public function setMobile(string $mobile): void
+    {
+        $this->mobile = $mobile;
+    }
+
+
+    /**
+     * Returns the fax
+     *
+     * @return string
+     */
+    public function getFax(): string
+    {
+        return $this->fax;
+    }
+
+
+    /**
+     * Sets the fax
+     *
+     * @param string $fax
+     * @return void
+     */
+    public function setFax(string $fax): void
+    {
+        $this->fax = $fax;
+    }
+
+
+    /**
+     * Returns the email
+     *
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+
+    /**
+     * Sets the email
+     *
+     * @param string $email
+     * @return void
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+
+    /**
+     * Returns the url
+     *
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+
+    /**
+     * Sets the url
+     *
+     * @param string $url
+     * @return void
+     */
+    public function setUrl(string $url): void
+    {
+        $this->url = $url;
+    }
+
+
+    /**
+     * Returns the image
+     *
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference|null $image
+     */
+    public function getImage():? FileReference
+    {
+        return $this->image;
+    }
+
+
+    /**
+     * Sets the image
+     *
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $image
+     * @return void
+     */
+    public function setImage(FileReference $image): void
+    {
+        $this->image = $image;
+    }
+
 
 }

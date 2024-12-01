@@ -16,6 +16,7 @@ You have to add the following CSS-classes to your custom HTML:
 * Markers and detail-overlay can be fully customized via Fluid-Templates
 * Can be configured to use a single location as center of the map or show all definied locations at once
 * Consent overlay for Google Map (GDPR)
+* List of locations, hierarchically ordered by categories
 
 ## Installation
 Just install the extension and include the TypoScript.
@@ -32,13 +33,31 @@ Make sure that the tables defined here have all necessary fields (see [ext_table
 This settings is a fallback-value that can be overriden in the plugin.
 * **removeFields**: This setting allows you to customize the fields of the location-records that are shown in the backend.
 You can define a comma-separated list of fields to remove from the TCA.
-
+* **pluginsWithHeader**: This setting allows you to define which plugin allows to set a header.
+*
 ## Possible other configurations (TypoScript)
 * **maxSearchRadius**: defines the maximum radius of a search when a user searchs for an address
 * **maxSearchDisplayRadius:** defines the maximum radius for the display of results on the map when a user searchs for an address
 * **defaultCountry**: see above
 
 If you use a proxy, you can also set the relevant proxy-settings for cURL so that the necessary API-calls can be executed.
+
+## Set custom options in layout-field of FlexForm
+```
+// Important: You have to specifiy the extension-plugin (e.g. gadgetogoogle_map)
+// AND the tab in the flexform (e.g. view) correctly
+TCEFORM.tt_content.pi_flexform.gadgetogoogle_map.view.settings\.layout {
+
+    // add new option "List"
+    addItems.list = List
+
+    // Override label of existing option "default"
+    altLabels.default = Slot
+
+    // remove option "big"
+    removeItems = big
+}
+```
 
 ## Usage in your own extension
 ### General

@@ -45,7 +45,6 @@ final class Search
 	protected int $radius = 0;
 
 
-
     /**
      * Get lngLatQuery
      *
@@ -115,7 +114,6 @@ final class Search
 	}
 
 
-
     /**
      * Is active
      *
@@ -129,6 +127,5 @@ final class Search
 
         return false;
     }
-
 
 }

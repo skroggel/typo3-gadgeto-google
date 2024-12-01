@@ -12,13 +12,24 @@
 			</trans-unit>
 			<trans-unit id="extConf.removeFields">
 				<source>Comma-separated list of fields that are to be hidden in the data record "Location".</source>
-				<target>Komma-separarierte Liste von Feldern, die im Datensatz "Location" ausgeblendet werden sollen.</target>
+			</trans-unit>
+			<trans-unit id="extConf.pluginsWithHeader">
+				<source>Comma-separated list of plugins with header-field in the backend.</source>
 			</trans-unit>
 
 
-			<!-- plugin -->
-			<trans-unit id="plugin.tx_gadgetogoogle_map">
+			<!-- Plugins -->
+			<trans-unit id="plugin.tx_gadgetogoogle_map.title">
 				<source>Google Map</source>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_list.title">
+				<source>List of locations</source>
+			</trans-unit>
+
+
+			<!-- Content Element Wizard -->
+			<trans-unit id="contentElementWizward.header">
+				<source>Locations</source>
 			</trans-unit>
 
 
@@ -52,6 +63,24 @@
 			</trans-unit>
 			<trans-unit id="flexform.settings.defaultCountry">
 				<source>Default Country for search (e.g. "DE")</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.maxResultsPerPage">
+				<source>Maximum number of results per Page</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.maxPages">
+				<source>Maximum number of pages shown</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.hidePagination">
+				<source>Hide pagination</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.layout">
+				<source>Layout</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.layout.default">
+				<source>Default</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.layout.big">
+				<source>Big</source>
 			</trans-unit>
 		</body>
 	</file>

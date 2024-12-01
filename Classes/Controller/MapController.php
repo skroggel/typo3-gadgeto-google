@@ -18,11 +18,9 @@ namespace Madj2k\GadgetoGoogle\Controller;
 
 use Madj2k\GadgetoGoogle\Domain\DTO\Search;
 use Madj2k\GadgetoGoogle\Domain\Repository\FilterCategoryRepository;
-use Madj2k\GadgetoGoogle\Domain\Repository\LocationRepository;
 use Madj2k\GadgetoGoogle\Service\GeolocationService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class MapController
@@ -32,29 +30,13 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * @package Madj2k_GadgetoGoogle
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-final class MapController extends  \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+final class MapController extends AbstractController
 {
-
-    /**
-     * @var \Madj2k\GadgetoGoogle\Domain\Repository\LocationRepository|null
-     */
-    protected ?LocationRepository $locationRepository;
-
 
     /**
      * @var \Madj2k\GadgetoGoogle\Domain\Repository\FilterCategoryRepository|null
      */
     protected ?FilterCategoryRepository $filterCategoryRepository;
-
-
-    /**
-     * @param \Madj2k\GadgetoGoogle\Domain\Repository\LocationRepository $locationRepository
-     * @return void
-     */
-    public function injectLocationRepository(LocationRepository $locationRepository): void
-    {
-        $this->locationRepository = $locationRepository;
-    }
 
 
     /**
@@ -64,15 +46,6 @@ final class MapController extends  \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function injectFilterCategoryRepository(FilterCategoryRepository $filterCategoryRepository): void
     {
         $this->filterCategoryRepository = $filterCategoryRepository;
-    }
-
-
-    /**
-     * Assign default variables to view
-     */
-    protected function initializeView(): void
-    {
-        $this->view->assign('data', $this->request->getAttribute('currentContentObject')->data);
     }
 
 
@@ -102,8 +75,14 @@ final class MapController extends  \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function showAction(?Search $search = null): ResponseInterface
     {
-        $locations = null;
-        $locationCenter = null;
+
+        /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $filterCategories */
+        $filterCategories = $this->filterCategoryRepository->findAll();
+
+        /** @var \Madj2k\GadgetoGoogle\Domain\Model\Location $locationCenter */
+        $locationCenter = $this->locationRepository->findByUid($this->settings['locationCenter']);
+
+        $locations = [];
         if ($search && $search->getIsActive()) {
 
             /** @var \Madj2k\GadgetoGoogle\Service\GeolocationService $geolocationService */
@@ -139,23 +118,20 @@ final class MapController extends  \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         // normal results
         } else {
             $search = GeneralUtility::makeInstance(\Madj2k\GadgetoGoogle\Domain\DTO\Search::class);
-            $locations = $this->locationRepository->findByUids($this->settings['locations']);
-            $locationCenter = $this->locationRepository->findByUid($this->settings['locationCenter']);
-        }
 
-        $filterCategories = $this->filterCategoryRepository->findAll();
+            /** @var array $allLocations */
+            $locations = $this->locationRepository->findByUids($this->settings['locations']);
+        }
 
         /**
          * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $currentContentObject
          */
-        $currentContentObject = $this->request->getAttribute('currentContentObject');
         $this->view->assignMultiple(
             [
                 'search' => $search,
                 'locations' => $locations,
                 'locationCenter' => $locationCenter,
                 'filterCategories' => $filterCategories,
-                'contentUid' => $currentContentObject->data['uid']
             ]
         );
 

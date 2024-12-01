@@ -18,12 +18,6 @@ plugin.tx_gadgetogoogle {
 
 	settings {
 
-        # cat=plugin.tx_gadgetogoogle//a; type=string; label=Maximum search-radius for the address-search in frontend (in kilometers, default: 0 = no limit)
-        maxSearchRadius = 0
-
-        # cat=plugin.tx_gadgetogoogle//a; type=string; label=Maximum radius of results that is shown on the map (in kilometers, default: 100)
-        maxSearchDisplayRadius = 100
-
         # cat=plugin.tx_gadgetogoogle//a; type=string; label=ISO country code of the country that is used by default for all addresses if no other value is specified
         defaultCountry = {$plugin.tx_gadgetogoogle.settings.defaultCountry}
 
@@ -39,4 +33,35 @@ plugin.tx_gadgetogoogle {
         # cat=plugin.tx_gadgetogoogle//a; type=string; label=Password for proxy for API requests
         proxyPassword = {$plugin.tx_gadgetogoogle.settings.proxyPassword}
 	}
+}
+
+plugin.tx_gadgetogoogle_map {
+
+    settings {
+
+        # cat=plugin.tx_gadgetogoogle//a; type=string; label=Maximum search-radius for the address-search in frontend (in kilometers, default: 0 = no limit)
+        maxSearchRadius = 0
+
+        # cat=plugin.tx_gadgetogoogle//a; type=string; label=Maximum radius of results that is shown on the map (in kilometers, default: 100)
+        maxSearchDisplayRadius = 100
+
+    }
+}
+
+
+
+plugin.tx_gadgetogoogle_list {
+
+    settings {
+
+	    # cat=plugin.tx_gadgetogoogle//a; type=integer; label=Maximum number of results
+	    maxResults =
+
+	    # cat=plugin.tx_gadgetogoogle//a; type=integer; label=Maximum number of results per page
+	    maxResultsPerPage = 10
+
+        # cat=plugin.tx_gadgetogoogle//a; type=bool; label=Hide pagination
+        hidePagination = 0
+
+    }
 }

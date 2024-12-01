@@ -15,6 +15,7 @@ namespace Madj2k\GadgetoGoogle\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -60,4 +61,21 @@ interface FilterableInterface extends GeoPositionInterface
      * @return void
      */
     public function setFilterCategory(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $filterCategory): void;
+
+
+    /**
+     * Returns the categories
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
+     */
+    public function getCategories(): ObjectStorage;
+
+
+    /**
+     * Sets the categories
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
+     * @return void
+     */
+    public function setCategories(ObjectStorage $categories): void;
 }

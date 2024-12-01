@@ -1,8 +1,16 @@
 routeEnhancers:
-  GadgetoGoogle:
+  GadgetoGoogleMap:
     type: Extbase
     namespace: 'tx_gadgetogoogle_map'
     routes:
       - routePath: '/map/'
         _controller: 'Map::show'
     defaultController: 'Map::show'
+
+  GadgetoGoogleList:
+    type: Extbase
+    namespace: 'tx_gadgetogoogle_list'
+    routes:
+      - routePath: '/location-list/'
+        _controller: 'Map::list'
+    defaultController: 'Map::list'

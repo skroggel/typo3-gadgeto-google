@@ -15,10 +15,8 @@ namespace Madj2k\GadgetoGoogle\Utilities;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class TcaUtility
@@ -48,6 +46,28 @@ class TcaUtility
         }
 
         return '';
+    }
+
+
+    /**
+     * Is a header in the plugin allowed via the extConf
+     *
+     * @param string $pluginName
+     * @return bool
+     */
+    public static function isPluginHeaderAllowed(string $pluginName): bool {
+
+        try {
+            $configReader = GeneralUtility::makeInstance(ExtensionConfiguration::class);
+            $extensionConfig = $configReader->get('gadgeto_google');
+            if (!empty($extensionConfig['pluginsWithHeader'])) {
+                return in_array($pluginName, GeneralUtility::trimExplode(',', $extensionConfig['pluginsWithHeader'], true));
+            }
+        } catch (\Exception $e) {
+            // do nothing
+        }
+
+        return false;
     }
 
 
@@ -102,5 +122,4 @@ class TcaUtility
 
         return $fields;
     }
-
 }
