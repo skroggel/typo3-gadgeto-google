@@ -236,12 +236,12 @@ return [
                     ['', 0]
                 ],
                 'default' => TcaUtility::getDefaultCountryByExtConf(),
-                'foreign_table' => 'static_languages',
+                'foreign_table' => 'static_countries',
                 'allowNonIdValues' => true,
-                'foreign_table_where' => 'AND static_languages.lg_sacred = 0 ORDER BY static_languages.lg_name_en',
-                'itemsProcFunc' => \SJBR\StaticInfoTables\Hook\Backend\Form\FormDataProvider\TcaSelectItemsProcessor::class . '->translateLanguagesSelector',
+                'foreign_table_where' => 'ORDER BY static_countries.cn_iso_2',
+                'itemsProcFunc' => \SJBR\StaticInfoTables\Hook\Backend\Form\FormDataProvider\TcaSelectItemsProcessor::class . '->translateCountriesSelector',
                 'itemsProcFunc_config' => [
-                    'indexField' => 'lg_iso_2,lg_country_iso_2',
+                    'indexField' => 'cn_iso_2',
                 ],
                 'size' => 1,
                 'minitems' => 1,
