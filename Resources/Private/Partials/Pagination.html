@@ -1,111 +1,134 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" 
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true"
 >
-
-	<f:if condition="{pagination.lastPageNumber} > 1">
-        <ul class="catsearch-pagination pagination">
-            <f:comment><!-- previous --></f:comment>
-            <li class="pagination-item">
-                <f:if condition="{pagination.previousPageNumber}">
-                    <f:then>
+    
+    <f:if condition="{pagination.lastPageNumber} > 1">
+        <nav class="pagination">
+            <ul class="pagination-list">
+                
+                <f:comment><!-- previous --></f:comment>
+                <li class="pagination-item">
+                    <f:if condition="{pagination.previousPageNumber}">
+                        <f:then>
+                            <f:render
+                                section="PageLink"
+                                arguments="{page: pagination.previousPageNumber,
+                                            class:'pagination-link pagination-prev',
+                                            title:'{f:translate(key:\'pagination.previous\')}',
+                                            type: type,
+                                            data: data}"
+                            />
+                        </f:then>
+                        <f:else>
+                            <a
+                                class="pagination-link pagination-prev disabled"
+                                title="{f:translate(key:'pagination.previous')}"
+                            ></a>
+                        </f:else>
+                    </f:if>
+                </li>
+    
+                <f:comment><!-- first page --></f:comment>
+                <f:if condition="{pagination.displayRangeStart} > {pagination.firstPageNumber}">
+                    <li class="pagination-item">
                         <f:render
                             section="PageLink"
-                            arguments="{arguments: '{currentPage:pagination.previousPageNumber}', 
-                                        class:'pagination-link pagination-prev', 
-                                        title:'{f:translate(key:\'search.pagination.previous\')}', data: data}"
-                        />
-                    </f:then>
-                    <f:else>
-                        <a
-                            class="pagination-link pagination-prev disabled"
-                            title="{f:translate(key:'search.pagination.previous')}"
-                        ></a>
-                    </f:else>
-                </f:if>
-            </li>
-
-            <f:comment><!-- first page --></f:comment>
-            <f:if condition="{pagination.displayRangeStart} > {pagination.firstPageNumber}">
-                <li class="pagination-item">
-                    <f:render
-                        section="PageLink"
-                        arguments="{arguments: '{currentPage:pagination.firstPageNumber}',
-                                    class: 'pagination-link', text: pagination.firstPageNumber, data: data}"
-                    />
-                </li>
-            </f:if>
-
-            <f:comment><!-- has less pages --></f:comment>
-            <f:if condition="{pagination.hasLessPages}">
-                <li class="pagination-item page-item">
-                    <span class="pagination-placeholder"></span>
-                </li>
-            </f:if>
-
-            <f:comment><!-- pages --></f:comment>
-            <f:for each="{pagination.allPageNumbers}" as="page">
-                <li
-                    class="pagination-item{f:if(condition:'{pagination.paginator.currentPageNumber}=={page}',then:' active')}"
-                >
-                    <f:render
-                        section="PageLink"
-                        arguments="{arguments: '{currentPage:page}', class:'pagination-link', text:page, data: data}"
-                    />
-                </li>
-            </f:for>
-
-            <f:comment><!-- Has more pages --></f:comment>
-            <f:if condition="{pagination.hasMorePages}">
-                <li class="pagination-item">
-                    <span class="pagination-placeholder"></span>
-                </li>
-            </f:if>
-
-            <f:comment><!-- Last page --></f:comment>
-            <f:if
-                condition="{pagination.displayRangeEnd} < {pagination.lastPageNumber}"
-            >
-                <li class="pagination-item">
-                    <f:render
-                        section="PageLink"
-                        arguments="{arguments: '{currentPage:pagination.lastPageNumber}', class: 'pagination-link',
-                                    text: pagination.lastPageNumber, data: data}"
-                    />
-                </li>
-            </f:if>
-
-            <f:comment><!-- next --></f:comment>
-            <li class="pagination-item">
-                <f:if condition="{pagination.nextPageNumber}">
-                    <f:then>
-                        <f:render
-                            section="PageLink"
-                            arguments="{arguments:'{currentPage: pagination.nextPageNumber}', 
-                                        class: 'pagination-link pagination-next',
-                                        title: '{f:translate(key:\'search.pagination.next\')}', 
+                            arguments="{page: pagination.firstPageNumber,
+                                        class: 'pagination-link',
+                                        text: pagination.firstPageNumber,
+                                        titlePrefix: '{f:translate(key: \'pagination.page\')}',
+                                        type: type,
                                         data: data}"
                         />
-                    </f:then>
-                    <f:else>
-                        <a
-                            class="pagination-link pagination-next disabled"
-                            title="{f:translate(key:'search.pagination.next')}"
-                        ></a>
-                    </f:else>
+                    </li>
                 </f:if>
-            </li>
-        </ul>
-	</f:if>
-
-	<f:comment><!-- ======================================================== --></f:comment>
-
-	<f:section name="PageLink">
-
-		<f:link.action
-			arguments="{arguments}"
-			class="{class}"
-			title="{title}"
-            section="c{data.uid}"
-			>{text}</f:link.action>
-	</f:section>
+    
+                <f:comment><!-- has less pages --></f:comment>
+                <f:if condition="{pagination.hasLessPages}">
+                    <li class="pagination-item page-item">
+                        <span class="pagination-placeholder"></span>
+                    </li>
+                </f:if>
+    
+                <f:comment><!-- pages --></f:comment>
+                <f:for each="{pagination.allPageNumbers}" as="page">
+                    <li
+                        class="pagination-item{f:if(condition:'{pagination.paginator.currentPageNumber}=={page}',then:' active')}"
+                    >
+                        <f:render
+                            section="PageLink"
+                            arguments="{page: page,
+                                       class:'pagination-link',
+                                       text: page,
+                                       titlePrefix: '{f:translate(key: \'pagination.page\')}',
+                                       type: type,
+                                       data: data}"
+                        />
+                    </li>
+                </f:for>
+    
+                <f:comment><!-- Has more pages --></f:comment>
+                <f:if condition="{pagination.hasMorePages}">
+                    <li class="pagination-item">
+                        <span class="pagination-placeholder"></span>
+                    </li>
+                </f:if>
+    
+                <f:comment><!-- Last page --></f:comment>
+                <f:if
+                    condition="{pagination.displayRangeEnd} < {pagination.lastPageNumber}"
+                >
+                    <li class="pagination-item">
+                        <f:render
+                            section="PageLink"
+                            arguments="{page: pagination.lastPageNumber,
+                                        class: 'pagination-link',
+                                        text: pagination.lastPageNumber,
+                                        titlePrefix: '{f:translate(key: \'pagination.page\')}',
+                                        type: type,
+                                        data: data}"
+                        />
+                    </li>
+                </f:if>
+    
+                <f:comment><!-- next --></f:comment>
+                <li class="pagination-item">
+                    <f:if condition="{pagination.nextPageNumber}">
+                        <f:then>
+                            <f:render
+                                section="PageLink"
+                                arguments="{page: pagination.nextPageNumber,
+                                            class: 'pagination-link pagination-next',
+                                            title: '{f:translate(key:\'pagination.next\')}',
+                                            type: type,
+                                            data: data}"
+                            />
+                        </f:then>
+                        <f:else>
+                            <a
+                                class="pagination-link pagination-next disabled"
+                                title="{f:translate(key:'pagination.next')}"
+                            ></a>
+                        </f:else>
+                    </f:if>
+                </li>
+            </ul>
+        </nav>
+    </f:if>
+    
+    <f:comment><!-- ======================================================== --></f:comment>
+    
+    <f:section name="PageLink">
+    
+        <f:switch expression="{type}">
+            <f:defaultCase>
+                <f:link.action
+                    arguments="{currentPage: page}"
+                    class="{class}"
+                    title="{f:if(condition: title, then: title, else: '{titlePrefix} {text}')}"
+                    section="c{data.uid}"
+                >{text}</f:link.action>
+            </f:defaultCase>
+        </f:switch>
+    </f:section>
 </html>
