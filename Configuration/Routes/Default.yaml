@@ -3,7 +3,7 @@ routeEnhancers:
     type: Extbase
     namespace: 'tx_gadgetogoogle_map'
     routes:
-      - routePath: '/map-search/'
+      - routePath: '/map-search'
         _controller: 'Map::show'
     defaultController: 'Map::show'
 
@@ -11,6 +11,6 @@ routeEnhancers:
     type: Extbase
     namespace: 'tx_gadgetogoogle_list'
     routes:
-      - routePath: '/location-list/'
+      - routePath: '/location-list'
         _controller: 'Map::list'
     defaultController: 'Map::list'

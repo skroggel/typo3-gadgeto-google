@@ -50,6 +50,12 @@
 			</trans-unit>
 
 
+			<trans-unit id="menu.breadcrumb">
+				<source>Breadcrumb-Navigation</source>
+				<target>Breadcrumb-Navigation</target>
+			</trans-unit>
+
+
 			<trans-unit id="adminModuleController.error.valuesNotSet">
 				<source>Please check that all fields are set correctly.</source>
 				<target>Bitte prüfen Sie, ob alle Felder korrekt gesetzt sind.</target>
