@@ -40,6 +40,11 @@
 			</trans-unit>
 
 
+			<trans-unit id="menu.breadcrumb">
+				<source>Breadcrumb-Navigation</source>
+			</trans-unit>
+
+
 			<trans-unit id="adminModuleController.error.valuesNotSet">
 				<source>Please check that all fields are set correctly.</source>
 			</trans-unit>
