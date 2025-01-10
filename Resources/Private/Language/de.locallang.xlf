@@ -74,6 +74,10 @@
 				<source>API-Key</source>
 				<target>API-Key</target>
 			</trans-unit>
+			<trans-unit id="templates.adminModule.keys.apiKeyMap">
+				<source>API-Key for Map</source>
+				<target>API-Key für Karte</target>
+			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.mapId">
 				<source>Map-Id</source>
 				<target>Map-Id</target>

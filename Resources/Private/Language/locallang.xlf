@@ -59,6 +59,9 @@
 			<trans-unit id="templates.adminModule.keys.apiKey">
 				<source>API-Key</source>
 			</trans-unit>
+			<trans-unit id="templates.adminModule.keys.apiKeyMap">
+				<source>API-Key for Map</source>
+			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.mapId">
 				<source>Map-Id</source>
 			</trans-unit>
