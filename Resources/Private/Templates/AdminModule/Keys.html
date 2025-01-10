@@ -8,12 +8,17 @@
         <f:form action="saveKeys" name="googleMapsConfig" method="post" class="form">
 
             <div class="form-group">
-                <label><f:translate key="templates.adminModule.keys.apiKey" />:</label>
+                <label><f:translate key="templates.adminModule.keys.apiKey" />:</label><br>
                 <f:form.textfield property="apiKey" value="{apiKey}"/>
             </div>
 
             <div class="form-group">
-                <label><f:translate key="templates.adminModule.keys.mapId" />:</label>
+                <label><f:translate key="templates.adminModule.keys.apiKeyMap" />:</label><br>
+                <f:form.textfield property="apiKeyMap" value="{apiKeyMap}"/>
+            </div>            
+
+            <div class="form-group">
+                <label><f:translate key="templates.adminModule.keys.mapId" />:</label><br>
                 <f:form.textfield property="mapId" value="{mapId}"/>
             </div>
 

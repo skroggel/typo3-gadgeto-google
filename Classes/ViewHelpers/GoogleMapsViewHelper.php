@@ -127,7 +127,7 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         );
 
         $configuration = [
-            'apiKey' => $googleMapsConfig['apiKey'],
+            'apiKey' => $googleMapsConfig['apiKeyMap'],
             'mapContainerId' => $mapContainerId,
             'clusterMarkerContainerId' => $clusterMarkerContainerId,
             'filterButtonClass' => $filterButtonClass,

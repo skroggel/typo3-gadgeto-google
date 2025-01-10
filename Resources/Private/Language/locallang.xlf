@@ -29,6 +29,22 @@
 			</trans-unit>
 
 
+			<trans-unit id="pagination.previous">
+				<source>Previous page</source>
+			</trans-unit>
+			<trans-unit id="pagination.next">
+				<source>Next page</source>
+			</trans-unit>
+			<trans-unit id="pagination.page">
+				<source>Page</source>
+			</trans-unit>
+
+
+			<trans-unit id="menu.breadcrumb">
+				<source>Breadcrumb-Navigation</source>
+			</trans-unit>
+
+
 			<trans-unit id="adminModuleController.error.valuesNotSet">
 				<source>Please check that all fields are set correctly.</source>
 			</trans-unit>
@@ -42,6 +58,9 @@
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.apiKey">
 				<source>API-Key</source>
+			</trans-unit>
+			<trans-unit id="templates.adminModule.keys.apiKeyMap">
+				<source>API-Key for Map</source>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.mapId">
 				<source>Map-Id</source>

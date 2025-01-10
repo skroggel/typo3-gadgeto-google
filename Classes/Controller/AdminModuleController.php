@@ -80,6 +80,7 @@ final class AdminModuleController extends  \TYPO3\CMS\Extbase\Mvc\Controller\Act
 
         $this->view->assignMultiple([
             'apiKey' => $googleMapsConfig['apiKey'] ?? '',
+            'apiKeyMap' => $googleMapsConfig['apiKeyMap'] ?? '',
             'mapId' => $googleMapsConfig['mapId'] ?? ''
         ]);
 
@@ -99,6 +100,7 @@ final class AdminModuleController extends  \TYPO3\CMS\Extbase\Mvc\Controller\Act
     {
         if (
             (! $googleMapsConfig['apiKey'])
+            || (! $googleMapsConfig['apiKeyMap'])
             || (! $googleMapsConfig['mapId'])
         ) {
             $this->addFlashMessage(

@@ -5,7 +5,7 @@
             <div class="typo3-messages" role="alert">
                 <f:for each="{flashMessages}" as="flashMessage">
                     <div class="alert alert-{flashMessage.severity.cssClass}">
-                        <p class="alert-message"><f:format.raw>{flashMessage.message}</f:format.raw></p>
+                        <p><f:format.raw>{flashMessage.message}</f:format.raw></p>
                     </div>
                 </f:for>
             </div>
