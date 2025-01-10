@@ -50,7 +50,7 @@ trait FilterableTrait
 
     /**
      * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>|\TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy|null
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\GadgetoGoogle\Domain\Model\Category>|\TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy|null
      */
     protected ObjectStorage|LazyLoadingProxy|null $categories = null;
 
@@ -126,7 +126,7 @@ trait FilterableTrait
     /**
      * Adds a category
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\Category $category
+     * @param \Madj2k\GadgetoGoogle\Domain\Model\Category $category
      * @return void
      */
     public function addCategory(Category $category): void
@@ -138,7 +138,7 @@ trait FilterableTrait
     /**
      * Removes a category
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\Category $category
+     * @param \Madj2k\GadgetoGoogle\Domain\Model\Category $category
      * @return void
      */
     public function removeCategory(Category $category): void
@@ -150,7 +150,7 @@ trait FilterableTrait
     /**
      * Returns the categories
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\GadgetoGoogle\Domain\Model\Category> $categories
      */
     public function getCategories(): ObjectStorage
     {
@@ -169,7 +169,7 @@ trait FilterableTrait
     /**
      * Sets the categories
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\GadgetoGoogle\Domain\Model\Category> $categories
      * @return void
      */
     public function setCategories(ObjectStorage $categories): void

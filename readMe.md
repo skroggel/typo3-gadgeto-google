@@ -62,6 +62,21 @@ TCEFORM.tt_content.pi_flexform.gadgetogoogle_map.view.settings\.layout {
 }
 ```
 
+## Set custom options for sys_category styles
+```
+TCEFORM.sys_category.tx_gadgetogoogle_style {
+
+    // add new option "Layout.1"
+    addItems.list = Layout-1
+
+    // Override label of existing option "default"
+    altLabels.default = Slot
+
+    // remove option "big"
+    removeItems = big
+}
+```
+
 ## Usage in your own extension
 ### General
 Your location-model has either to

@@ -3,6 +3,12 @@
     <file source-language="en" datatype="plaintext" original="messages" date="2023-09-17UTC13:49:100">
         <body>
 
+			<!-- sys_category -->
+			<trans-unit id="sys_category.tx_gadgetogoogle_style">
+				<source>Style for pin on map</source>
+			</trans-unit>
+
+
 			<!-- tx_gadgetogoogle_domain_model_filtercategory -->
 			<trans-unit id="tx_gadgetogoogle_domain_model_filtercategory">
 				<source>Filter-Category for Map</source>
@@ -10,7 +16,6 @@
 			<trans-unit id="tx_gadgetogoogle_domain_model_filtercategory.label">
 				<source>Label</source>
 			</trans-unit>
-
 
 
 			<!-- tx_gadgetogoogle_domain_model_location -->
