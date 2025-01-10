@@ -43,3 +43,9 @@ CREATE TABLE tx_gadgetogoogle_domain_model_filtercategory
 	KEY   label (label),
 );
 
+
+CREATE TABLE sys_category
+(
+	tx_gadgetogoogle_style varchar(255) DEFAULT 'default' NOT NULL,
+);
+
