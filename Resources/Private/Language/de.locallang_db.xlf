@@ -87,6 +87,10 @@
 				<source>Country</source>
 				<target>Land</target>
 			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.address_addition">
+				<source>Address Addition (for API-Request)</source>
+				<target>Adresszusatz (für API-Anfragen)</target>
+			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.phone">
 				<source>Phone</source>
 				<target>Telefon</target>

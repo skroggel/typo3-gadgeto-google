@@ -17,6 +17,7 @@ namespace Madj2k\GadgetoGoogle\ViewHelpers;
 use Madj2k\GadgetoGoogle\Domain\Model\Location;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
@@ -59,11 +60,13 @@ class GroupByCategoryViewHelper extends AbstractViewHelper
         $items = $arguments['items'];
 
         $result = [];
-        /** @var \Madj2k\GadgetoGoogle\Domain\Model\Location $item */
-        foreach ($items as $item) {
-            foreach ($item->getCategories() as $category) {
-                $tempResult = self::buildCategoryHierarchy($category, [], $item);
-                $result = self::arrayMergeRecursiveDistinct($result, $tempResult);
+        if ($items) {
+            /** @var \Madj2k\GadgetoGoogle\Domain\Model\Location $item */
+            foreach ($items as $item) {
+                foreach ($item->getCategories() as $category) {
+                    $tempResult = self::buildCategoryHierarchy($category, [], $item);
+                    $result = self::arrayMergeRecursiveDistinct($result, $tempResult);
+                }
             }
         }
 
@@ -126,5 +129,4 @@ class GroupByCategoryViewHelper extends AbstractViewHelper
 
         return $merged;
     }
-
 }
