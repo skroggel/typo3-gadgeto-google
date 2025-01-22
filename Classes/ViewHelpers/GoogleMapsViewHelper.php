@@ -156,8 +156,6 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
             $this->buildItemDataArray($location, $configuration, $settings);
         }
 
-        DebuggerUtility::var_dump($configuration);
-
         return '
             <script type="module">
                 import GadgetoGoogleMaps from "' . $jsFile . '";
