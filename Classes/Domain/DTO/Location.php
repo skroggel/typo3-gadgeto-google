@@ -134,6 +134,9 @@ final class Location
         if ($this->getCountry()) {
             $destinationArray[] = $this->getCountry();
         }
+        if ($this->getAddressAddition()) {
+            $destinationArray[] = $this->getAddressAddition();
+        }
 
         return implode(', ', $destinationArray);
     }

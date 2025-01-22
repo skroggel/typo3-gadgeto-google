@@ -38,7 +38,7 @@ return [
             'showitem' => TcaUtility::removeFieldsByExtConf('gender, title, --linebreak--, firstname, lastname'),
         ],
         'address' => [
-            'showitem' => TcaUtility::removeFieldsByExtConf('street, street_number, --linebreak--, zip, city, --linebreak--, country'),
+            'showitem' => TcaUtility::removeFieldsByExtConf('street, street_number, --linebreak--, zip, city, --linebreak--, country, --linebreak--, address_addition'),
         ],
         'phone' => [
             'showitem' => TcaUtility::removeFieldsByExtConf('phone, mobile, --linebreak--,fax'),
@@ -246,6 +246,14 @@ return [
                 'size' => 1,
                 'minitems' => 1,
                 'maxitems' => 1
+            ],
+        ],
+        'address_addition' => [
+            'exclude' => false,
+            'label' => $ll . 'tx_gadgetogoogle_domain_model_location.address_addition',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
             ],
         ],
         'phone' => [

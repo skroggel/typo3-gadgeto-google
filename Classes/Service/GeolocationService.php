@@ -23,6 +23,7 @@ use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * GeolocationService
@@ -520,7 +521,10 @@ class GeolocationService implements SingletonInterface
         string $table,
         mixed $uid,
         array &$fieldArray,
-        array $keyMap = ['street' => 'street', 'street_number' => 'street_number', 'zip' => 'zip', 'city' => 'city', 'country' => 'country']
+        array $keyMap = [
+            'street' => 'street', 'street_number' => 'street_number', 'zip' => 'zip', 'city' => 'city',
+            'country' => 'country', 'address_addition' => 'address_addition'
+        ]
     ): bool {
 
         $fieldArrayInternal = $fieldArray;

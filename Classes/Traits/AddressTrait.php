@@ -23,7 +23,7 @@ namespace Madj2k\GadgetoGoogle\Traits;
  * @package Madj2k_GadgetoGoogle
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-trait AddressTrait
+trait   AddressTrait
 {
 
     /**
@@ -54,6 +54,12 @@ trait AddressTrait
      * @var string
      */
     protected string $country = '';
+
+
+    /**
+     * @var string
+     */
+    protected string $addressAddition = '';
 
 
     /**
@@ -168,5 +174,28 @@ trait AddressTrait
     public function setCountry(string $country): void
     {
         $this->country = $country;
+    }
+
+
+    /**
+     * Returns the addressAddition
+     *
+     * @return string
+     */
+    public function getAddressAddition(): string
+    {
+        return $this->addressAddition;
+    }
+
+
+    /**
+     * Sets the addressAddition
+     *
+     * @param string $addressAddition
+     * @return void
+     */
+    public function setAddressAddition(string $addressAddition): void
+    {
+        $this->addressAddition = $addressAddition;
     }
 }

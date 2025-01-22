@@ -19,6 +19,7 @@ use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Resource\Exception\InvalidFileException;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 use Madj2k\GadgetoGoogle\Domain\Model\FilterableInterface;
 
@@ -136,7 +137,7 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
                 $mapConfig, [
                     'mapId' => $googleMapsConfig['mapId'],
                     'center' => [
-                        'lat' => (float)$centerLatitude,
+                        'lat' => (float) $centerLatitude,
                         'lng' => (float) $centerLongitude,
                     ],
                 ]
@@ -154,6 +155,8 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         foreach ($locations as $location) {
             $this->buildItemDataArray($location, $configuration, $settings);
         }
+
+        DebuggerUtility::var_dump($configuration);
 
         return '
             <script type="module">

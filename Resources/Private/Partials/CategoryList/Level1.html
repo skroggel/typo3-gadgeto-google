@@ -1,9 +1,11 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
     <f:variable name="level" value="{level + 1}" />
+    <f:variable name="sortedCategories" value="{gadgetoGoogle:sortGroupedCategories(items: categories)}" />
     
-    <f:for each="{categories}" as="category">
+    <f:for each="{sortedCategories}" as="category">
         <f:if condition="{category.children}">
             <f:render partial="CategoryList/Sublevel"
                       arguments="{categories: category.children, parent: category, level: level, data: data, 
