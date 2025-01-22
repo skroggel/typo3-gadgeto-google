@@ -21,8 +21,11 @@ You have to add the following CSS-classes to your custom HTML:
 ## Installation
 Just install the extension and include the TypoScript.
 
-You will need a Google API Key for beeing aple to use the Maps API (see: https://developers.google.com/maps/documentation/javascript/get-api-key?hl=de)
+You will need two Google API Key for beeing aple to use the Maps API (see: https://developers.google.com/maps/documentation/javascript/get-api-key?hl=de)
 and a Map Key (see: https://developers.google.com/maps/documentation/get-map-id?hl=de).
+
+The API Key for the map should have a referer-restriction.
+The one for normal API should have an IP-restriction.
 
 ## Possible global configurations (System -> Settings -> Extension Configuration)
 You can configure the following three things via the extension configuration (System -> Settings -> Extension Configuration):
