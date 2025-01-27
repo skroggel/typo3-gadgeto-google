@@ -59,7 +59,7 @@ trait   AddressTrait
     /**
      * @var string
      */
-    protected string $addressAddition = '';
+    protected string $addressAdditionApi = '';
 
 
     /**
@@ -178,24 +178,24 @@ trait   AddressTrait
 
 
     /**
-     * Returns the addressAddition
+     * Returns the addressAdditionApi
      *
      * @return string
      */
-    public function getAddressAddition(): string
+    public function getAddressAdditionApi(): string
     {
-        return $this->addressAddition;
+        return $this->addressAdditionApi;
     }
 
 
     /**
-     * Sets the addressAddition
+     * Sets the addressAdditionApi
      *
-     * @param string $addressAddition
+     * @param string $addressAdditionApi
      * @return void
      */
-    public function setAddressAddition(string $addressAddition): void
+    public function setAddressAdditionApi(string $addressAdditionApi): void
     {
-        $this->addressAddition = $addressAddition;
+        $this->addressAdditionApi = $addressAdditionApi;
     }
 }

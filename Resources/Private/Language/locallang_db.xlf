@@ -67,9 +67,6 @@
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.country">
 				<source>Country</source>
 			</trans-unit>
-			<trans-unit id="tx_gadgetogoogle_domain_model_location.address_addition">
-				<source>Address Addition (for API-Request)</source>
-			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.phone">
 				<source>Phone</source>
 			</trans-unit>
@@ -87,6 +84,12 @@
 			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.image">
 				<source>Image</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.address_addition_api">
+				<source>Address Addition for API-Requests</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.manual_lng_lat">
+				<source>Enter geodata manually (deactivate automatic determination via API)</source>
 			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.longitude">
 				<source>Longitude</source>
