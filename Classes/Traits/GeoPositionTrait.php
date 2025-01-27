@@ -27,6 +27,12 @@ trait GeoPositionTrait
 {
 
     /**
+     * @var bool
+     */
+    protected bool $manualLngLat = false;
+
+
+    /**
      * @var float
      */
     protected float $longitude = 0.0;
@@ -42,6 +48,30 @@ trait GeoPositionTrait
      * @var float
      */
     protected float $distance = 0.0;
+
+
+    /**
+     * Returns the manualLnglat
+     *
+     * @return bool $manualLnglat
+     */
+    public function getManualLngLat(): bool
+    {
+        return $this->manualLngLat;
+    }
+
+
+    /**
+     * Sets the manualLngLat
+     *
+     * @param bool $manualLngLat
+     * @return void
+     */
+    public function setManualLnglat(bool $manualLngLat): void
+    {
+        $this->manualLngLat = $manualLngLat;
+    }
+
 
 
     /**

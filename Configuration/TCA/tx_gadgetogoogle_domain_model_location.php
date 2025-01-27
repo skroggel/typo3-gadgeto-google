@@ -38,7 +38,7 @@ return [
             'showitem' => TcaUtility::removeFieldsByExtConf('gender, title, --linebreak--, firstname, lastname'),
         ],
         'address' => [
-            'showitem' => TcaUtility::removeFieldsByExtConf('street, street_number, --linebreak--, zip, city, --linebreak--, country, --linebreak--, address_addition'),
+            'showitem' => TcaUtility::removeFieldsByExtConf('street, street_number, --linebreak--, zip, city, --linebreak--, country'),
         ],
         'phone' => [
             'showitem' => TcaUtility::removeFieldsByExtConf('phone, mobile, --linebreak--,fax'),
@@ -50,7 +50,7 @@ return [
             'showitem' => TcaUtility::removeFieldsByExtConf('categories, --linebreak--, filter_category'),
         ],
         'geo_position' => [
-            'showitem' => TcaUtility::removeFieldsByExtConf('longitude,latitude'),
+            'showitem' => TcaUtility::removeFieldsByExtConf('address_addition_api, --linebreak--, manual_lng_lat, --linebreak--, longitude, latitude'),
         ],
     ],
 	'columns' => [
@@ -248,14 +248,6 @@ return [
                 'maxitems' => 1
             ],
         ],
-        'address_addition' => [
-            'exclude' => false,
-            'label' => $ll . 'tx_gadgetogoogle_domain_model_location.address_addition',
-            'config' => [
-                'type' => 'input',
-                'eval' => 'trim',
-            ],
-        ],
         'phone' => [
             'exclude' => false,
             'label' => $ll . 'tx_gadgetogoogle_domain_model_location.phone',
@@ -296,6 +288,22 @@ return [
                 'eval' => 'trim',
             ],
         ],
+        'address_addition_api' => [
+            'exclude' => false,
+            'label' => $ll . 'tx_gadgetogoogle_domain_model_location.address_addition_api',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+            ],
+        ],
+        'manual_lng_lat' => [
+            'exclude' => false,
+            'label' => $ll . 'tx_gadgetogoogle_domain_model_location.manual_lng_lat',
+            'config' => [
+                'type' => 'check',
+                'renderType' => 'checkboxToggle',
+            ],
+        ],
         'longitude' => [
             'l10n_mode' => 'exclude',
             'exclude' => false,
@@ -303,7 +311,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',
-                'readOnly' => true,
+                // 'readOnly' => true,
             ],
         ],
         'latitude' => [
@@ -313,7 +321,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',
-                'readOnly' => true,
+                // 'readOnly' => true,
             ],
         ],
         'distance' => [

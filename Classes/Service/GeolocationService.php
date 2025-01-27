@@ -523,7 +523,7 @@ class GeolocationService implements SingletonInterface
         array &$fieldArray,
         array $keyMap = [
             'street' => 'street', 'street_number' => 'street_number', 'zip' => 'zip', 'city' => 'city',
-            'country' => 'country', 'address_addition' => 'address_addition'
+            'country' => 'country', 'address_addition_api' => 'address_addition_api', 'manual_lng_lat' => 'manual_lng_lat'
         ]
     ): bool {
 
@@ -564,6 +564,12 @@ class GeolocationService implements SingletonInterface
                 );
             }
 
+            // if geolocation is to be set manually, skip from here!
+            if ($fieldArrayInternal['manual_lng_lat']) {
+                return false;
+            }
+DebuggerUtility::var_dump($fieldArrayInternal);
+//die();
             $this->location = new Location($this->settings);
             foreach ($keyMapSanitized as $key => $map) {
                 $setter = 'set' . GeneralUtility::underscoredToUpperCamelCase($map);
