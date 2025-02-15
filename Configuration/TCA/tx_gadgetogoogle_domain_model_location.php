@@ -47,7 +47,7 @@ return [
             'showitem' => TcaUtility::removeFieldsByExtConf('email, url'),
         ],
         'filter' => [
-            'showitem' => TcaUtility::removeFieldsByExtConf('categories, --linebreak--, filter_category'),
+            'showitem' => TcaUtility::removeFieldsByExtConf('categories, --linebreak--, filter_category, --linebreak--, sorting'),
         ],
         'geo_position' => [
             'showitem' => TcaUtility::removeFieldsByExtConf('address_addition_api, --linebreak--, manual_lng_lat, --linebreak--, longitude, latitude'),
@@ -327,6 +327,15 @@ return [
         'distance' => [
             'config' => [
                 'type' => 'none',
+            ],
+        ],
+        'sorting' => [
+            'exclude' => false,
+            'label' => $ll . 'tx_gadgetogoogle_domain_model_location.sorting',
+            'config' => [
+                'type' => 'input',
+                'default' => 0,
+                'eval' => 'required,trim,int'
             ],
         ],
         'categories' => [

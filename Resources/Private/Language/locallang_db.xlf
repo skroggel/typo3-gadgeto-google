@@ -100,6 +100,9 @@
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.filter_category">
 				<source>Category for Filter</source>
 			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.sorting">
+				<source>Sorting (if not set: alphabetical)</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

@@ -30,6 +30,7 @@ CREATE TABLE tx_gadgetogoogle_domain_model_location
 	latitude             decimal(15, 8)          NOT NULL,
 
 	filter_category      int(11) unsigned NOT NULL default '0',
+	sorting              int(11) unsigned NOT NULL default '0',
 
 	KEY                  label (label),
 	KEY                  filter_category (filter_category),

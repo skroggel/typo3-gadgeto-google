@@ -18,14 +18,14 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * Class SortGroupedCategoriesViewHelper
+ * Class SortLocationsViewHelper
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright Steffen Kroggel <developer@steffenkroggel.de>
  * @package Madj2k_GadgetoGoogle
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class SortGroupedCategoriesViewHelper extends AbstractViewHelper
+class SortLocationsViewHelper extends AbstractViewHelper
 {
 
     /**
@@ -36,8 +36,8 @@ class SortGroupedCategoriesViewHelper extends AbstractViewHelper
     public function initializeArguments(): void
     {
         parent::initializeArguments();
-        $this->registerArgument('items', 'array', 'The structured array from GroupByCategoryViewHelper');
-        $this->registerArgument('sortField', 'string', 'The sort field.', false, 'title');
+        $this->registerArgument('items', 'array', 'The locations to sort.');
+        $this->registerArgument('sortField', 'string', 'The sort field if no sorting value is set.', false, 'label');
         $this->registerArgument('sortDirection', 'string', 'The sort direction.', false, 'asc');
     }
 
@@ -66,20 +66,31 @@ class SortGroupedCategoriesViewHelper extends AbstractViewHelper
         $result = [];
         if ($items) {
 
-            /** @var array $item */
-            foreach ($items as $item) {
+            $resultKey = [];
+            $resultSorting = [];
+            $sortingUsed = false;
 
-                if (
-                    (isset($item['object']))
-                    && ($category = $item['object'])
-                    && ($category  instanceof \TYPO3\CMS\Extbase\Domain\Model\Category)
-                ) {
+            /** @var \Madj2k\GadgetoGoogle\Domain\Model\Location $location */
+            foreach ($items as $location) {
+
+                if ($location  instanceof \Madj2k\GadgetoGoogle\Domain\Model\Location) {
 
                     $getter = 'get' . ucfirst($sortField);
-                    if (method_exists($category, $getter)) {
-                        $result[self::sanitizeKey($category->getTitle())] = $item;
+                    if (method_exists($location, $getter)) {
+                        $resultKey[self::sanitizeKey($location->$getter())] = $location;
+                    }
+
+                    $resultSorting[$location->getSorting()] = $location;
+
+                    if ($location->getSorting()) {
+                        $sortingUsed = true;
                     }
                 }
+            }
+
+            $result = $resultKey;
+            if ($sortingUsed) {
+                $result = $resultSorting;
             }
 
             if ($sortDirection == 'desc') {

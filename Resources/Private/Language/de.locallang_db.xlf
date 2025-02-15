@@ -131,6 +131,10 @@
 				<source>Category for Filter</source>
 				<target>Kategorie für Filter</target>
 			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.sorting">
+				<source>Sorting (if not set: alphabetical)</source>
+				<target>Sortierung (wenn nicht gesetzt: alphabetisch)</target>
+			</trans-unit>
 
         </body>
     </file>

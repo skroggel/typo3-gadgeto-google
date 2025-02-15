@@ -1,17 +1,19 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
     <f:variable name="level" value="{level + 1}" />
+    <f:variable name="sortedCategories" value="{gadgetoGoogle:sortGroupedCategories(items: categories)}" />
 
     <ul class="category-list level-{level}">
-        <f:for each="{categories}" as="category">
+        <f:for each="{sortedCategories}" as="category">
             <li class="category-item level-{level}">
 
                 <h3>{category.object.title}</h3>
 
                 <f:if condition="{category.locations}">
                     <ul class="location-list">
-                        <f:for each="{category.locations}" as="location">
+                        <f:for each="{gadgetoGoogle:sortLocations(items:category.locations)}" as="location">
                             <li class="location-item">
                                 <f:render partial="Location/Item"
                                           arguments="{location: location, data: data, settings: settings, 

@@ -23,7 +23,7 @@ namespace Madj2k\GadgetoGoogle\Traits;
  * @package Madj2k_GadgetoGoogle
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-trait   AddressTrait
+trait AddressTrait
 {
 
     /**
