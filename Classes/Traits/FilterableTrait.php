@@ -42,6 +42,12 @@ trait FilterableTrait
 
 
     /**
+     * @var int
+     */
+    protected int $sorting = 0;
+
+
+    /**
      * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\GadgetoGoogle\Domain\Model\FilterCategory>|\TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy|null
     */
@@ -53,7 +59,6 @@ trait FilterableTrait
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\GadgetoGoogle\Domain\Model\Category>|\TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy|null
      */
     protected ObjectStorage|LazyLoadingProxy|null $categories = null;
-
 
 
     /**
@@ -89,6 +94,29 @@ trait FilterableTrait
     public function setLabel(string $label): void
     {
         $this->label = $label;
+    }
+
+
+    /**
+     * Returns the sorting
+     *
+     * @return int
+     */
+    public function getSorting(): int
+    {
+        return $this->sorting;
+    }
+
+
+    /**
+     * Sets the sorting
+     *
+     * @param int $sorting
+     * @return void
+     */
+    public function setSorting(int $sorting): void
+    {
+        $this->sorting = $sorting;
     }
 
 
