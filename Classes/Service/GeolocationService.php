@@ -565,11 +565,10 @@ class GeolocationService implements SingletonInterface
             }
 
             // if geolocation is to be set manually, skip from here!
-            if ($fieldArrayInternal['manual_lng_lat']) {
+            if (isset($fieldArrayInternal['manual_lng_lat'])) {
                 return false;
             }
-DebuggerUtility::var_dump($fieldArrayInternal);
-//die();
+
             $this->location = new Location($this->settings);
             foreach ($keyMapSanitized as $key => $map) {
                 $setter = 'set' . GeneralUtility::underscoredToUpperCamelCase($map);
