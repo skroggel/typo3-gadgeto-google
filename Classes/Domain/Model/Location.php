@@ -17,6 +17,7 @@ namespace Madj2k\GadgetoGoogle\Domain\Model;
 
 use Madj2k\GadgetoGoogle\Traits\AddressTrait;
 use Madj2k\GadgetoGoogle\Traits\FilterableTrait;
+use Madj2k\GadgetoGoogle\Traits\PersonTrait;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
@@ -31,6 +32,7 @@ class Location extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements
 {
 
     use FilterableTrait;
+    use PersonTrait;
     use AddressTrait;
 
 
