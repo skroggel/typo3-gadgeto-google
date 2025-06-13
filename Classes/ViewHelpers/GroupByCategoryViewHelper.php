@@ -17,9 +17,10 @@ namespace Madj2k\GadgetoGoogle\ViewHelpers;
 use Madj2k\GadgetoGoogle\Domain\Model\Location;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class GroupByCategoryViewHelper
@@ -49,6 +50,7 @@ class GroupByCategoryViewHelper extends AbstractViewHelper
      * @param \Closure $renderChildrenClosure
      * @param \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
      * @return array
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      */
     public static function renderStatic(
         array $arguments,
@@ -82,9 +84,16 @@ class GroupByCategoryViewHelper extends AbstractViewHelper
      * @param array $subResult
      * @param \Madj2k\GadgetoGoogle\Domain\Model\Location|null $location
      * @return array|array[]
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      */
     protected static function buildCategoryHierarchy (Category $category, array $subResult, ?Location $location = null): array
     {
+
+        $languageUid = self::getCurrentLanguageUid();
+
+        // get translated version - if available!
+        $translatedCategory = self::getTranslatedCategory($category, $languageUid);
+        $category = $translatedCategory ?? $category;
 
         $result = [
              $category->getUid() => [
@@ -99,7 +108,9 @@ class GroupByCategoryViewHelper extends AbstractViewHelper
         }
 
         if ($parentCategory = $category->getParent()) {
-             return self::buildCategoryHierarchy($parentCategory, $result);
+            // get translated version - if available!
+            $translatedParent = self::getTranslatedCategory($parentCategory, $languageUid);
+            return self::buildCategoryHierarchy($translatedParent ?? $parentCategory, $result, $location);
         }
 
         return $result;
@@ -128,5 +139,50 @@ class GroupByCategoryViewHelper extends AbstractViewHelper
         }
 
         return $merged;
+    }
+
+
+    /**
+     * Get the translated category
+     *
+     * @param \TYPO3\CMS\Extbase\Domain\Model\Category $category
+     * @param int $languageUid
+     * @return \TYPO3\CMS\Extbase\Domain\Model\Category|null
+     */
+    private static function getTranslatedCategory(Category $category, int $languageUid): ?Category
+    {
+        if ($languageUid === 0 || (int)$category->_getProperty('sysLanguageUid') === $languageUid) {
+            return $category;
+        }
+
+        $persistenceManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
+        $query = $persistenceManager->createQueryForType(Category::class);
+
+        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()->setRespectSysLanguage(false);
+
+        $query->matching(
+            $query->logicalAnd(
+                $query->equals('l10nParent', $category->getUid()),
+                $query->equals('sysLanguageUid', $languageUid),
+            )
+        );
+
+        return $query->execute()->getFirst();
+    }
+
+
+    /**
+     * @return int
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     */
+    private static function getCurrentLanguageUid(): int
+    {
+        /** @var \TYPO3\CMS\Core\Context\Context $context */
+        $context = GeneralUtility::makeInstance(Context::class);
+
+        /** @var \TYPO3\CMS\Core\Context\LanguageAspect $languageAspect */
+        $languageAspect = $context->getAspect('language');
+        return $languageAspect->getId();
     }
 }
