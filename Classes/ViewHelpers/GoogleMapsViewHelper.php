@@ -73,7 +73,7 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         $this->registerArgument('filterButtonClass', 'string', 'The class of the buttons for filtering the map', false, 'map-filter-button');
         $this->registerArgument('consentButtonClass', 'string', 'The class of the consent button', false, 'map-consent-button');
         $this->registerArgument('cookieName', 'string', 'The name of the consent cookie', false, 'gadgetogoogle-consent');
-        $this->registerArgument('overlay', 'array', 'Configuration array for the overlay', false,);
+        $this->registerArgument('canvas', 'array', 'Configuration array for an canvas-overlay on the map', false,);
         $this->registerArgument('settings', 'array', 'The settings array', false, []);
     }
 
@@ -111,8 +111,8 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         /** @var string $cookieName */
         $cookieName = $this->arguments['cookieName'];
 
-        /** @var array $overlay */
-        $overlay = $this->arguments['overlay'];
+        /** @var array $canvas */
+        $canvas = $this->arguments['canvas'];
 
         /** @var array $settings */
         $settings = $this->arguments['settings'];
@@ -153,10 +153,10 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
             ),
             'data' => [],
             'boundaryPositions' => [],
-            'overlay' => [
-                'enabled' => $overlay['enabled'] ?? false,
-                'jsonCoordinates' => json_decode($overlay['jsonCoordinates'], true) ?? [],
-                'fillStyle' => $overlay['fillStyle'] ?? 'rgba(255, 255, 255, 0.5)',
+            'canvas' => [
+                'enabled' => $canvas['enabled'] ?? false,
+                'jsonCoordinates' => isset($canvas['jsonCoordinates']) ? json_decode($canvas['jsonCoordinates'], true) : [],
+                'fillStyle' => $canvas['fillStyle'] ?? 'rgba(255, 255, 255, 0.5)',
             ]
         ];
 

@@ -20,7 +20,9 @@ use Madj2k\GadgetoGoogle\Domain\DTO\Search;
 use Madj2k\GadgetoGoogle\Domain\Repository\FilterCategoryRepository;
 use Madj2k\GadgetoGoogle\Service\GeolocationService;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * Class MapController
@@ -32,6 +34,18 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 final class MapController extends AbstractController
 {
+
+    /**
+     * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer|null $currentContentObject
+     */
+    protected ?ContentObjectRenderer $currentContentObject = null;
+
+
+    /**
+     * @var \TYPO3\CMS\Core\Site\Entity\SiteLanguage|null
+     */
+    protected ?SiteLanguage $siteLanguage = null;
+
 
     /**
      * @var \Madj2k\GadgetoGoogle\Domain\Repository\FilterCategoryRepository|null
@@ -46,6 +60,25 @@ final class MapController extends AbstractController
     public function injectFilterCategoryRepository(FilterCategoryRepository $filterCategoryRepository): void
     {
         $this->filterCategoryRepository = $filterCategoryRepository;
+    }
+
+
+    /**
+     * Set globally used objects
+     */
+    protected function initializeAction(): void
+    {
+        $this->currentContentObject = $this->request->getAttribute('currentContentObject');
+        $this->siteLanguage = $this->request->getAttribute('language');
+    }
+
+
+    /**
+     * Assign default variables to view
+     */
+    protected function initializeView(): void
+    {
+        $this->view->assign('data', $this->currentContentObject->data);
     }
 
 
@@ -75,13 +108,6 @@ final class MapController extends AbstractController
      */
     public function showAction(?Search $search = null): ResponseInterface
     {
-
-        /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $filterCategories */
-        $filterCategories = $this->filterCategoryRepository->findAll();
-
-        /** @var \Madj2k\GadgetoGoogle\Domain\Model\Location $locationCenter */
-        $locationCenter = $this->locationRepository->findByUid($this->settings['locationCenter']);
-
         $locations = [];
         if ($search && $search->getIsActive()) {
 
@@ -134,8 +160,11 @@ final class MapController extends AbstractController
             [
                 'search' => $search,
                 'locations' => $locations,
-                'locationCenter' => $locationCenter,
-                'filterCategories' => $filterCategories,
+                'locationCenter' => $this->locationRepository->findByUid($this->settings['locationCenter']),
+                'filterCategories' => $this->filterCategoryRepository->findAll(),
+                'categories' => $this->locationRepository->findAssignedCategories(
+                    $this->siteLanguage->getLanguageId()
+                ),
             ]
         );
 

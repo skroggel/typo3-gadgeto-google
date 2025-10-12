@@ -17,7 +17,7 @@
                 
                     <f:comment><!-- Add filters for your map --></f:comment>
                     <f:if condition="!{settings.hideFilter}">
-                        <f:render partial="Top/Filters" arguments="{filterCategories: filterCategories, data: data, 
+                        <f:render partial="Top/Filters" arguments="{filterCategories: filterCategories, categories: categories, data: data, 
                                                                     settings: settings, settingsForLayout: settingsForLayout}" />
                     </f:if>
                 

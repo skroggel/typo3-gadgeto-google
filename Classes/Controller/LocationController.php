@@ -18,7 +18,9 @@ namespace Madj2k\GadgetoGoogle\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * Class LocationController
@@ -30,6 +32,36 @@ use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
  */
 final class LocationController extends  AbstractController
 {
+
+    /**
+     * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer|null $currentContentObject
+     */
+    protected ?ContentObjectRenderer $currentContentObject = null;
+
+
+    /**
+     * @var \TYPO3\CMS\Core\Site\Entity\SiteLanguage|null
+     */
+    protected ?SiteLanguage $siteLanguage = null;
+
+
+    /**
+     * Set globally used objects
+     */
+    protected function initializeAction(): void
+    {
+        $this->currentContentObject = $this->request->getAttribute('currentContentObject');
+        $this->siteLanguage = $this->request->getAttribute('language');
+    }
+
+
+    /**
+     * Assign default variables to view
+     */
+    protected function initializeView(): void
+    {
+        $this->view->assign('data', $this->currentContentObject->data);
+    }
 
 
     /**

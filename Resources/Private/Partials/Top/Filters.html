@@ -7,7 +7,7 @@
         Add filters for your map
         -->
     </f:comment>
-    <f:if condition="{filterCategories}">
+    <f:if condition="{filterCategories} || {categories}">
         <nav class="map-filter">
             <ul class="map-filter-list">
                 <li class="map-filter-item">
@@ -16,13 +16,27 @@
                         <f:translate key="label.showAll" extensionName="gadgeto_google" />
                     </button>
                 </li>
-                <f:for each="{filterCategories}" as="filterCategory">
-                    <li class="map-filter-item">
-                        <f:comment><!-- The category data-attribute sets the filter --></f:comment>
-                        <button class="map-filter-button js-gadgetogoogle-map-filter-btn" 
-                                data-category="{filterCategory.uid}">{filterCategory.label}</button>
-                    </li>
-                </f:for>
+                <f:if condition="{categories}">
+                    <f:then>
+                        <f:for each="{categories}" as="category">
+                            <li class="map-filter-item">
+                                <f:comment><!-- The category data-attribute sets the filter --></f:comment>
+                                <button class="map-filter-button js-gadgetogoogle-map-filter-btn"
+                                        data-category="{category.uid}">{category.title}</button>
+                            </li>
+                        </f:for>
+                    </f:then>
+                    <f:else>
+                        <f:comment><!-- deprecated version --></f:comment>
+                        <f:for each="{filterCategories}" as="filterCategory">
+                            <li class="map-filter-item">
+                                <f:comment><!-- The category data-attribute sets the filter --></f:comment>
+                                <button class="map-filter-button js-gadgetogoogle-map-filter-btn"
+                                        data-category="{filterCategory.uid}">{filterCategory.label}</button>
+                            </li>
+                        </f:for>
+                    </f:else>
+                </f:if>
             </ul>
         </nav>
     </f:if>

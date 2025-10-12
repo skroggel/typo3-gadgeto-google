@@ -114,7 +114,7 @@ export default class GadgetoGoogleMaps {
     },
     data: [],
     boundaryPositions: [],
-    overlay: {
+    canvas: {
       enabled: false,
       jsonCoordinates: null,
       fillStyle: 'rgba(255, 245, 245, 0.5)'
@@ -256,7 +256,7 @@ export default class GadgetoGoogleMaps {
 
         // re-center and reset zoom
         this.centerMap();
-        this.addOverlay();
+        this.initCanvas();
 
       } else {
         console.log('No marker-definitions given.');
@@ -443,104 +443,83 @@ export default class GadgetoGoogleMaps {
 
 
   /**
-   * Draws a semi-transparent overlay on top of the map
+   * Draws a canvas on top of the map
    * and cuts out the region defined in a GeoJSON object.
    *
-   * The overlay stays fixed in the viewport (does not scroll with the page),
+   * The canvas stays fixed in the viewport (does not scroll with the page),
    * but re-renders its contents as the map is moved or zoomed.
-   *
-   * Requirements:
-   *  - `overlay.enabled` must be true
-   *  - `overlay.jsonCoordinates` must contain valid GeoJSON geometry data
    */
-  addOverlay() {
-    if (!this.settings.overlay.enabled || !this.settings.overlay.jsonCoordinates) {
-      console.log("Overlay disabled or no coordinates");
-      return;
-    }
+  initCanvas() {
+    if (!this.settings.canvas.enabled || !this.settings.canvas.jsonCoordinates) return;
 
-    const region = this.settings.overlay.jsonCoordinates.map(([lng, lat]) => new google.maps.LatLng(lat, lng));
-    const fillStyle = this.settings.overlay.fillStyle;
+    const coords = this.settings.canvas.jsonCoordinates;
+    const region = coords.map(([lng, lat]) => new google.maps.LatLng(lat, lng));
+    const map = this.map;
+    const fillStyle = this.settings.canvas.fillStyle;
+
     const overlay = new google.maps.OverlayView();
-    this.overlay = overlay;
-
-    const addCanvas = () => {
+    overlay.onAdd = function () {
       const canvas = document.createElement("canvas");
-      canvas.classList.add("map-overlay-canvas");
+      canvas.style.pointerEvents = "none";
       canvas.style.position = "absolute";
       canvas.style.top = "0";
       canvas.style.left = "0";
-      canvas.style.pointerEvents = "none";
-      canvas.style.zIndex = "9999";
-
+      canvas.style.transform = "translate(-50%, -50%)"; // Correction from center of map
+      canvas.style.zIndex = "0";
 
       this.canvas = canvas;
 
-      const container = overlay.getPanes().mapPane; // WICHTIG: mapPane, nicht overlayLayer
-      container.appendChild(canvas);
+      const panes = this.getPanes();
+      panes.overlayLayer.appendChild(canvas);
     };
 
-
-    const drawCanvas = () => {
-      const projection = overlay.getProjection();
+    overlay.draw = function () {
+      const projection = this.getProjection();
       if (!projection || !this.canvas) return;
 
       const canvas = this.canvas;
       const ctx = canvas.getContext("2d");
 
-      const container = overlay.getPanes().mapPane;
-      const { width: w, height: h } = container.getBoundingClientRect(); // GENAU das brauchen wir!
+      // Double canvas size to cover all movement directions during dragging
+      const w = map.getDiv().offsetWidth;
+      const h = map.getDiv().offsetHeight;
+      canvas.width = w * 2;
+      canvas.height = h * 2;
 
-      canvas.width = w;
-      canvas.height = h;
+      // Shift drawing context so that map center is (0, 0) on the canvas
+      ctx.setTransform(1, 0, 0, 1, w, h);
 
-      ctx.clearRect(0, 0, w, h);
+      // Fill entire canvas with semi-transparent canvas
+      ctx.clearRect(-w, -h, canvas.width, canvas.height);
       ctx.fillStyle = fillStyle;
-      ctx.fillRect(0, 0, w, h);
+      ctx.fillRect(-w, -h, canvas.width, canvas.height);
 
+      // Cut out the shape of Switzerland from the canvas
       ctx.globalCompositeOperation = "destination-out";
       ctx.beginPath();
-
       region.forEach((latlng, i) => {
         const pt = projection.fromLatLngToDivPixel(latlng);
         if (i === 0) ctx.moveTo(pt.x, pt.y);
         else ctx.lineTo(pt.x, pt.y);
       });
-
       ctx.closePath();
       ctx.fill();
-      ctx.globalCompositeOperation = "source-over";
-
-      console.log("drawCanvas done:", canvas, canvas.width, canvas.height);
-      canvas.style.border = "2px solid red";
-      canvas.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+      ctx.globalCompositeOperation = "source-over"
     };
 
-
-    const removeCanvas = () => {
+    overlay.onRemove = function () {
       this.canvas?.remove();
       this.canvas = null;
     };
 
-    overlay.onAdd = () => {
-      addCanvas();
-    };
-    overlay.draw = () => {
-      drawCanvas();
-    };
-    overlay.onRemove = () => {
-      removeCanvas();
-    };
+    overlay.setMap(map);
 
-    overlay.setMap(this.map);
-
-    this.map.addListener("drag", () => overlay.draw());
-    this.map.addListener("zoom_changed", () => overlay.draw());
-    this.map.addListener("center_changed", () => overlay.draw());
-    this.map.addListener("resize", () => overlay.draw());
-
-    console.log("addOverlay done, overlay instance:", overlay);
+    // Trigger Redraw
+    map.addListener("center_changed", () => overlay.draw());
+    map.addListener("zoom_changed", () => overlay.draw());
+    map.addListener("resize", () => overlay.draw());
   }
+
 
 
 

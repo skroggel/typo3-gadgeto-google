@@ -152,6 +152,55 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
 
     /**
+     * Get all categories assigned to records in this repository
+     *
+     * @param int $languageUid
+     * @return array<int, string> uid => title
+     * @throws \Doctrine\DBAL\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     */
+    public function findAssignedCategories(int $languageUid = 0): array
+    {
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $queryBuilder = $connectionPool->getQueryBuilderForTable('sys_category');
+        $tableName = $this->getTableName();
+
+        $joinCondition = $queryBuilder->expr()->and(
+            $queryBuilder->expr()->eq('mm.uid_local', $queryBuilder->quoteIdentifier('c.uid')),
+            $queryBuilder->expr()->eq('mm.tablenames', $queryBuilder->createNamedParameter($tableName)),
+            $queryBuilder->expr()->eq('mm.fieldname', $queryBuilder->createNamedParameter('categories'))
+        );
+
+        $queryBuilder
+            ->select('c.uid', 'c.title')
+            ->from('sys_category', 'c')
+            ->innerJoin(
+                'c',
+                'sys_category_record_mm',
+                'mm',
+                (string)  $joinCondition
+            )
+            ->innerJoin(
+                'mm',
+                $tableName,
+                't',
+                $queryBuilder->expr()->eq('t.uid', $queryBuilder->quoteIdentifier('mm.uid_foreign'))
+            )
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'c.sys_language_uid',
+                    $queryBuilder->createNamedParameter($languageUid, \Doctrine\DBAL\ParameterType::INTEGER)
+                )
+            )
+            ->groupBy('c.uid', 'c.title')
+            ->orderBy('c.sorting', 'ASC')
+            ->addOrderBy('c.title', 'ASC');
+
+        return $queryBuilder->executeQuery()->fetchAllAssociative();
+    }
+
+
+    /**
      * Return the current table name
      *
      * @return string
@@ -165,7 +214,6 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
             /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper $dataMapper */
             $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
-
             $this->tableName = $dataMapper->getDataMap($className)->getTableName();
         }
 

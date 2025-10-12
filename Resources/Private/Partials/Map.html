@@ -14,30 +14,14 @@
                 Init the map. Optionally you can add a "locationCenter" to explicitl define the center of the map.
                 Otherwise the first place is used. Don't forget to add an overlay-element for it!
                 
-                Example for overlay-config with a mask around germany
-                <f:variable name="overlay" value="{overlay: {
-                  enabled: false,
-                  jsonCoordinates: [
-                    [5.5, 55.1],
-                    [9.0, 55.0],
-                    [13.0, 54.9],
-                    [15.0, 53.5],
-                    [15.0, 50.5],
-                    [13.5, 48.5],
-                    [10.0, 47.3],
-                    [7.0, 47.5],
-                    [5.5, 49.5],
-                    [5.5, 55.1]
-                  ],
-                  fillStyle: 'rgba(255, 245, 245, 0.5)'
-                }}" />
-            --></f:comment>
-
-            <f:variable name="overlay" value="{
+                Example for an additional canvas-config with a raw red mask around Germany
+                <f:variable name="canvas" value="{
                   enabled: true,
                   jsonCoordinates: '[[5.866,47.270],[5.866,55.059],[9.921,55.059],[14.988,55.009],[15.041,50.743],[13.095,48.555],[10.454,47.270],[5.866,47.270]]',
                   fillStyle: 'rgba(255, 0, 0, 0.5)'
-                }" />            
+                }" />     
+            --></f:comment>
+            <f:variable name="overlay" value="" />
             <f:if condition="{locationCenter}">
                 <f:then>
                     <f:render partial="Map/Overlay" 
@@ -45,12 +29,12 @@
                     
                     <f:render partial="Map/ClusterMarker" 
                               arguments="{data: data, settings: settings, settingsForLayout: settingsForLayout}" />
-                    <gadgetoGoogle:googleMaps locations="{locations}" locationCenter="{locationCenter}" settings="{settings}" overlay="{overlay}"/>
+                    <gadgetoGoogle:googleMaps locations="{locations}" locationCenter="{locationCenter}" settings="{settings}" canvas="{canvas}"/>
                 </f:then>
                 <f:else>
                     <f:render partial="Map/ClusterMarker" 
                               arguments="{data: data, settings: settings, settingsForLayout: settingsForLayout}" />
-                    <gadgetoGoogle:googleMaps locations="{locations}" settings="{settings}" overlay="{overlay}"/>
+                    <gadgetoGoogle:googleMaps locations="{locations}" settings="{settings}" canvas="{canvas}"/>
                 </f:else>
             </f:if>
     
