@@ -71,16 +71,16 @@
 				<target>API-Keys und Konfiguration für Google Maps</target>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.apiKey">
-				<source>API-Key</source>
-				<target>API-Key</target>
+				<source>API-Key for Geolocation API</source>
+				<target>API-Key für Geolocation API</target>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.apiKeyMap">
-				<source>API-Key for Map</source>
-				<target>API-Key für Karte</target>
+				<source>API-Key for Maps JavaScript API</source>
+				<target>API-Key für Maps JavaScript API</target>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.mapId">
-				<source>Map-Id</source>
-				<target>Map-Id</target>
+				<source>Map-Id (Map-Style)</source>
+				<target>Karten-Id (Kartenstil)</target>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.save">
 				<source>Save</source>

@@ -66,12 +66,14 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         parent::initializeArguments();
         $this->registerArgument('locations', QueryResultInterface::class, 'The locations to display', true);
         $this->registerArgument('locationCenter', FilterableInterface::class, 'The location that builds the center of the map', false, null);
-        $this->registerArgument('mapConfig', 'array', 'The configuration for the Google Map', false, ['zoom' => 12, 'mapTypeControl' => false, 'streetViewControl' => false, 'scrollwheel' => false, 'options' => ['gestureHandling' => 'cooperative']]);
+        $this->registerArgument('mapConfig', 'array', 'The configuration for the Google Map', false, ['zoom' => 12, 'mapTypeControl' => false, 'streetViewControl' => false, 'scrollwheel' => true, 'options' => ['gestureHandling' => 'cooperative']]);
         $this->registerArgument('mapContainerId', 'string', 'The id of the DIV for the map', false, 'tx-gadgetogoogle-map');
         $this->registerArgument('clusterMarkerContainerId', 'string', 'The id of the DIV for the cluster-marker', false, 'tx-gadgetogoogle-map-cluster-marker');
         $this->registerArgument('overlayContainerIdPrefix', 'string', 'The prefix for the DIVs which contain the content for the overlay', false, 'tx-gadgetogoogle-map-overlay');
         $this->registerArgument('filterButtonClass', 'string', 'The class of the buttons for filtering the map', false, 'map-filter-button');
         $this->registerArgument('consentButtonClass', 'string', 'The class of the consent button', false, 'map-consent-button');
+        $this->registerArgument('cookieName', 'string', 'The name of the consent cookie', false, 'gadgetogoogle-consent');
+        $this->registerArgument('overlay', 'array', 'Configuration array for the overlay', false,);
         $this->registerArgument('settings', 'array', 'The settings array', false, []);
     }
 
@@ -106,6 +108,12 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         /** @var string $consentButtonClass */
         $consentButtonClass = $this->arguments['consentButtonClass'];
 
+        /** @var string $cookieName */
+        $cookieName = $this->arguments['cookieName'];
+
+        /** @var array $overlay */
+        $overlay = $this->arguments['overlay'];
+
         /** @var array $settings */
         $settings = $this->arguments['settings'];
 
@@ -133,6 +141,7 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
             'clusterMarkerContainerId' => $clusterMarkerContainerId,
             'filterButtonClass' => $filterButtonClass,
             'consentButtonClass' => $consentButtonClass,
+            'cookieName' => $cookieName,
             'mapConfig' => array_merge(
                 $mapConfig, [
                     'mapId' => $googleMapsConfig['mapId'],
@@ -143,7 +152,12 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
                 ]
             ),
             'data' => [],
-            'boundaryPositions' => []
+            'boundaryPositions' => [],
+            'overlay' => [
+                'enabled' => $overlay['enabled'] ?? false,
+                'jsonCoordinates' => json_decode($overlay['jsonCoordinates'], true) ?? [],
+                'fillStyle' => $overlay['fillStyle'] ?? 'rgba(255, 255, 255, 0.5)',
+            ]
         ];
 
         /*
@@ -173,8 +187,12 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
      */
     protected function buildItemDataArray (FilterableInterface $item, array &$configuration, array $settings = []): bool
     {
+
         if (
-            ($item->getFilterCategory())
+            (
+                ($item->getFilterCategory())
+                || ($item->getCategories())
+            )
             && (
                 $item->getLatitude()
                 && $item->getLongitude()
@@ -189,9 +207,18 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
 
             // build string of selected searchTypes
             $categories = [];
-            /** @var \TYPO3\CMS\Extbase\DomainObject\AbstractEntity $type */
-            foreach ($item->getFilterCategory() as $type) {
-                $categories[] = $type->getUid();
+            if ($item->getCategories()) {
+                /** @var \Madj2k\GadgetoGoogle\Domain\Model\Category $type */
+                foreach ($item->getCategories() as $category) {
+                    $categories[] = $category->getUid();
+                }
+
+                // deprecated version
+            } else {
+                /** @var \TYPO3\CMS\Extbase\DomainObject\AbstractEntity $type */
+                foreach ($item->getFilterCategory() as $type) {
+                    $categories[] = $type->getUid();
+                }
             }
 
             if (! is_array($configuration['data'])) {

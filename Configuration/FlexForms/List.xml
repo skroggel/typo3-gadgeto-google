@@ -33,34 +33,30 @@
                         </config>
                     </settings.maxPages>
                     <settings.hidePagination>
-                        <label>
-                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.hidePagination
-                        </label>
+                        <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.hidePagination</label>
                         <config>
                             <type>check</type>
                             <items type="array">
                                 <numIndex index="0" type="array">
-                                    <numIndex index="0"></numIndex>
-                                    <numIndex index="1"></numIndex>
+                                    <label></label>
+                                    <value></value>
                                 </numIndex>
                             </items>
                         </config>
                     </settings.hidePagination>
                     <settings.layout>
-                        <label>
-                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout
-                        </label>
+                        <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout</label>
                         <config>
                             <type>select</type>
                             <renderType>selectSingle</renderType>
                             <items type="array">
                                 <numIndex index="0" type="array">
-                                    <numIndex index="0">LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.default</numIndex>
-                                    <numIndex index="1">default</numIndex>
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.default</label>
+                                    <value>default</value>
                                 </numIndex>
                                 <numIndex index="1" type="array">
-                                    <numIndex index="0">LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.big</numIndex>
-                                    <numIndex index="1">big</numIndex>
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.big</label>
+                                    <value>big</value>
                                 </numIndex>
                             </items>
                         </config>

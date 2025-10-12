@@ -17,6 +17,7 @@ namespace Madj2k\GadgetoGoogle\Hooks;
 use Madj2k\GadgetoGoogle\Service\GeolocationService;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class TceMainHooks
@@ -58,8 +59,21 @@ class TceMainHooks
                 if ($geolocationService->insertDataFromRecord($table, $id, $fieldArray)) {
                     $geolocationService->setApiCallType(GeolocationService::API_CALL_TYPE_ADDRESS)
                         ->fetchData();
-                    $fieldArray['longitude'] = $geolocationService->getLocation()->getLongitude();
-                    $fieldArray['latitude'] = $geolocationService->getLocation()->getLatitude();
+
+                    if ($longitude = $geolocationService->getLocation()->getLongitude()) {
+                        $fieldArray['longitude'] = (float) $longitude;
+                    }
+                    if ($latitude = $geolocationService->getLocation()->getLatitude()) {
+                        $fieldArray['latitude'] = (float) $latitude;
+                    }
+                }
+
+                // fixing type because of missing possibility to use type=number with more than two digits
+                if (isset($fieldArray['longitude'])) {
+                    $fieldArray['longitude'] = (float) $fieldArray['longitude'];
+                }
+                if (isset($fieldArray['latitude'])) {
+                    $fieldArray['latitude'] = (float) $fieldArray['latitude'];
                 }
             }
         } catch (\Exception $e) {

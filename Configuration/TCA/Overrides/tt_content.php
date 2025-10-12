@@ -42,7 +42,7 @@ call_user_func(
             ) {
 
                 // add flexform to plugin
-                $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+                $GLOBALS['TCA']['tt_content']['types'][$pluginSignature]['showitem'] .= 'pi_flexform';
                 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
                     '*', // wildcard when using third parameter, else use pluginSignature
                     'FILE:' . $flexFormFile,

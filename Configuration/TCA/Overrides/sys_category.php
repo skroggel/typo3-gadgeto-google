@@ -18,7 +18,10 @@ call_user_func(
                         'renderType' => 'selectSingle',
                         'default' => 'default',
                         'items' => [
-                            ['Default', 'default'],
+                            [
+                                'label' => 'Default',
+                                'value' => 'default',
+                            ],
                         ],
 					],
 				],

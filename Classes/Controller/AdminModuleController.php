@@ -78,15 +78,14 @@ final class AdminModuleController extends  \TYPO3\CMS\Extbase\Mvc\Controller\Act
             );
         }
 
-        $this->view->assignMultiple([
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $moduleTemplate->assignMultiple([
             'apiKey' => $googleMapsConfig['apiKey'] ?? '',
             'apiKeyMap' => $googleMapsConfig['apiKeyMap'] ?? '',
             'mapId' => $googleMapsConfig['mapId'] ?? ''
         ]);
 
-        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        return $moduleTemplate->renderResponse('AdminModule/Keys');
 	}
 
 

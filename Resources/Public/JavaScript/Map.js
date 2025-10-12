@@ -102,18 +102,23 @@ export default class GadgetoGoogleMaps {
 
   settings = {
     apiKey: '',
-    filterButtonClass: 'js-gadgetogoogle-map-filter-btn',
-    consentButtonClass: 'js-gadgetogoogle-map-consent-btn',
     mapContainerId: '#tx-gadgetogoogle-map',
     clusterMarkerContainerId: '#tx-gadgetogoogle-map-cluster',
-    cookieName: 'consent-google-map',
+    filterButtonClass: 'js-gadgetogoogle-map-filter-btn',
+    consentButtonClass: 'js-gadgetogoogle-map-consent-btn',
+    cookieName: 'gadgetogoogle-consent',
     mapConfig: {
       zoom: 12,
       mapTypeControl: false,
       streetViewControl: false,
     },
     data: [],
-    boundaryPositions: []
+    boundaryPositions: [],
+    overlay: {
+      enabled: false,
+      jsonCoordinates: null,
+      fillStyle: 'rgba(255, 245, 245, 0.5)'
+    }
   }
   markers = [];
   consent = [];
@@ -121,6 +126,7 @@ export default class GadgetoGoogleMaps {
   clusterRenderer = null;
   markerClusterer = null;
   map = null;
+  canvas = null;
 
   /**
    * @param settings
@@ -250,6 +256,7 @@ export default class GadgetoGoogleMaps {
 
         // re-center and reset zoom
         this.centerMap();
+        this.addOverlay();
 
       } else {
         console.log('No marker-definitions given.');
@@ -433,4 +440,110 @@ export default class GadgetoGoogleMaps {
     // re-center and reset zoom
     this.centerMap();
   }
+
+
+  /**
+   * Draws a semi-transparent overlay on top of the map
+   * and cuts out the region defined in a GeoJSON object.
+   *
+   * The overlay stays fixed in the viewport (does not scroll with the page),
+   * but re-renders its contents as the map is moved or zoomed.
+   *
+   * Requirements:
+   *  - `overlay.enabled` must be true
+   *  - `overlay.jsonCoordinates` must contain valid GeoJSON geometry data
+   */
+  addOverlay() {
+    if (!this.settings.overlay.enabled || !this.settings.overlay.jsonCoordinates) {
+      console.log("Overlay disabled or no coordinates");
+      return;
+    }
+
+    const region = this.settings.overlay.jsonCoordinates.map(([lng, lat]) => new google.maps.LatLng(lat, lng));
+    const fillStyle = this.settings.overlay.fillStyle;
+    const overlay = new google.maps.OverlayView();
+    this.overlay = overlay;
+
+    const addCanvas = () => {
+      const canvas = document.createElement("canvas");
+      canvas.classList.add("map-overlay-canvas");
+      canvas.style.position = "absolute";
+      canvas.style.top = "0";
+      canvas.style.left = "0";
+      canvas.style.pointerEvents = "none";
+      canvas.style.zIndex = "9999";
+
+
+      this.canvas = canvas;
+
+      const container = overlay.getPanes().mapPane; // WICHTIG: mapPane, nicht overlayLayer
+      container.appendChild(canvas);
+    };
+
+
+    const drawCanvas = () => {
+      const projection = overlay.getProjection();
+      if (!projection || !this.canvas) return;
+
+      const canvas = this.canvas;
+      const ctx = canvas.getContext("2d");
+
+      const container = overlay.getPanes().mapPane;
+      const { width: w, height: h } = container.getBoundingClientRect(); // GENAU das brauchen wir!
+
+      canvas.width = w;
+      canvas.height = h;
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = fillStyle;
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+
+      region.forEach((latlng, i) => {
+        const pt = projection.fromLatLngToDivPixel(latlng);
+        if (i === 0) ctx.moveTo(pt.x, pt.y);
+        else ctx.lineTo(pt.x, pt.y);
+      });
+
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalCompositeOperation = "source-over";
+
+      console.log("drawCanvas done:", canvas, canvas.width, canvas.height);
+      canvas.style.border = "2px solid red";
+      canvas.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+    };
+
+
+    const removeCanvas = () => {
+      this.canvas?.remove();
+      this.canvas = null;
+    };
+
+    overlay.onAdd = () => {
+      addCanvas();
+    };
+    overlay.draw = () => {
+      drawCanvas();
+    };
+    overlay.onRemove = () => {
+      removeCanvas();
+    };
+
+    overlay.setMap(this.map);
+
+    this.map.addListener("drag", () => overlay.draw());
+    this.map.addListener("zoom_changed", () => overlay.draw());
+    this.map.addListener("center_changed", () => overlay.draw());
+    this.map.addListener("resize", () => overlay.draw());
+
+    console.log("addOverlay done, overlay instance:", overlay);
+  }
+
+
+
+
+
 }

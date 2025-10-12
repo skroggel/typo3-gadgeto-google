@@ -57,13 +57,13 @@
 				<source>API-Keys and Configuration for Google Maps</source>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.apiKey">
-				<source>API-Key</source>
+				<source>API-Key for Geolocation API</source>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.apiKeyMap">
-				<source>API-Key for Map</source>
+				<source>API-Key for Maps JavaScript API</source>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.mapId">
-				<source>Map-Id</source>
+				<source>Map-Id (Map-Style)</source>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.save">
 				<source>Save</source>
