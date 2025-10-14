@@ -11,14 +11,16 @@
                     
                     <f:comment><!-- Add search for your map --></f:comment>
                     <f:if condition="{settings.showSearch}">
-                        <f:render partial="Top/Search" arguments="{search: search, data: data, settings: settings, 
-                                                                   settingsForLayout: settingsForLayout}" />
+                        <f:render partial="Controls/Search" arguments="{search: search, categories: categories, 
+                                                                        data: data, settings: settings, 
+                                                                        settingsForLayout: settingsForLayout}" />
                     </f:if>
                 
                     <f:comment><!-- Add filters for your map --></f:comment>
                     <f:if condition="!{settings.hideFilter}">
-                        <f:render partial="Top/Filters" arguments="{filterCategories: filterCategories, categories: categories, data: data, 
-                                                                    settings: settings, settingsForLayout: settingsForLayout}" />
+                        <f:render partial="Controls/Filters" arguments="{filterCategories: filterCategories, categories: categories, 
+                                                                         data: data, settings: settings, 
+                                                                         settingsForLayout: settingsForLayout}" />
                     </f:if>
                 
                     <f:comment><!-- Show map --></f:comment>

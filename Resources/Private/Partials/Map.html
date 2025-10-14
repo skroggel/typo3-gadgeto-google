@@ -2,11 +2,12 @@
       xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-    <f:comment><!-- Now add some HTML for the overlays --></f:comment>
     <f:if condition="{locations}">
         <f:then>
+
+            <f:comment><!-- Now add some HTML for the overlays --></f:comment>
             <f:for each="{locations}" as="location">
-                <f:render partial="Map/Overlay"
+                <f:render partial="Map/PinDetails"
                           arguments="{location: location, data: data, settings: settings, settingsForLayout: settingsForLayout}" />
             </f:for>
     
@@ -21,10 +22,10 @@
                   fillStyle: 'rgba(255, 0, 0, 0.5)'
                 }" />     
             --></f:comment>
-            <f:variable name="overlay" value="" />
+            <f:variable name="canvas" value="" />
             <f:if condition="{locationCenter}">
                 <f:then>
-                    <f:render partial="Map/Overlay" 
+                    <f:render partial="Map/PinDetails" 
                               arguments="{location: locationCenter, data: data, settings: settings, settingsForLayout: settingsForLayout}" />
                     
                     <f:render partial="Map/ClusterMarker" 

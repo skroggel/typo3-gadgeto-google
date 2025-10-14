@@ -14,7 +14,29 @@
                               class="map-search-input form-control" />
     
             <f:form.hidden property="lngLatQuery"
-                           class="js-gadgetogoogle-geoposition-field" />            
+                           class="js-gadgetogoogle-geoposition-field" />
+
+        </div>
+        
+        <f:if condition="{categories}">
+            <div class="map-search-location form-element">
+    
+                <label for="tx-gadgetogoogle-search-category-{data.uid}" class="form-label">
+                    <f:translate key="label.findCategory" extensionName="gadgeto_google" />
+                </label>
+                
+                <f:form.select
+                    name="category"
+                    id="tx-gadgetogoogle-search-category-{data.uid}"
+                    options="{categories}"
+                    optionLabelField="title"
+                    optionValueField="uid"
+                    class="form-select form-control"
+                />
+            </div>
+        </f:if>
+
+        <div class="map-search-location form-element">
             
             <button type="submit" class="btn btn-primary">                
                 <f:translate key="label.search" extensionName="gadgeto_google" />

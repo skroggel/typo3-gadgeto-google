@@ -7,7 +7,7 @@
         Add filters for your map
         -->
     </f:comment>
-    <f:if condition="{filterCategories} || {categories}">
+    <f:if condition="({filterCategories} && {filterCategories -> f:count()} > 0) || ({categories} && {categories -> f:count()} > 0)">
         <nav class="map-filter">
             <ul class="map-filter-list">
                 <li class="map-filter-item">

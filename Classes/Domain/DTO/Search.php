@@ -15,6 +15,8 @@ namespace Madj2k\GadgetoGoogle\Domain\DTO;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Madj2k\GadgetoGoogle\Domain\Model\Category;
+
 
 /**
  * Class Search
@@ -43,6 +45,14 @@ final class Search
 	 * @var int
 	 */
 	protected int $radius = 0;
+
+
+
+    /**
+     * @var \Madj2k\GadgetoGoogle\Domain\Model\Category|null
+     */
+    protected Category|null $category = null;
+
 
 
     /**
@@ -126,6 +136,29 @@ final class Search
         }
 
         return false;
+    }
+
+
+    /**
+     * Get category
+     *
+     * @return \Madj2k\GadgetoGoogle\Domain\Model\Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+
+    /**
+     * Set category
+     *
+     * @param \Madj2k\GadgetoGoogle\Domain\Model\Category $category
+     * @return void
+     */
+    public function setCategory(Category $category): void
+    {
+        $this->category = $category;
     }
 
 }
