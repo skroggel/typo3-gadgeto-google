@@ -28,6 +28,11 @@ use Madj2k\GadgetoGoogle\Domain\Model\Category;
  */
 final class Search
 {
+    /**
+     * @var int
+     */
+    protected int $identifier = 0;
+
 
 	/**
 	 * @var string
@@ -47,12 +52,39 @@ final class Search
 	protected int $radius = 0;
 
 
+    /**
+     * @var int
+     */
+    protected int $page = 1;
+
 
     /**
      * @var \Madj2k\GadgetoGoogle\Domain\Model\Category|null
      */
     protected Category|null $category = null;
 
+
+    /**
+     * Get identifier
+     *
+     * @return int
+     */
+    public function getIdentifier(): int
+    {
+        return $this->identifier;
+    }
+
+
+    /**
+     * Set identifier
+     *
+     * @param int $identifier
+     * @return void
+     */
+    public function setIdentifier(int $identifier): void
+    {
+        $this->identifier = $identifier;
+    }
 
 
     /**
@@ -115,27 +147,35 @@ final class Search
 	/**
 	 * Set radius
 	 *
-	 * @param int|null $radius
+	 * @param int $radius
 	 * @return void
 	 */
-	public function setRadius(?int $radius): void
+	public function setRadius(int $radius): void
 	{
-		$this->radius = (int) $radius;
+		$this->radius = $radius;
 	}
 
 
     /**
-     * Is active
+     * Get page
      *
-     * @return bool
+     * @return int
      */
-    public function getIsActive(): bool
+    public function getPage(): int
     {
-        if ($this->getAddressQuery() || $this->getLngLatQuery()) {
-            return true;
-        }
+        return $this->page;
+    }
 
-        return false;
+
+    /**
+     * Set page
+     *
+     * @param int $page
+     * @return void
+     */
+    public function setPage(int $page): void
+    {
+        $this->page = $page;
     }
 
 
@@ -153,12 +193,27 @@ final class Search
     /**
      * Set category
      *
-     * @param \Madj2k\GadgetoGoogle\Domain\Model\Category $category
+     * @param \Madj2k\GadgetoGoogle\Domain\Model\Category|null $category
      * @return void
      */
-    public function setCategory(Category $category): void
+    public function setCategory(Category|null $category): void
     {
         $this->category = $category;
+    }
+
+
+    /**
+     * Is active
+     *
+     * @return bool
+     */
+    public function getIsActive(): bool
+    {
+        if ($this->getAddressQuery() || $this->getLngLatQuery() || $this->getCategory()) {
+            return true;
+        }
+
+        return false;
     }
 
 }

@@ -1,0 +1,31 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
+      data-namespace-typo3-fluid="true"
+>
+
+    <f:if condition="{pagination.nextPageNumber} > 1">
+        <nav class="pagination">
+            <gadgetoGoogle:searchForm
+                class="pagination-form"
+                name="search"
+                object="{search}"
+                section="property-{data.uid}-{lastPaginatedItem.uid}"
+                method="POST"
+            >
+    
+                <f:form.hidden property="addressQuery" />
+                <f:form.hidden property="lngLatQuery" />
+                <f:form.hidden property="radius" />
+                <f:form.hidden property="category" />
+    
+                <f:form.button
+                    property="page"
+                    value="{search.page + 1}"
+                    class="pagination-more"
+                >
+                    <f:translate key="pagination.more" extensionName="gadgetoGoogle"/>
+                </f:form.button>
+            </gadgetoGoogle:searchForm>
+        </nav>
+    </f:if>
+</html>

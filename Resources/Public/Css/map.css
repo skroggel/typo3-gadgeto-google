@@ -31,11 +31,15 @@
     font-size: 14px;
     gap: 15px;
     height: 30px;
+    width: 30px;
     justify-content: center;
     padding: 4px;
     position: relative;
     transition: all 0.3s ease-out;
-    width: 30px;
+}
+
+.map-marker:has(.map-marker-icon-label--cluster) {
+    transform: scale(2);
 }
 
 .map-marker::after {
@@ -69,6 +73,7 @@
     display:none;
 }
 
+.map-marker-icon-label--cluster,
 .map-marker-icon-label.cluster {
     display: inline;
     color: #fff;

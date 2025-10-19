@@ -1,0 +1,15 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+    <f:flashMessages as="flashMessages">
+        <f:if condition="{flashMessages}">
+            <div class="typo3-messages" role="alert">
+                <f:for each="{flashMessages}" as="flashMessage">
+                    <div class="alert alert-{flashMessage.severity.cssClass}">
+                        <p><f:format.raw>{flashMessage.message}</f:format.raw></p>
+                    </div>
+                </f:for>
+            </div>
+        </f:if>
+    </f:flashMessages>
+
+</html>

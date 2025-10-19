@@ -102,6 +102,7 @@ export default class GadgetoGoogleMaps {
 
   settings = {
     apiKey: '',
+    instanceContainerId: '#tx-gadgetogoogle-map-instance',
     mapContainerId: '#tx-gadgetogoogle-map',
     clusterMarkerContainerId: '#tx-gadgetogoogle-map-cluster',
     filterButtonClass: 'js-gadgetogoogle-map-filter-btn',
@@ -127,13 +128,18 @@ export default class GadgetoGoogleMaps {
   markerClusterer = null;
   map = null;
   canvas = null;
+  instance = null
 
   /**
    * @param settings
    */
   constructor (settings) {
     this.settings =  {...this.settings, ...settings}
-    this.consent = document.getElementsByClassName(this.settings.consentButtonClass);
+    this.instance = document.getElementById(this.settings.instanceContainerId);
+    this.consent = this.instance
+      ? this.instance.querySelectorAll(`.${this.settings.consentButtonClass}`)
+      : document.querySelectorAll(`.${this.settings.consentButtonClass}`);
+
     if ((this.consent.length === 0)  || (document.cookie.indexOf(this.settings.cookieName + '=1') > -1)) {
       this.initApi();
       this.initMap();
@@ -224,8 +230,10 @@ export default class GadgetoGoogleMaps {
           });
         }
 
-        // init filters
-        this.filters = document.getElementsByClassName(this.settings.filterButtonClass);
+        // init filters based on instance - or use fallback
+        this.filters = this.instance
+          ? this.instance.querySelectorAll(`.${this.settings.filterButtonClass}`)
+          : document.querySelectorAll(`.${this.settings.filterButtonClass}`);
         const self = this;
         if (this.filters) {
           Array.from(this.filters).forEach((filter) => {

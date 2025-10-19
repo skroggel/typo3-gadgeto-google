@@ -1,15 +1,9 @@
 # Gadgeto Google
 
-**Gadgeto Google** is a powerful TYPO3 extension that provides utilities for integrating the Google Geolocation API and Google Maps into your TYPO3 installation. It allows automatic geolocation of records, map display with filters, consent management, and full customization via Fluid templates.
-
----
-
-**IMPORTANT - BREAKING CHANGE:**
-
-Add the following classes to your HTML elements:
-
-- `js-gadgetogoogle-map-consent-btn`: Consent button that enables the map
-- `js-gadgetogoogle-map-filter-btn`: Filter buttons interacting with the map
+**Gadgeto Google** is a powerful TYPO3 extension that provides utilities for integrating the
+Google Geolocation API and Google Maps into your TYPO3 installation.
+It allows automatic geolocation of records, map display with filters, consent management,
+and full customization via Fluid templates.
 
 ---
 
@@ -29,6 +23,37 @@ Add the following classes to your HTML elements:
 - Backend-ordered list of locations by category
 - Extendable with your own models and repositories
 - PageTS and TypoScript configuration for dynamic behavior
+
+---
+## ❗Breaking Changes
+
+
+**IMPORTANT - BREAKING CHANGES v13:**
+
+New template-structure. If you need to use the old templates, set the following TypoScript config via constants:
+
+```constants
+plugin.tx_gadgetogoogle {
+
+	view {
+		# cat=plugin.tx_gadgetogoogle/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:gadgeto_google/Resources/Private/v12/Templates/
+
+		# cat=plugin.tx_gadgetogoogle/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:gadgeto_google/Resources/Private/v12/Partials/
+
+		# cat=plugin.tx_gadgetogoogle/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:gadgeto_google/Resources/Private/v12/Layouts/
+	}
+}
+```
+
+**IMPORTANT - BREAKING CHANGES v12:**
+
+Add the following classes to your HTML elements:
+
+- `js-gadgetogoogle-map-consent-btn`: Consent button that enables the map
+- `js-gadgetogoogle-map-filter-btn`: Filter buttons interacting with the map
 
 ---
 

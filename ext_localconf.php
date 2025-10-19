@@ -21,7 +21,27 @@ call_user_func(
             [\Madj2k\GadgetoGoogle\Controller\LocationController::class => 'list'],
 
             // non-cacheable actions
-            [\Madj2k\GadgetoGoogle\Controller\LocationController::class => ''],
+            [],
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            $extKey,
+            'Detail',
+            [\Madj2k\GadgetoGoogle\Controller\LocationController::class => 'detail'],
+
+            // non-cacheable actions
+            [],
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            $extKey,
+            'Teaser',
+            [\Madj2k\GadgetoGoogle\Controller\LocationController::class => 'teaser'],
+
+            // non-cacheable actions
+            [],
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
         );
 
@@ -34,14 +54,16 @@ call_user_func(
         //=================================================================
         // cHash
         //=================================================================
-        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = '^tx_gadgetogoogle_map[search]';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = '^gadgetogoogle_map[search]';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'gadgetogoogle_map[location]';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'gadgetogoogle_detail[location]';
 
         //=================================================================
         // Register Logger
         //=================================================================
         $GLOBALS['TYPO3_CONF_VARS']['LOG']['Madj2k']['GadgetoGoogle']['writerConfiguration'] = [
 
-            \TYPO3\CMS\Core\Log\LogLevel::INFO => [
+            \TYPO3\CMS\Core\Log\LogLevel::WARNING => [
                 // add a FileWriter
                 'TYPO3\\CMS\\Core\\Log\\Writer\\FileWriter' => [
                     // configuration for the writer

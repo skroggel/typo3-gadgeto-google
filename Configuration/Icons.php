@@ -7,6 +7,8 @@ foreach (
 [
     'gadgetogoogle-plugin-map' => 'gadgetogoogle-plugin-map.svg',
     'gadgetogoogle-plugin-list' => 'gadgetogoogle-plugin-list.svg',
+    'gadgetogoogle-plugin-detail' => 'gadgetogoogle-plugin-detail.svg',
+    'gadgetogoogle-plugin-teaser' => 'gadgetogoogle-plugin-teaser.svg',
 ] as $identifier => $path) {
     $iconList[$identifier] = [
         'provider' => SvgIconProvider::class,

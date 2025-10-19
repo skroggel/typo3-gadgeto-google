@@ -25,7 +25,7 @@ return [
 	'types' => [
         '1' => ['showitem' =>
             TcaUtility::removeFieldsByExtConf(
-                'label, sub_label, company, --palette--;;person, --palette--;;address, --palette--;;phone, --palette--;;contact, image, --palette--;;geo_position, --palette--;;filter,
+                'label, sub_label, company, slug, --palette--;;person, --palette--;;address, --palette--;;phone, --palette--;;contact, image, --palette--;;geo_position, --palette--;;filter,
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource,
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden, starttime, endtime
                 '
@@ -81,6 +81,23 @@ return [
 				'type' => 'passthrough',
 			],
 		],
+        'slug' => [
+            'exclude' => true,
+            'label' => $ll . 'tx_gadgetogoogle_domain_model_location.slug',
+            'config' => [
+                'type' => 'slug',
+                'size' => 50,
+                'eval' => 'uniqueInSite',
+                'generatorOptions' => [
+                    'fields' => ['label'],
+                    'replacements' => [
+                        '/' => '-',
+                    ],
+                ],
+                'fallbackCharacter' => '-',
+                'prependSlash' => false,
+            ],
+        ],
 		'label' => [
 			'exclude' => false,
 			'label' => $ll . 'tx_gadgetogoogle_domain_model_location.label',

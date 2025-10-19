@@ -1,7 +1,7 @@
 mod.wizards.newContentElement.wizardItems.gadgetogoogle {
     header = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:contentElementWizward.header
     elements {
-		map {
+		gadgetogoogle_map {
 			iconIdentifier = gadgetogoogle-plugin-map
 			title = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_map.title
 			description = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_map.description
@@ -9,12 +9,28 @@ mod.wizards.newContentElement.wizardItems.gadgetogoogle {
 				CType = gadgetogoogle_map
 			}
 		}
-        list {
+        gadgetogoogle_list {
             iconIdentifier = gadgetogoogle-plugin-list
             title = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_list.title
             description = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_list.description
             tt_content_defValues {
                 CType = gadgetogoogle_list
+            }
+        }
+        gadgetogoogle_detail {
+            iconIdentifier = gadgetogoogle-plugin-detail
+            title = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_detail.title
+            description = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_detail.description
+            tt_content_defValues {
+                CType = gadgetogoogle_detail
+            }
+        }
+        gadgetogoogle_teaser {
+            iconIdentifier = gadgetogoogle-plugin-teaser
+            title = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_teaser.title
+            description = LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:plugin.tx_gadgetogoogle_teaser.description
+            tt_content_defValues {
+                CType = gadgetogoogle_teaser
             }
         }
     }

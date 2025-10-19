@@ -1,0 +1,29 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <f:comment>
+        <!--
+        Add filters for your map
+        -->
+    </f:comment>
+    <f:if condition="{filterCategories}">
+        <nav class="map-filter">
+            <ul class="map-filter-list">
+                <li class="map-filter-item">
+                    <f:comment><!-- The empty category data-attribute clears the filter --></f:comment>
+                    <button class="map-filter-button active" data-category="">
+                        <f:translate key="label.showAll" extensionName="gadgeto_google" />
+                    </button>
+                </li>
+                <f:for each="{filterCategories}" as="filterCategory">
+                    <li class="map-filter-item">
+                        <f:comment><!-- The category data-attribute sets the filter --></f:comment>
+                        <button class="map-filter-button js-gadgetogoogle-map-filter-btn" 
+                                data-category="{filterCategory.uid}">{filterCategory.label}</button>
+                    </li>
+                </f:for>
+            </ul>
+        </nav>
+    </f:if>
+</html>

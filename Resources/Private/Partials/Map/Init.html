@@ -7,7 +7,7 @@
 
             <f:comment><!-- Now add some HTML for the overlays --></f:comment>
             <f:for each="{locations}" as="location">
-                <f:render partial="Map/PinDetails"
+                <f:render partial="Map/Marker"
                           arguments="{location: location, data: data, settings: settings, settingsForLayout: settingsForLayout}" />
             </f:for>
     
@@ -18,24 +18,33 @@
                 Example for an additional canvas-config with a raw red mask around Germany
                 <f:variable name="canvas" value="{
                   enabled: true,
-                  jsonCoordinates: '[[5.866,47.270],[5.866,55.059],[9.921,55.059],[14.988,55.009],[15.041,50.743],[13.095,48.555],[10.454,47.270],[5.866,47.270]]',
+                  jsonFile: 'EXT:gadgeto_google/Resources/Private/Partials/Map/CanvasExample.json',
                   fillStyle: 'rgba(255, 0, 0, 0.5)'
                 }" />     
             --></f:comment>
             <f:variable name="canvas" value="" />
             <f:if condition="{locationCenter}">
                 <f:then>
-                    <f:render partial="Map/PinDetails" 
+                    <f:render partial="Map/Marker" 
                               arguments="{location: locationCenter, data: data, settings: settings, settingsForLayout: settingsForLayout}" />
                     
-                    <f:render partial="Map/ClusterMarker" 
+                    <f:render partial="Map/MarkerCluster" 
                               arguments="{data: data, settings: settings, settingsForLayout: settingsForLayout}" />
-                    <gadgetoGoogle:googleMaps locations="{locations}" locationCenter="{locationCenter}" settings="{settings}" canvas="{canvas}"/>
+                    <gadgetoGoogle:googleMaps locations="{locations}" 
+                                              locationCenter="{locationCenter}" 
+                                              settings="{settings}" 
+                                              data="{data}"
+                                              canvas="{canvas}"
+                    />
                 </f:then>
                 <f:else>
-                    <f:render partial="Map/ClusterMarker" 
+                    <f:render partial="Map/MarkerCluster" 
                               arguments="{data: data, settings: settings, settingsForLayout: settingsForLayout}" />
-                    <gadgetoGoogle:googleMaps locations="{locations}" settings="{settings}" canvas="{canvas}"/>
+                    <gadgetoGoogle:googleMaps locations="{locations}" 
+                                              settings="{settings}"
+                                              data="{data}"
+                                              canvas="{canvas}"
+                    />
                 </f:else>
             </f:if>
     
@@ -45,9 +54,9 @@
         </f:then>
         <f:else>
             <f:if condition="{search.isActive}">
-                <div class="alert alert-warning" role="alert">
-                    <p><f:translate key="label.noResults" extensionName="gadgeto_google" /></p>
-                </div>
+                <f:render partial="AlertMessage"
+                          arguments="{message: '{f:translate(key: \'label.noResults\', extensionName: \'gadgetoGoogle\')}', severity: 'warning', 
+                                      data: data, settings: settings, settingsForLayout: settingsForLayout}" />
             </f:if>
         </f:else>
     </f:if>

@@ -11,6 +11,12 @@ call_user_func(
             'List' => [
                 'flexFormFile' => 'List',
             ],
+            'Detail' => [
+                'flexFormFile' => 'Detail',
+            ],
+            'Teaser' => [
+                'flexFormFile' => 'Teaser',
+            ],
         ];
 
         foreach ($pluginConfig as $pluginName => $pluginSettings) {

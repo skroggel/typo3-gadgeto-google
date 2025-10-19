@@ -18,10 +18,10 @@ plugin.tx_gadgetogoogle {
 	}
 
 	persistence {
-		storagePid = {$plugin.tx_gadgetogoogle.persistence.storagePid}
+		# storagePid = {$plugin.tx_gadgetogoogle.persistence.storagePid}
 
 		# In order to make the manual selection in BE work, we need to completely remove this setting here
-		# storagePid >
+		storagePid >
 	}
 
 	settings {
@@ -41,8 +41,17 @@ plugin.tx_gadgetogoogle_map {
         pluginNamespace = gadgetogoogle_map
     }
     settings {
-        maxSearchRadius = {$plugin.tx_gadgetogoogle.settings.maxSearchRadius}
-        maxSearchDisplayRadius = {$plugin.tx_gadgetogoogle.settings.maxSearchDisplayRadius}
+        showSearch = {$plugin.tx_gadgetogoogle_map.settings.showSearch}
+        maxSearchRadius = {$plugin.tx_gadgetogoogle_map.settings.maxSearchRadius}
+        maxSearchDisplayRadius = {$plugin.tx_gadgetogoogle_map.settings.maxSearchDisplayRadius}
+        showList = {$plugin.tx_gadgetogoogle_map.settings.showList}
+        hideFilter = {$plugin.tx_gadgetogoogle_map.settings.hideFilter}
+        listStyle = {$plugin.tx_gadgetogoogle_list.settings.listStyle}
+        layout = {$plugin.tx_gadgetogoogle_map.settings.layout}
+
+        layoutOverride.default {
+            // overrides for layout "default"
+        }
     }
 }
 
@@ -52,9 +61,22 @@ plugin.tx_gadgetogoogle_list {
         pluginNamespace = gadgetogoogle_list
     }
     settings {
-        maxResultsPerPage = {$plugin.tx_gadgetogoogle.settings.maxResultsPerPage}
-        maxPages = {$plugin.tx_gadgetogoogle.settings.maxPages}
-        hidePagination = {$plugin.tx_gadgetogoogle.settings.hidePagination}
+        maxResultsPerPage = {$plugin.tx_gadgetogoogle_list.settings.maxResultsPerPage}
+        maxPages = {$plugin.tx_gadgetogoogle_list.settings.maxPages}
+        hidePagination = {$plugin.tx_gadgetogoogle_list.settings.hidePagination}
+        listStyle = {$plugin.tx_gadgetogoogle_list.settings.listStyle}
+        layout = {$plugin.tx_gadgetogoogle_list.settings.layout}
+    }
+}
+
+plugin.tx_gadgetogoogle_teaser < plugin.tx_gadgetogoogle
+plugin.tx_gadgetogoogle_teaser {
+    view {
+        pluginNamespace = gadgetogoogle_teaser
+    }
+    settings {
+        listStyle = {$plugin.tx_gadgetogoogle_teaser.settings.listStyle}
+        layout = {$plugin.tx_gadgetogoogle_teaser.settings.layout}
     }
 }
 

@@ -16,11 +16,13 @@ namespace Madj2k\GadgetoGoogle\Controller;
  */
 
 
+use Madj2k\GadgetoGoogle\Domain\DTO\Search;
+use Madj2k\GadgetoGoogle\Domain\Model\Location;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
-use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class LocationController
@@ -34,55 +36,41 @@ final class LocationController extends  AbstractController
 {
 
     /**
-     * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer|null $currentContentObject
-     */
-    protected ?ContentObjectRenderer $currentContentObject = null;
-
-
-    /**
-     * @var \TYPO3\CMS\Core\Site\Entity\SiteLanguage|null
-     */
-    protected ?SiteLanguage $siteLanguage = null;
-
-
-    /**
-     * Set globally used objects
-     */
-    protected function initializeAction(): void
-    {
-        $this->currentContentObject = $this->request->getAttribute('currentContentObject');
-        $this->siteLanguage = $this->request->getAttribute('language');
-    }
-
-
-    /**
-     * Assign default variables to view
-     */
-    protected function initializeView(): void
-    {
-        $this->view->assign('data', $this->currentContentObject->data);
-    }
-
-
-    /**
      * action list
      *
-     * @param int $currentPage
+     * @param int $currentPage // old version
+     * @param Search|null $search
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function listAction(int $currentPage = 1): ResponseInterface
+    public function listAction(int $currentPage = 1, ?Search $search = null): ResponseInterface
     {
+        // check identifier - this way the plugin can be used multiple times on the same page
+        if (
+            (! $search)
+            || ($search->getIdentifier() != $this->currentContentObject->data['uid'])
+        ){
+            $search = GeneralUtility::makeInstance(\Madj2k\GadgetoGoogle\Domain\DTO\Search::class);
+        }
 
         /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $locations */
         $locations = $this->locationRepository->findAll();
 
         $maxItemsPerPage = (int) $this->settings['maxResultsPerPage'] ?? 10;
         $maxPages = (int) $this->settings['maxPages'] ?? 3;
+        $page = $this->request->hasArgument('currentPage')
+            ? $currentPage
+            : $search->getPage();
+
+        // if paginationStyle = more: since we only load more, we always start at the first page
+        if ($this->settings['paginationStyle'] == 'More') {
+            $maxItemsPerPage = $maxItemsPerPage * $page;
+            $page = 1;
+        }
 
         /** @var \TYPO3\CMS\Extbase\Pagination\QueryResultPaginator $paginator */
         $paginator = new QueryResultPaginator(
             $locations,
-            $currentPage,
+            $page,
             $maxItemsPerPage
         );
 
@@ -93,19 +81,61 @@ final class LocationController extends  AbstractController
         );
 
         $this->view->assignMultiple([
+            'search' => $search,
+            'locations' => $locations,
             'paginator' => $paginator,
             'pagination' => $pagination,
+            'lastPaginatedItem' => $locations[$paginator->getKeyOfLastPaginatedItem()] ?? null,
         ]);
 
-        /**
-         * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $currentContentObject
-         */
+        return $this->htmlResponse();
+    }
+
+
+    /**
+     * action teaser
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Doctrine\DBAL\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     */
+    public function teaserAction(): ResponseInterface
+    {
+        /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $locations */
+        $locations = $this->locationRepository->findByConstraints($this->settings['locations'] ?? '');
+
+        $this->view->assignMultiple([
+            'locations' => $locations,
+        ]);
+
+        return $this->htmlResponse();
+    }
+
+
+
+    /**
+     * action detail
+     *
+     * @param \Madj2k\GadgetoGoogle\Domain\Model\Location|null $location
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function detailAction(?Location $location = null): ResponseInterface
+    {
+
+        if (! $location) {
+            $this->view->assign('notFound', true);
+
+            $response = $this->htmlResponse();
+            return $response->withStatus(404);
+        }
+
         $this->view->assignMultiple(
             [
-                'locations' => $locations,
+                'location' => $location,
             ]
         );
 
         return $this->htmlResponse();
+
     }
 }
