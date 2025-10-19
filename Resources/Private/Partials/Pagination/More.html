@@ -12,7 +12,8 @@
                 section="property-{data.uid}-{lastPaginatedItem.uid}"
                 method="POST"
             >
-    
+                
+                <f:form.hidden property="identifier" value="{data.uid}" />
                 <f:form.hidden property="addressQuery" />
                 <f:form.hidden property="lngLatQuery" />
                 <f:form.hidden property="radius" />

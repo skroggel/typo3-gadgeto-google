@@ -11,7 +11,7 @@ call_user_func(
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('sys_category',
 			[
 				'tx_gadgetogoogle_style' => [
-					'exclude' => 0,
+					'exclude' => true,
 					'label' => $ll . 'sys_category.tx_gadgetogoogle_style',
 					'config' => [
                         'type' => 'select',
