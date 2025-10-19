@@ -72,8 +72,8 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         $this->registerArgument('mapContainerId', 'string', 'The id of the DIV for the map', false, 'tx-gadgetogoogle-map');
         $this->registerArgument('clusterMarkerContainerId', 'string', 'The id of the DIV for the cluster-marker', false, 'tx-gadgetogoogle-map-cluster-marker');
         $this->registerArgument('overlayContainerIdPrefix', 'string', 'The prefix for the DIVs which contain the content for the overlay', false, 'tx-gadgetogoogle-map-overlay');
-        $this->registerArgument('filterButtonClass', 'string', 'The class of the buttons for filtering the map', false, 'map-filter-button');
-        $this->registerArgument('consentButtonClass', 'string', 'The class of the consent button', false, 'map-consent-button');
+        $this->registerArgument('filterButtonClass', 'string', 'The class of the buttons for filtering the map', false, 'js-gadgetogoogle-map-filter-btn');
+        $this->registerArgument('consentButtonClass', 'string', 'The class of the consent button', false, 'js-gadgetogoogle-map-consent-btn');
         $this->registerArgument('cookieName', 'string', 'The name of the consent cookie', false, 'gadgetogoogle-consent');
         $this->registerArgument('canvas', 'array', 'Configuration array for an canvas-overlay on the map', false,);
         $this->registerArgument('data', 'array', 'The data array', false, []);
