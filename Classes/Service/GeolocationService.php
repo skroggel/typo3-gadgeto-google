@@ -39,19 +39,19 @@ class GeolocationService implements SingletonInterface
     /**
      * @const string
      */
-    const GOOGLE_API_URL = 'https://maps.google.com/maps/api/geocode/json';
+    const string GOOGLE_API_URL = 'https://maps.google.com/maps/api/geocode/json';
 
 
     /**
      * @const string
      */
-    const API_CALL_TYPE_LNGLAT = 'latlng';
+    const string API_CALL_TYPE_LNGLAT = 'latlng';
 
 
     /**
      * @const string
      */
-    const API_CALL_TYPE_ADDRESS = 'address';
+    const string API_CALL_TYPE_ADDRESS = 'address';
 
 
     /**
@@ -530,10 +530,9 @@ class GeolocationService implements SingletonInterface
         $fieldArrayInternal = $fieldArray;
 
         // do not init data, if longitude or latitude are set because then we most likely have an import going on
-        if (isset($fieldArrayInternal['longitude']) || isset($fieldArrayInternal['latitude'])) {
+        if (!empty($fieldArrayInternal['longitude']) || !empty($fieldArrayInternal['latitude'])) {
             return false;
         }
-
         // check if there is a key match to check if relevant fields from fieldArray have been changed
         $doInit = false;
         foreach ($keyMap as $key => $map) {
@@ -565,7 +564,7 @@ class GeolocationService implements SingletonInterface
             }
 
             // if geolocation is to be set manually, skip from here!
-            if (isset($fieldArrayInternal['manual_lng_lat'])) {
+            if (!empty($fieldArrayInternal['manual_lng_lat'])) {
                 return false;
             }
 

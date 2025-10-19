@@ -20,7 +20,10 @@ use Madj2k\GadgetoGoogle\Domain\DTO\Search;
 use Madj2k\GadgetoGoogle\Domain\Repository\FilterCategoryRepository;
 use Madj2k\GadgetoGoogle\Service\GeolocationService;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class MapController
@@ -50,82 +53,85 @@ final class MapController extends AbstractController
 
 
     /**
-     * Allow mapping of properties to DTO even if no object is submitted (e.g. when using GET)
-     *
-     * @return void
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
-     */
-    public function initializeShowAction(): void
-    {
-        if ($this->arguments->hasArgument('search')) {
-            $propertyMappingConfiguration = $this->arguments->getArgument('search')->getPropertyMappingConfiguration();
-            $propertyMappingConfiguration->allowAllProperties();
-        }
-    }
-
-
-    /**
      * action show
      *
      * @param \Madj2k\GadgetoGoogle\Domain\DTO\Search|null $search
      * @return \Psr\Http\Message\ResponseInterface
      * @throws \Doctrine\DBAL\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
     public function showAction(?Search $search = null): ResponseInterface
     {
+        // check identifier - this way the plugin can be used multiple times on the same page
+        if (
+            (! $search)
+            || ($search->getIdentifier() != $this->currentContentObject->data['uid'])
+        ){
+            $search = GeneralUtility::makeInstance(\Madj2k\GadgetoGoogle\Domain\DTO\Search::class);
+        }
 
-        /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $filterCategories */
-        $filterCategories = $this->filterCategoryRepository->findAll();
-
-        /** @var \Madj2k\GadgetoGoogle\Domain\Model\Location $locationCenter */
-        $locationCenter = $this->locationRepository->findByUid($this->settings['locationCenter']);
-
-        $locations = [];
         if ($search && $search->getIsActive()) {
 
             /** @var \Madj2k\GadgetoGoogle\Service\GeolocationService $geolocationService */
             $geolocationService = GeneralUtility::makeInstance(GeolocationService::class, $this->settings);
 
-            // check if we search by lngLat or address
-            if ($search->getLngLatQuery()) {
-                $geolocationService->setApiCallType(GeolocationService::API_CALL_TYPE_LNGLAT)
-                    ->setRawQuery($search->getLngLatQuery());
+            // check if we search by lngLat or address and fetch coordinates accordingly
+            $longitude = 0.0;
+            $latitude = 0.0;
+            if (($search->getLngLatQuery() ||$search->getAddressQuery())) {
 
-            } else {
-                $geolocationService->setApiCallType(GeolocationService::API_CALL_TYPE_ADDRESS)
-                    ->setRawQuery($search->getAddressQuery());
+                if ($search->getLngLatQuery()) {
+                    $geolocationService->setApiCallType(GeolocationService::API_CALL_TYPE_LNGLAT)
+                        ->setRawQuery($search->getLngLatQuery());
+
+                } else {
+                    $geolocationService->setApiCallType(GeolocationService::API_CALL_TYPE_ADDRESS)
+                        ->setRawQuery($search->getAddressQuery());
+                }
+
+                if ($geolocationService->fetchData()) {
+
+                    /** @var \Madj2k\GadgetoGoogle\Domain\DTO\Location $currentLocation */
+                    $currentLocation = $geolocationService->getLocation();
+
+                    $longitude = $currentLocation->getLongitude();
+                    $latitude = $currentLocation->getLatitude();
+
+                    // delete lngLat-value from search - only used once!
+                    $search->setLngLatQuery('');
+
+                    // set address from result as feedback
+                    $search->setAddressQuery($currentLocation->getAddressAsString());
+                }
             }
 
-            if ($geolocationService->fetchData()) {
-
-                /** @var \Madj2k\GadgetoGoogle\Domain\DTO\Location $currentLocation */
-                $currentLocation = $geolocationService->getLocation();
-                $locations = $this->locationRepository->findByDistance(
-                    $currentLocation->getLongitude(),
-                    $currentLocation->getLatitude(),
-                    (int) $this->settings['maxSearchRadius'] ?: 0
-                );
-
-                // delete lngLat-value from search - only used once!
-                $search->setLngLatQuery('');
-
-                // set address from result as feedback
-                $search->setAddressQuery($currentLocation->getAddressAsString());
-            }
+            $locations = $this->locationRepository->findByConstraints(
+                ($this->settings['locations'] ?? ''),
+                $longitude,
+                $latitude,
+                ($search->getCategory() ?? null),
+                $search->getRadius() ?? ($this->settings['maxSearchRadius'] ?? 0),
+            );
 
         // normal results
         } else {
-            $search = GeneralUtility::makeInstance(\Madj2k\GadgetoGoogle\Domain\DTO\Search::class);
-
-            /** @var array $allLocations */
-            if (! empty($this->settings['locations'])) {
-                $locations = $this->locationRepository->findByUids($this->settings['locations']);
-            } else {
-                $locations = $this->locationRepository->findAll();
-            }
+            $locations = $this->locationRepository->findByUids($this->settings['locations'] ?? '');
         }
+
+        // pagination basics
+        $maxItemsPerPage = (intval($this->settings['maxResultsPerPage']) > 0)
+            ? intval($this->settings['maxResultsPerPage'])
+            : 10;
+
+        // if paginationStyle = more: since we only load more, we always start at the first page
+        $page = $search->getPage();
+        if ($this->settings['paginationStyle'] == 'More') {
+            $maxItemsPerPage = $maxItemsPerPage * $page;
+            $page = 1;
+        }
+
+        $paginator = new ArrayPaginator($locations, $page, $maxItemsPerPage);
+        $pagination = new SimplePagination($paginator);
 
         /**
          * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $currentContentObject
@@ -134,8 +140,15 @@ final class MapController extends AbstractController
             [
                 'search' => $search,
                 'locations' => $locations,
-                'locationCenter' => $locationCenter,
-                'filterCategories' => $filterCategories,
+                'locationCenter' => $this->locationRepository->findByUid($this->settings['locationCenter']),
+                'paginator' => $paginator,
+                'pagination' => $pagination,
+                'lastPaginatedItem' => $locations[$paginator->getKeyOfLastPaginatedItem()] ?? null,
+                'filterCategories' => $this->filterCategoryRepository->findAll(), // deprecated
+                'categories' => $this->locationRepository->findAssignedCategories(
+                    $this->settings['locations'] ?? '',
+                    $this->siteLanguage->getLanguageId()
+                ),
             ]
         );
 

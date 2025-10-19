@@ -18,9 +18,25 @@
 				<source>Locations</source>
 				<target>Standorte</target>
 			</trans-unit>
-			<trans-unit id="label.findLocation">
+			<trans-unit id="label.searchField.addressQuery">
 				<source>Find Location</source>
 				<target>Standort finden</target>
+			</trans-unit>
+			<trans-unit id="label.searchField.radius">
+				<source>Search Radius</source>
+				<target>Suchradius</target>
+			</trans-unit>
+			<trans-unit id="label.searchField.radius.all">
+				<source>All</source>
+				<target>Alle</target>
+			</trans-unit>
+			<trans-unit id="label.searchField.category">
+				<source>Find Category</source>
+				<target>Kategorie finden</target>
+			</trans-unit>
+			<trans-unit id="label.searchField.category.all">
+				<source>All</source>
+				<target>Alle</target>
 			</trans-unit>
 			<trans-unit id="label.search">
 				<source>Search</source>
@@ -33,6 +49,10 @@
 			<trans-unit id="label.noResults">
 				<source>Unfortunately, no matching results could be found.</source>
 				<target>Leider konnten keine passenden Ergebnisse gefunden werden.</target>
+			</trans-unit>
+			<trans-unit id="label.notFound">
+				<source>Unfortunately, the location could not be found.</source>
+				<target>Leider konnte der Standort nicht gefunden werden.</target>
 			</trans-unit>
 
 
@@ -47,6 +67,10 @@
 			<trans-unit id="pagination.page">
 				<source>Page</source>
 				<target>Seite</target>
+			</trans-unit>
+			<trans-unit id="pagination.more">
+				<source>More</source>
+				<target>Mehr</target>
 			</trans-unit>
 
 
@@ -71,22 +95,40 @@
 				<target>API-Keys und Konfiguration für Google Maps</target>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.apiKey">
-				<source>API-Key</source>
-				<target>API-Key</target>
+				<source>API-Key for Geolocation API</source>
+				<target>API-Key für Geolocation API</target>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.apiKeyMap">
-				<source>API-Key for Map</source>
-				<target>API-Key für Karte</target>
+				<source>API-Key for Maps JavaScript API</source>
+				<target>API-Key für Maps JavaScript API</target>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.mapId">
-				<source>Map-Id</source>
-				<target>Map-Id</target>
+				<source>Map-Id (Map-Style)</source>
+				<target>Karten-Id (Kartenstil)</target>
 			</trans-unit>
 			<trans-unit id="templates.adminModule.keys.save">
 				<source>Save</source>
 				<target>Speichern</target>
 			</trans-unit>
 
+
+			<!-- deprecated-->
+			<trans-unit id="label.findLocation">
+				<source>Find Location</source>
+				<target>Standort finden</target>
+			</trans-unit>
+			<trans-unit id="label.findCategory">
+				<source>Find Category</source>
+				<target>Kategorie finden</target>
+			</trans-unit>
+			<trans-unit id="label.findCategory.all">
+				<source>All</source>
+				<target>Alle</target>
+			</trans-unit>
+			<trans-unit id="label.searchRadius">
+				<source>Search Radius</source>
+				<target>Suchradius</target>
+			</trans-unit>
 		</body>
     </file>
 </xliff>

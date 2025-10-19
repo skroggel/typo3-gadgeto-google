@@ -102,18 +102,24 @@ export default class GadgetoGoogleMaps {
 
   settings = {
     apiKey: '',
-    filterButtonClass: 'js-gadgetogoogle-map-filter-btn',
-    consentButtonClass: 'js-gadgetogoogle-map-consent-btn',
+    instanceContainerId: '#tx-gadgetogoogle-map-instance',
     mapContainerId: '#tx-gadgetogoogle-map',
     clusterMarkerContainerId: '#tx-gadgetogoogle-map-cluster',
-    cookieName: 'consent-google-map',
+    filterButtonClass: 'js-gadgetogoogle-map-filter-btn',
+    consentButtonClass: 'js-gadgetogoogle-map-consent-btn',
+    cookieName: 'gadgetogoogle-consent',
     mapConfig: {
       zoom: 12,
       mapTypeControl: false,
       streetViewControl: false,
     },
     data: [],
-    boundaryPositions: []
+    boundaryPositions: [],
+    canvas: {
+      enabled: false,
+      jsonCoordinates: null,
+      fillStyle: 'rgba(255, 245, 245, 0.5)'
+    }
   }
   markers = [];
   consent = [];
@@ -121,13 +127,19 @@ export default class GadgetoGoogleMaps {
   clusterRenderer = null;
   markerClusterer = null;
   map = null;
+  canvas = null;
+  instance = null
 
   /**
    * @param settings
    */
   constructor (settings) {
     this.settings =  {...this.settings, ...settings}
-    this.consent = document.getElementsByClassName(this.settings.consentButtonClass);
+    this.instance = document.getElementById(this.settings.instanceContainerId);
+    this.consent = this.instance
+      ? this.instance.querySelectorAll(`.${this.settings.consentButtonClass}`)
+      : document.querySelectorAll(`.${this.settings.consentButtonClass}`);
+
     if ((this.consent.length === 0)  || (document.cookie.indexOf(this.settings.cookieName + '=1') > -1)) {
       this.initApi();
       this.initMap();
@@ -218,8 +230,10 @@ export default class GadgetoGoogleMaps {
           });
         }
 
-        // init filters
-        this.filters = document.getElementsByClassName(this.settings.filterButtonClass);
+        // init filters based on instance - or use fallback
+        this.filters = this.instance
+          ? this.instance.querySelectorAll(`.${this.settings.filterButtonClass}`)
+          : document.querySelectorAll(`.${this.settings.filterButtonClass}`);
         const self = this;
         if (this.filters) {
           Array.from(this.filters).forEach((filter) => {
@@ -250,6 +264,7 @@ export default class GadgetoGoogleMaps {
 
         // re-center and reset zoom
         this.centerMap();
+        this.initCanvas();
 
       } else {
         console.log('No marker-definitions given.');
@@ -433,4 +448,89 @@ export default class GadgetoGoogleMaps {
     // re-center and reset zoom
     this.centerMap();
   }
+
+
+  /**
+   * Draws a canvas on top of the map
+   * and cuts out the region defined in a GeoJSON object.
+   *
+   * The canvas stays fixed in the viewport (does not scroll with the page),
+   * but re-renders its contents as the map is moved or zoomed.
+   */
+  initCanvas() {
+    if (!this.settings.canvas.enabled || !this.settings.canvas.jsonCoordinates) return;
+
+    const coords = this.settings.canvas.jsonCoordinates;
+    const region = coords.map(([lng, lat]) => new google.maps.LatLng(lat, lng));
+    const map = this.map;
+    const fillStyle = this.settings.canvas.fillStyle;
+
+    const overlay = new google.maps.OverlayView();
+    overlay.onAdd = function () {
+      const canvas = document.createElement("canvas");
+      canvas.style.pointerEvents = "none";
+      canvas.style.position = "absolute";
+      canvas.style.top = "0";
+      canvas.style.left = "0";
+      canvas.style.transform = "translate(-50%, -50%)"; // Correction from center of map
+      canvas.style.zIndex = "0";
+
+      this.canvas = canvas;
+
+      const panes = this.getPanes();
+      panes.overlayLayer.appendChild(canvas);
+    };
+
+    overlay.draw = function () {
+      const projection = this.getProjection();
+      if (!projection || !this.canvas) return;
+
+      const canvas = this.canvas;
+      const ctx = canvas.getContext("2d");
+
+      // Double canvas size to cover all movement directions during dragging
+      const w = map.getDiv().offsetWidth;
+      const h = map.getDiv().offsetHeight;
+      canvas.width = w * 2;
+      canvas.height = h * 2;
+
+      // Shift drawing context so that map center is (0, 0) on the canvas
+      ctx.setTransform(1, 0, 0, 1, w, h);
+
+      // Fill entire canvas with semi-transparent canvas
+      ctx.clearRect(-w, -h, canvas.width, canvas.height);
+      ctx.fillStyle = fillStyle;
+      ctx.fillRect(-w, -h, canvas.width, canvas.height);
+
+      // Cut out the shape of Switzerland from the canvas
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      region.forEach((latlng, i) => {
+        const pt = projection.fromLatLngToDivPixel(latlng);
+        if (i === 0) ctx.moveTo(pt.x, pt.y);
+        else ctx.lineTo(pt.x, pt.y);
+      });
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalCompositeOperation = "source-over"
+    };
+
+    overlay.onRemove = function () {
+      this.canvas?.remove();
+      this.canvas = null;
+    };
+
+    overlay.setMap(map);
+
+    // Trigger Redraw
+    map.addListener("center_changed", () => overlay.draw());
+    map.addListener("zoom_changed", () => overlay.draw());
+    map.addListener("resize", () => overlay.draw());
+  }
+
+
+
+
+
+
 }

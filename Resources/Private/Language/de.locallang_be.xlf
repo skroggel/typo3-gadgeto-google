@@ -24,12 +24,36 @@
 
 			<!-- Plugins -->
 			<trans-unit id="plugin.tx_gadgetogoogle_map.title">
-				<source>Google Map</source>
-				<target>Google Map</target>
+				<source>Google Map with Filters and Search, optional with List</source>
+				<target>Google Map mit Suche und Filtern, optional mit Liste</target>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_map.description">
+				<source>Displays locations on a map, enables a radius search for addresses, and allows filtering by category. The results list can be displayed optionally.</source>
+				<target>Zeigt Orte auf einer Karte an, ermöglicht die Umkreissuche nach Adressen und eine Filterung nach Kategorie. Optional kann die Ergebnisliste angezeigt werden.</target>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_detail.title">
+				<source>Details of a location</source>
+				<target>Details eines Standortes</target>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_detail.description">
+				<source>Shows the detailed view of a single location with all available information.</source>
+				<target>Zeigt die Detailansicht eines einzelnen Standorts mit allen verfügbaren Informationen.</target>
 			</trans-unit>
 			<trans-unit id="plugin.tx_gadgetogoogle_list.title">
-				<source>Listof locations</source>
+				<source>List of locations</source>
 				<target>Liste der Standorte</target>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_list.description">
+				<source>Displays all locations clearly as a list, grouped by category and with a scroll function for large amounts of data.</source>
+				<target>Stellt alle Standorte übersichtlich als Liste dar, gruppiert nach Kategorien und mit Blätterfunktion für große Datenmengen.</target>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_teaser.title">
+				<source>Teaser for locations</source>
+				<target>Teaser für Standorte</target>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_teaser.description">
+				<source>Displays selected locations as teasers. The locations to be displayed can be selected manually in the plugin.</source>
+				<target>Zeigt ausgewählte Standorte als Teaser. Die anzuzeigenden Locations können im Plugin manuell gewählt werden.</target>
 			</trans-unit>
 
 
@@ -49,25 +73,37 @@
 				<source>View</source>
 				<target>Ansicht</target>
 			</trans-unit>
+			<trans-unit id="flexform.tab.list">
+				<source>List</source>
+				<target>Liste</target>
+			</trans-unit>
 			<trans-unit id="flexform.tab.search">
 				<source>Search</source>
 				<target>Suche</target>
 			</trans-unit>
 			<trans-unit id="flexform.settings.locationCenter">
-				<source>Location in Center of Map (otherwise map scales so that all locations are visible)</source>
+				<source>Location in center of map (otherwise map scales so that all locations are visible)</source>
 				<target>Standort im Zentrum der Karte (sonst skaliert Karte sich so, dass alle Standorte sichtbar sind)</target>
 			</trans-unit>
 			<trans-unit id="flexform.settings.locations">
-				<source>Shown Locations (if empty, all locations are shown)</source>
+				<source>Shown locations (if empty, all locations are shown)</source>
 				<target>Angezeigte Standorte (wenn leer, werden alle angezeigt)</target>
 			</trans-unit>
 			<trans-unit id="flexform.settings.showSearch">
-				<source>Show Search</source>
+				<source>Show search</source>
 				<target>Suche anzeigen</target>
 			</trans-unit>
+			<trans-unit id="flexform.settings.showList">
+				<source>Show list</source>
+				<target>Liste anzeigen</target>
+			</trans-unit>
 			<trans-unit id="flexform.settings.hideFilter">
-				<source>Hide Filter</source>
-				<target>Filter ausblenden</target>
+				<source>Hide filter for pins</source>
+				<target>Filter für Pins ausblenden</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.detailPage">
+				<source>Detail page with plugin</source>
+				<target>Detail-Seite mit Plugin</target>
 			</trans-unit>
 			<trans-unit id="flexform.settings.maxSearchRadius">
 				<source>Maximum radius for search (in kilometers, 0 = unlimited)</source>
@@ -92,6 +128,34 @@
 			<trans-unit id="flexform.settings.hidePagination">
 				<source>Hide pagination</source>
 				<target>Pagination ausblenden</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.paginationStyle">
+				<source>Pagination style</source>
+				<target>Paginationstil</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.paginationStyle.default">
+				<source>Default</source>
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.paginationStyle.more">
+				<source>Show more</source>
+				<target>Mehr anzeigen</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.listStyle">
+				<source>List style</source>
+				<target>Listenstil</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.listStyle.default">
+				<source>Default</source>
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.listStyle.teaser">
+				<source>Teaser</source>
+				<target>Teaser</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.listStyle.category">
+				<source>Group by category</source>
+				<target>Nach Kategorien gruppieren</target>
 			</trans-unit>
 			<trans-unit id="flexform.settings.layout">
 				<source>Layout</source>

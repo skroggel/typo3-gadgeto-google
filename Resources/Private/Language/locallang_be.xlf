@@ -20,10 +20,28 @@
 
 			<!-- Plugins -->
 			<trans-unit id="plugin.tx_gadgetogoogle_map.title">
-				<source>Google Map</source>
+				<source>Google Map with Filters and Search, optional with List</source>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_map.description">
+				<source>Displays locations on a map, enables a radius search for addresses, and allows filtering by category. The results list can be displayed optionally.</source>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_detail.title">
+				<source>Details of a location</source>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_detail.description">
+				<source>Shows the detailed view of a single location with all available information.</source>
 			</trans-unit>
 			<trans-unit id="plugin.tx_gadgetogoogle_list.title">
 				<source>List of locations</source>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_list.description">
+				<source>Displays all locations clearly as a list, grouped by category and with a scroll function for large amounts of data.</source>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_teaser.title">
+				<source>Teaser for locations</source>
+			</trans-unit>
+			<trans-unit id="plugin.tx_gadgetogoogle_teaser.description">
+				<source>Displays selected locations as teasers. The locations to be displayed can be selected manually in the plugin.</source>
 			</trans-unit>
 
 
@@ -40,20 +58,29 @@
 			<trans-unit id="flexform.tab.view">
 				<source>View</source>
 			</trans-unit>
+			<trans-unit id="flexform.tab.list">
+				<source>List</source>
+			</trans-unit>
 			<trans-unit id="flexform.tab.search">
 				<source>Search</source>
 			</trans-unit>
 			<trans-unit id="flexform.settings.locationCenter">
-				<source>Location in Center of Map (otherwise map scales so that all locations are visible)</source>
+				<source>Location in center of map (otherwise map scales so that all locations are visible)</source>
 			</trans-unit>
 			<trans-unit id="flexform.settings.locations">
-				<source>Shown Locations</source>
+				<source>Shown locations (if empty, all locations are shown)</source>
 			</trans-unit>
 			<trans-unit id="flexform.settings.showSearch">
-				<source>Show Search</source>
+				<source>Show search</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.showList">
+				<source>Show list</source>
 			</trans-unit>
 			<trans-unit id="flexform.settings.hideFilter">
-				<source>Hide Filter</source>
+				<source>Hide filter for pins</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.detailPage">
+				<source>Detail page with plugin</source>
 			</trans-unit>
 			<trans-unit id="flexform.settings.maxSearchRadius">
 				<source>Maximum radius for search (in kilometers, 0 = unlimited)</source>
@@ -70,8 +97,29 @@
 			<trans-unit id="flexform.settings.maxPages">
 				<source>Maximum number of pages shown</source>
 			</trans-unit>
+			<trans-unit id="flexform.settings.listStyle">
+				<source>List style</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.listStyle.default">
+				<source>Default</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.listStyle.teaser">
+				<source>Teaser</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.listStyle.category">
+				<source>Group by category</source>
+			</trans-unit>
 			<trans-unit id="flexform.settings.hidePagination">
 				<source>Hide pagination</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.paginationStyle">
+				<source>Pagination style</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.paginationStyle.default">
+				<source>Default</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.paginationStyle.more">
+				<source>Show more</source>
 			</trans-unit>
 			<trans-unit id="flexform.settings.layout">
 				<source>Layout</source>

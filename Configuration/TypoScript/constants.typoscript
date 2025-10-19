@@ -19,49 +19,120 @@ plugin.tx_gadgetogoogle {
 	settings {
 
         # cat=plugin.tx_gadgetogoogle//a; type=string; label=ISO country code of the country that is used by default for all addresses if no other value is specified
-        defaultCountry = {$plugin.tx_gadgetogoogle.settings.defaultCountry}
+        defaultCountry = DE
 
         # cat=plugin.tx_gadgetogoogle//a; type=string; label=Proxy for API requests
-        proxy = {$plugin.tx_gadgetogoogle.settings.proxy}
+        proxy =
 
         # cat=plugin.tx_gadgetogoogle//a; type=string; label=Proxy-port for API requests
-        proxyPort = {$plugin.tx_gadgetogoogle.settings.proxyPort}
+        proxyPort =
 
         # cat=plugin.tx_gadgetogoogle//a; type=string; label=Username for proxy for API requests
-        proxyUsername = {$plugin.tx_gadgetogoogle.settings.proxyUsername}
+        proxyUsername =
 
         # cat=plugin.tx_gadgetogoogle//a; type=string; label=Password for proxy for API requests
-        proxyPassword = {$plugin.tx_gadgetogoogle.settings.proxyPassword}
+        proxyPassword =
 	}
 }
+##############################################
+#  gadgeto_google – Base Settings
+##############################################
 
-plugin.tx_gadgetogoogle_map {
+plugin.tx_gadgetogoogle {
 
     settings {
 
-        # cat=plugin.tx_gadgetogoogle//a; type=string; label=Maximum search-radius for the address-search in frontend (in kilometers, default: 0 = no limit)
-        maxSearchRadius = 0
+        # cat=plugin.tx_gadgetogoogle//a; type=string; label=ISO country code used by default for address lookups
+        defaultCountry = DE
 
-        # cat=plugin.tx_gadgetogoogle//a; type=string; label=Maximum radius of results that is shown on the map (in kilometers, default: 100)
-        maxSearchDisplayRadius = 100
+        # cat=plugin.tx_gadgetogoogle//a; type=string; label=Proxy for API requests (optional)
+        proxy =
 
+        # cat=plugin.tx_gadgetogoogle//a; type=integer; label=Proxy port for API requests
+        proxyPort =
+
+        # cat=plugin.tx_gadgetogoogle//a; type=string; label=Proxy username for API requests
+        proxyUsername =
+
+        # cat=plugin.tx_gadgetogoogle//a; type=string; label=Proxy password for API requests
+        proxyPassword =
     }
 }
 
 
 
+##############################################
+#  gadgeto_google – Map Plugin
+##############################################
+
+plugin.tx_gadgetogoogle_map {
+
+    settings {
+
+        # cat=plugin.tx_gadgetogoogle_map//a; type=boolean; label=Show search form in frontend
+        showSearch = 1
+
+        # cat=plugin.tx_gadgetogoogle_map//a; type=integer; label=Maximum search radius for address search (in km, 0 = no limit)
+        maxSearchRadius = 0
+
+        # cat=plugin.tx_gadgetogoogle_map//a; type=integer; label=Maximum radius of displayed results on map (in km)
+        maxSearchDisplayRadius = 100
+
+        # cat=plugin.tx_gadgetogoogle_map//b; type=boolean; label=Show list of locations below the map
+        showList = 1
+
+        # cat=plugin.tx_gadgetogoogle_map//b; type=boolean; label=Hide filter categories in frontend
+        hideFilter = 0
+
+        # cat=plugin.tx_gadgetogoogle_teaser//a; type=string; label=List display style for teaser (Default|Teaser|Category)
+        listStyle = Default
+
+        # cat=plugin.tx_gadgetogoogle_map//b; type=string; label=Layout variant for map view (default|big)
+        layout = default
+    }
+}
+
+
+
+##############################################
+#  gadgeto_google – List Plugin
+##############################################
+
 plugin.tx_gadgetogoogle_list {
 
     settings {
 
-	    # cat=plugin.tx_gadgetogoogle//a; type=integer; label=Maximum number of results
-	    maxResults =
+        # cat=plugin.tx_gadgetogoogle_list//a; type=integer; label=Maximum number of results per page
+        maxResultsPerPage = 10
 
-	    # cat=plugin.tx_gadgetogoogle//a; type=integer; label=Maximum number of results per page
-	    maxResultsPerPage = 10
+        # cat=plugin.tx_gadgetogoogle_list//a; type=integer; label=Maximum number of visible pagination links
+        maxPages = 3
 
-        # cat=plugin.tx_gadgetogoogle//a; type=bool; label=Hide pagination
+        # cat=plugin.tx_gadgetogoogle_list//a; type=boolean; label=Hide pagination
         hidePagination = 0
 
+        # cat=plugin.tx_gadgetogoogle_list//b; type=string; label=List display style (Default|Teaser|Category)
+        listStyle = Category
+
+        # cat=plugin.tx_gadgetogoogle_list//b; type=string; label=Layout variant for list view (default|big)
+        layout = default
+    }
+}
+
+
+
+##############################################
+#  gadgeto_google – Teaser Plugin
+##############################################
+
+plugin.tx_gadgetogoogle_teaser {
+
+    settings {
+
+        # cat=plugin.tx_gadgetogoogle_teaser//a; type=string; label=List display style for teaser (Default|Teaser|Category)
+        listStyle = Teaser
+
+        # cat=plugin.tx_gadgetogoogle_teaser//b; type=string; label=Layout variant for teaser view (default|big)
+        layout = default
     }
 }

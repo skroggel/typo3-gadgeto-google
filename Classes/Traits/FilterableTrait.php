@@ -42,6 +42,12 @@ trait FilterableTrait
 
 
     /**
+     * @var string
+     */
+    protected string $subLabel = '';
+
+
+    /**
      * @var int
      */
     protected int $sorting = 0;
@@ -86,6 +92,29 @@ trait FilterableTrait
 
 
     /**
+     * Sets the subLabel
+     *
+     * @param string $subLabel
+     * @return void
+     */
+    public function setSubLabel(string $subLabel): void
+    {
+        $this->subLabel = $subLabel;
+    }
+
+
+    /**
+     * Returns the subLabel
+     *
+     * @return string
+     */
+    public function getSubLabel(): string
+    {
+        return $this->subLabel;
+    }
+
+
+    /**
      * Sets the label
      *
      * @param string $label
@@ -95,6 +124,7 @@ trait FilterableTrait
     {
         $this->label = $label;
     }
+
 
 
     /**

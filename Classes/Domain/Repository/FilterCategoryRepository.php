@@ -23,6 +23,7 @@ namespace Madj2k\GadgetoGoogle\Domain\Repository;
  * @copyright Steffen Kroggel <developer@steffenkroggel.de>
  * @package Madj2k_GadgetoGoogle
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @deprecated use sys_categories instead
  */
 class FilterCategoryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {

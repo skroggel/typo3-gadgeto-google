@@ -1,0 +1,43 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <f:comment>
+        <!--
+        Add filters for your map
+        -->
+    </f:comment>
+    <f:if condition="({filterCategories} && {filterCategories -> f:count()} > 1) || ({categories} && {categories -> f:count()} > 1} && !{search.category})">
+        <nav class="map-filter">
+            <ul class="map-filter-list">
+                <li class="map-filter-item">
+                    <f:comment><!-- The empty category data-attribute clears the filter --></f:comment>
+                    <button class="map-filter-button active" data-category="">
+                        <f:translate key="label.showAll" extensionName="gadgetoGoogle" />
+                    </button>
+                </li>
+                <f:if condition="{categories}">
+                    <f:then>
+                        <f:for each="{categories}" as="category">
+                            <li class="map-filter-item">
+                                <f:comment><!-- The category data-attribute sets the filter --></f:comment>
+                                <button class="map-filter-button js-gadgetogoogle-map-filter-btn"
+                                        data-category="{category.uid}">{category.title}</button>
+                            </li>
+                        </f:for>
+                    </f:then>
+                    <f:else>
+                        <f:comment><!-- deprecated version --></f:comment>
+                        <f:for each="{filterCategories}" as="filterCategory">
+                            <li class="map-filter-item">
+                                <f:comment><!-- The category data-attribute sets the filter --></f:comment>
+                                <button class="map-filter-button js-gadgetogoogle-map-filter-btn"
+                                        data-category="{filterCategory.uid}">{filterCategory.label}</button>
+                            </li>
+                        </f:for>
+                    </f:else>
+                </f:if>
+            </ul>
+        </nav>
+    </f:if>
+</html>

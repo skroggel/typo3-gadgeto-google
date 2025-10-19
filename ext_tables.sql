@@ -4,6 +4,8 @@
 CREATE TABLE tx_gadgetogoogle_domain_model_location
 (
 	label                varchar(255) DEFAULT '' NOT NULL,
+	sub_label            varchar(255) DEFAULT '' NOT NULL,
+	slug 						     varchar(2048) DEFAULT '' NOT NULL,
 
 	gender               int(11) unsigned NOT NULL default '99',
 	title                varchar(255) DEFAULT '' NOT NULL,

@@ -9,7 +9,6 @@ return [
 		'label' => 'label',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
 		'default_sortby' => 'ORDER BY label ASC',
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
@@ -26,7 +25,7 @@ return [
 	'types' => [
         '1' => ['showitem' =>
             TcaUtility::removeFieldsByExtConf(
-                'label, company, --palette--;;person, --palette--;;address, --palette--;;phone, --palette--;;contact, image, --palette--;;geo_position, --palette--;;filter,
+                'label, sub_label, company, slug, --palette--;;person, --palette--;;address, --palette--;;phone, --palette--;;contact, image, --palette--;;geo_position, --palette--;;filter,
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource,
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden, starttime, endtime
                 '
@@ -56,30 +55,23 @@ return [
 	'columns' => [
 
 		'sys_language_uid' => [
-			'exclude' => false,
 			'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
 			'config' => [
-				'type' => 'select',
-				'renderType' => 'selectSingle',
-				'foreign_table' => 'sys_language',
-				'foreign_table_where' => 'ORDER BY sys_language.title',
-				'items' => [
-					['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages', -1],
-					['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.default_value', 0]
-				],
-                'default' => 0
+                'type' => 'language',
 			],
 		],
 		'l10n_parent' => [
 			'displayCond' => 'FIELD:sys_language_uid:>:0',
-			'exclude' => false,
 			'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
-				'items' => [
-					['', 0],
-				],
+                'items' => [
+                    [
+                        'label' => '',
+                        'value' => 0,
+                    ],
+                ],
 				'foreign_table' => 'tx_gadgetogoogle_domain_model_location',
 				'foreign_table_where' => 'AND tx_gadgetogoogle_domain_model_location.pid=###CURRENT_PID### AND tx_gadgetogoogle_domain_model_location.sys_language_uid IN (-1,0)',
 			],
@@ -89,52 +81,40 @@ return [
 				'type' => 'passthrough',
 			],
 		],
-
-		'hidden' => [
-			'exclude' => false,
-			'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
-			'config' => [
-				'type' => 'check',
-			],
-		],
-		'starttime' => [
-			'exclude' => false,
-			'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
-			'config' => [
-				'type' => 'input',
-                'renderType' => 'inputDateTime',
-				'size' => 13,
-				'eval' => 'datetime',
-				'checkbox' => 0,
-				'default' => 0,
-                'behaviour' => [
-                    'allowLanguageSynchronization' => true
-                ]
-			],
-		],
-		'endtime' => [
-			'exclude' => false,
-			'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
-			'config' => [
-				'type' => 'input',
-                'renderType' => 'inputDateTime',
-				'size' => 13,
-				'eval' => 'datetime',
-				'checkbox' => 0,
-				'default' => 0,
-                'behaviour' => [
-                    'allowLanguageSynchronization' => true
-                ]
-			],
-		],
+        'slug' => [
+            'exclude' => true,
+            'label' => $ll . 'tx_gadgetogoogle_domain_model_location.slug',
+            'config' => [
+                'type' => 'slug',
+                'size' => 50,
+                'eval' => 'uniqueInSite',
+                'generatorOptions' => [
+                    'fields' => ['label'],
+                    'replacements' => [
+                        '/' => '-',
+                    ],
+                ],
+                'fallbackCharacter' => '-',
+                'prependSlash' => false,
+            ],
+        ],
 		'label' => [
 			'exclude' => false,
 			'label' => $ll . 'tx_gadgetogoogle_domain_model_location.label',
 			'config' => [
 				'type' => 'input',
-				'eval' => 'required,trim'
+				'eval' => 'trim',
+                'required' => true,
 			],
 		],
+        'sub_label' => [
+            'exclude' => false,
+            'label' => $ll . 'tx_gadgetogoogle_domain_model_location.sub_label',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+            ],
+        ],
         'title' => [
             'exclude' => false,
             'label' => $ll . 'tx_gadgetogoogle_domain_model_location.title',
@@ -155,11 +135,24 @@ return [
                 'maxitems' => 1,
                 'default' => 99,
                 'items' => [
-                    [$ll . 'tx_gadgetogoogle_domain_model_location.gender.0', '0'],
-                    [$ll . 'tx_gadgetogoogle_domain_model_location.gender.1', '1'],
-                    [$ll . 'tx_gadgetogoogle_domain_model_location.gender.2', '2'],
-                    [$ll . 'tx_gadgetogoogle_domain_model_location.gender.99', '99'],
+                    [
+                        'label' => $ll . 'tx_gadgetogoogle_domain_model_location.gender.0',
+                        'value' => 0,
+                    ],
+                    [
+                        'label' => 'tx_gadgetogoogle_domain_model_location.gender.1',
+                        'value' => 1,
+                    ],
+                    [
+                        'label' => 'tx_gadgetogoogle_domain_model_location.gender.2',
+                        'value' => 2,
+                    ],
+                    [
+                        'label' => 'tx_gadgetogoogle_domain_model_location.gender.99',
+                        'value' => 99,
+                    ],
                 ],
+                'type' => 'language',
             ],
         ],
         'firstname' => [
@@ -185,7 +178,7 @@ return [
             'label' => $ll . 'tx_gadgetogoogle_domain_model_location.company',
             'config' => [
                 'type' => 'input',
-                'eval' => 'trim,required'
+                'eval' => 'trim',
             ],
         ],
         'street' => [
@@ -233,7 +226,10 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['', 0]
+                    [
+                        'label' => '',
+                        'value' => 0,
+                    ],
                 ],
                 'default' => TcaUtility::getDefaultCountryByExtConf(),
                 'foreign_table' => 'static_countries',
@@ -333,9 +329,10 @@ return [
             'exclude' => false,
             'label' => $ll . 'tx_gadgetogoogle_domain_model_location.sorting',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
                 'default' => 0,
-                'eval' => 'required,trim,int'
+                'eval' => 'trim',
+                'required' => true,
             ],
         ],
         'categories' => [
@@ -344,7 +341,7 @@ return [
                 'foreign_table_where' => 'AND {#sys_category}.{#sys_language_uid} IN (-1, 0) AND {#sys_category}.{#pid} = ###CURRENT_PID###',
                 'treeConfig' => [
                     'appearance' => [
-                        'nonSelectableLevels' => '0,1'
+                        'nonSelectableLevels' => '0'
                     ],
                 ]
             ],

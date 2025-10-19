@@ -25,6 +25,12 @@
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.label">
 				<source>Label</source>
 			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.sub_label">
+				<source>Sub-Label</source>
+			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.slug">
+				<source>Slug</source>
+			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.title">
 				<source>Title</source>
 			</trans-unit>

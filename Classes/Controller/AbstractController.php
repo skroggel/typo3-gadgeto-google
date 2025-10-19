@@ -18,6 +18,9 @@ namespace Madj2k\GadgetoGoogle\Controller;
 
 use Madj2k\CatSearch\Domain\Model\FilterableInterface;
 use Madj2k\GadgetoGoogle\Domain\Repository\LocationRepository;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * Class AbstractController
@@ -37,6 +40,18 @@ abstract class AbstractController extends  \TYPO3\CMS\Extbase\Mvc\Controller\Act
 
 
     /**
+     * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer|null $currentContentObject
+     */
+    protected ?ContentObjectRenderer $currentContentObject = null;
+
+
+    /**
+     * @var \TYPO3\CMS\Core\Site\Entity\SiteLanguage|null
+     */
+    protected ?SiteLanguage $siteLanguage = null;
+
+
+    /**
      * @param \Madj2k\GadgetoGoogle\Domain\Repository\LocationRepository $locationRepository
      * @return void
      */
@@ -47,11 +62,26 @@ abstract class AbstractController extends  \TYPO3\CMS\Extbase\Mvc\Controller\Act
 
 
     /**
+     * Set globally used objects
+     */
+    protected function initializeAction(): void
+    {
+        $this->currentContentObject = $this->request->getAttribute('currentContentObject');
+        $this->siteLanguage = $this->request->getAttribute('language');
+
+        if ($this->arguments->hasArgument('search')) {
+            $propertyMappingConfiguration = $this->arguments->getArgument('search')->getPropertyMappingConfiguration();
+            $propertyMappingConfiguration->allowAllProperties();
+        }
+    }
+
+
+    /**
      * Assign default variables to view
      */
     protected function initializeView(): void
     {
-        $this->view->assign('data', $this->request->getAttribute('currentContentObject')->data);
+        $this->view->assign('data', $this->currentContentObject->data);
 
         // check for layout - and for layout of item for detail view!
         $layout = $this->settings['layout'] ?? 'default';
@@ -74,5 +104,6 @@ abstract class AbstractController extends  \TYPO3\CMS\Extbase\Mvc\Controller\Act
             $this->view->assign('settingsForLayout', array_merge($settings, $layoutSettings));
         }
     }
+
 
 }
