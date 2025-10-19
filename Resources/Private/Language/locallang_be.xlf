@@ -82,6 +82,9 @@
 			<trans-unit id="flexform.settings.detailPage">
 				<source>Detail page with plugin</source>
 			</trans-unit>
+			<trans-unit id="flexform.settings.listPage">
+				<source>List page with plugin</source>
+			</trans-unit>
 			<trans-unit id="flexform.settings.maxSearchRadius">
 				<source>Maximum radius for search (in kilometers, 0 = unlimited)</source>
 			</trans-unit>

@@ -105,6 +105,10 @@
 				<source>Detail page with plugin</source>
 				<target>Detail-Seite mit Plugin</target>
 			</trans-unit>
+			<trans-unit id="flexform.settings.listPage">
+				<source>List page with plugin</source>
+				<target>Listen-Seite mit Plugin</target>
+			</trans-unit>
 			<trans-unit id="flexform.settings.maxSearchRadius">
 				<source>Maximum radius for search (in kilometers, 0 = unlimited)</source>
 				<target>Maximaler Suchradius (in Kilometer, 0 = unbegrenzt)</target>
