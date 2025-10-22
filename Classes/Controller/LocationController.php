@@ -43,6 +43,14 @@ final class LocationController extends  AbstractController
      */
     public function listAction(int $currentPage = 1, ?Search $search = null): ResponseInterface
     {
+        // check if there is something in the session
+        if (
+            (! $search)
+            && ($sessionData = $this->getSessionStorage())
+        ){
+            $search = $sessionData['search'] ?? null;
+        }
+
         // check identifier - this way the plugin can be used multiple times on the same page
         if (
             (! $search)
@@ -53,6 +61,13 @@ final class LocationController extends  AbstractController
 
         /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $locations */
         $locations = $this->locationRepository->findAll();
+
+        // Important: store session for detail view
+        $this->setSessionStorage(
+            [
+                'search' => $search,
+                'locations' => $this->locationRepository->getUidListFromObjects($locations)
+            ]);
 
         $maxItemsPerPage = (int) $this->settings['maxResultsPerPage'] ?? 10;
         $maxPages = (int) $this->settings['maxPages'] ?? 3;
@@ -115,15 +130,9 @@ final class LocationController extends  AbstractController
      * action detail
      *
      * @param \Madj2k\GadgetoGoogle\Domain\Model\Location|null $location
-     * @param \Madj2k\GadgetoGoogle\Domain\Model\Location|null $prevLocation
-     * @param \Madj2k\GadgetoGoogle\Domain\Model\Location|null $nextLocation
      * @return ResponseInterface
      */
-    public function detailAction(
-        ?Location $location = null,
-        ?Location $prevLocation = null,
-        ?Location $nextLocation = null
-    ): ResponseInterface {
+    public function detailAction(?Location $location = null): ResponseInterface {
 
         if (! $location) {
             $this->view->assign('notFound', true);
@@ -132,11 +141,25 @@ final class LocationController extends  AbstractController
             return $response->withStatus(404);
         }
 
+        // get previous and next location if we find one in the session
+        $prevNextLocation = [];
+        $search = null;
+        if ($sessionData = $this->getSessionStorage()) {
+            $search = $sessionData['search'] ?? null;
+            if (isset($sessionData['locations'])) {
+                $prevNextLocation = $this->locationRepository->findPrevAndNextObjectsByUidList(
+                    $location,
+                    $sessionData['locations']
+                );
+            }
+        }
+
         $this->view->assignMultiple(
             [
                 'location' => $location,
-                'prevLocation' => $prevLocation,
-                'nextLocation' => $nextLocation,
+                'search' => $search,
+                'prevLocation' => $prevNextLocation['prev'] ?? null,
+                'nextLocation' => $prevNextLocation['next'] ?? null,
             ]
         );
 

@@ -153,6 +153,19 @@ TCEFORM.tt_content.pi_flexform.gadgetogoogle_map.view.settings\.layout {
     // remove option "big"
     removeItems = big
 }
+
+TCEFORM.tt_content.pi_flexform.gadgetogoogle_map.list.settings\.paginationStyle {
+
+    // remove option "More"
+    removeItems = More
+}
+
+TCEFORM.tt_content.pi_flexform.gadgetogoogle_map.list.settings\.listStyle {
+
+    // remove option "Category"
+    removeItems = Category
+}
+
 ```
 
 ---

@@ -19,10 +19,12 @@ use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Madj2k\GadgetoGoogle\Domain\Model\Category;
+use Madj2k\GadgetoGoogle\Domain\Model\Location;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /**
  * Class LocationRepository
@@ -369,6 +371,63 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
         }
 
         return $this->dataMapperForCategories($query->executeQuery()->fetchAllAssociative());
+    }
+
+
+    /**
+     * Extracts a list of UIDs from the given objects and returns them as a comma-separated string.
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array $objects Collection of objects to extract UIDs from. Each object must have a `getUid` method.
+     * @return string A comma-separated string of UIDs.
+     */
+    public function getUidListFromObjects(QueryResultInterface|array $objects): string
+    {
+        /** @var int[] $uids */
+        $uids = [];
+
+        foreach ($objects as $object) {
+            if (method_exists($object, 'getUid')) {
+                $uids[] = (int)$object->getUid();
+            }
+        }
+
+        return implode(',', $uids);
+    }
+
+
+    /**
+     * Finds the previous and next objects relative to a provided location object based on a UID list.
+     *
+     * @param \Madj2k\GadgetoGoogle\Domain\Model\Location $location The reference location object.
+     * @param string $uidList A comma-separated list of UIDs representing the sequence to search within.
+     * @return array An associative array with keys 'prev' and 'next', containing the previous and next objects respectively.
+     *               If there is no previous or next object, the respective value will be null.
+     */
+    public function findPrevAndNextObjectsByUidList(Location $location, string $uidList = ''): array
+    {
+        /** @var int[] $uids */
+        $prev = $next = null;
+        if ($uidList) {
+            $uids = array_map('intval', explode(',', $uidList));
+
+            $index = array_search($location->getUid(), $uids, true);
+
+            if ($index === false) {
+                return ['prev' => null, 'next' => null];
+            }
+
+            $prevUid = $uids[$index - 1] ?? null;
+            $nextUid = $uids[$index + 1] ?? null;
+
+            /** @var \TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface|null $prev */
+            $prev = $prevUid !== null ? $this->findByUid($prevUid) : null;
+
+            /** @var \TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface|null $next */
+            $next = $nextUid !== null ? $this->findByUid($nextUid) : null;
+        }
+
+        return ['prev' => $prev, 'next' => $next];
+
     }
 
 
