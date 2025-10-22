@@ -42,6 +42,9 @@
 			<trans-unit id="label.notFound">
 				<source>Unfortunately, the location could not be found.</source>
 			</trans-unit>
+			<trans-unit id="label.back">
+				<source>Back</source>
+			</trans-unit>
 
 
 			<trans-unit id="pagination.previous">

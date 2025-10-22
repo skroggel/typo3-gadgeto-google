@@ -6,7 +6,12 @@
         {location.street} {location.streetNumber}<br>
         {location.zip} {location.city}<br>
         {location.country}
-    </div>
 
+        <f:link.page
+            pageUid="{settings.listPage}"
+            class="location-detail-cta"
+            title="{f:translate(key:'label.back', extensionName:'gadgetoGoogle')}"
+        ><f:translate key="label.back" extensionName="gadgetoGoogle" /></f:link.page>
+    </div>
 
 </html>

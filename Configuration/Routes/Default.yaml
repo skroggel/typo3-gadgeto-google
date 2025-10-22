@@ -21,17 +21,9 @@ routeEnhancers:
     routes:
       - routePath: '/location-detail/{location}'
         _controller: 'Location::detail'
-      - routePath: '/location-detail-1/{location}/{prevLocation}'
-        _controller: 'Location::detail'
-      - routePath: '/location-detail-2/{location}/{nextLocation}'
-        _controller: 'Location::detail'
-      - routePath: '/location-detail/{location}/{prevLocation}/{nextLocation}'
-        _controller: 'Location::detail'
     defaultController: 'Location::detail'
     requirements:
       location: '^[a-z0-9\-]+$'
-      prevLocation: '[0-9]+'
-      nextLocation: '[0-9]+'
     aspects:
       location:
         type: PersistedAliasMapper

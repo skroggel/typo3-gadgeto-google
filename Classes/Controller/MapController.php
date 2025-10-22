@@ -62,6 +62,14 @@ final class MapController extends AbstractController
      */
     public function showAction(?Search $search = null): ResponseInterface
     {
+        // check if there is something in the session
+        if (
+            (! $search)
+            && ($sessionData = $this->getSessionStorage())
+        ){
+            $search = $sessionData['search'] ?? null;
+        }
+
         // check identifier - this way the plugin can be used multiple times on the same page
         if (
             (! $search)
@@ -117,6 +125,13 @@ final class MapController extends AbstractController
         } else {
             $locations = $this->locationRepository->findByUids($this->settings['locations'] ?? '');
         }
+
+        // Important: store session for detail view
+        $this->setSessionStorage(
+            [
+                'search' => $search,
+                'locations' => $this->locationRepository->getUidListFromObjects($locations)
+            ]);
 
         // pagination basics
         $maxItemsPerPage = (intval($this->settings['maxResultsPerPage']) > 0)

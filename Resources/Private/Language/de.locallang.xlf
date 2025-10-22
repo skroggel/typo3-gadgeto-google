@@ -54,6 +54,10 @@
 				<source>Unfortunately, the location could not be found.</source>
 				<target>Leider konnte der Standort nicht gefunden werden.</target>
 			</trans-unit>
+			<trans-unit id="label.back">
+				<source>Back</source>
+				<target>Zurück</target>
+			</trans-unit>
 
 
 			<trans-unit id="pagination.previous">
