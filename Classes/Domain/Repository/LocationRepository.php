@@ -158,6 +158,8 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
         // search by distance
         if ($longitude && $latitude)  {
             $this->addDistanceConstraints($query, $longitude, $latitude, $maxDistance);
+        } else {
+            $query->orderBy('label', QueryInterface::ORDER_ASCENDING);
         }
 
         // search by category

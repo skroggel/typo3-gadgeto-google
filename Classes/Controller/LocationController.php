@@ -15,7 +15,6 @@ namespace Madj2k\GadgetoGoogle\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
-
 use Madj2k\GadgetoGoogle\Domain\DTO\Search;
 use Madj2k\GadgetoGoogle\Domain\Model\Location;
 use Psr\Http\Message\ResponseInterface;
@@ -112,15 +111,19 @@ final class LocationController extends  AbstractController
     }
 
 
-
     /**
      * action detail
      *
      * @param \Madj2k\GadgetoGoogle\Domain\Model\Location|null $location
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param \Madj2k\GadgetoGoogle\Domain\Model\Location|null $prevLocation
+     * @param \Madj2k\GadgetoGoogle\Domain\Model\Location|null $nextLocation
+     * @return ResponseInterface
      */
-    public function detailAction(?Location $location = null): ResponseInterface
-    {
+    public function detailAction(
+        ?Location $location = null,
+        ?Location $prevLocation = null,
+        ?Location $nextLocation = null
+    ): ResponseInterface {
 
         if (! $location) {
             $this->view->assign('notFound', true);
@@ -132,6 +135,8 @@ final class LocationController extends  AbstractController
         $this->view->assignMultiple(
             [
                 'location' => $location,
+                'prevLocation' => $prevLocation,
+                'nextLocation' => $nextLocation,
             ]
         );
 
