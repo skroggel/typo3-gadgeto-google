@@ -115,15 +115,20 @@ final class MapController extends AbstractController
 
             $locations = $this->locationRepository->findByConstraints(
                 ($this->settings['locations'] ?? ''),
+                $this->currentContentObject->data['pages'] ?? '',
                 $longitude,
                 $latitude,
                 ($search->getCategory() ?? null),
                 $search->getRadius() ?? ($this->settings['maxSearchRadius'] ?? 0),
+
             );
 
         // normal results
         } else {
-            $locations = $this->locationRepository->findByUids($this->settings['locations'] ?? '');
+            $locations = $this->locationRepository->findByUids(
+                $this->settings['locations'] ?? '',
+                $this->currentContentObject->data['pages'] ?? '',
+            );
         }
 
         // Important: store session for detail view
@@ -162,6 +167,7 @@ final class MapController extends AbstractController
                 'filterCategories' => $this->filterCategoryRepository->findAll(), // deprecated
                 'categories' => $this->locationRepository->findAssignedCategories(
                     $this->settings['locations'] ?? '',
+                    $this->currentContentObject->data['pages'] ?? '',
                     $this->siteLanguage->getLanguageId()
                 ),
             ]

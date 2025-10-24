@@ -11,14 +11,13 @@
 
     <f:variable name="cssClasses" value="" />
     <f:for each="{location.categories}" as="category">
-        <f:variable name="cssClasses" value="{cssClasses} map-marker-icon--{category.txGadgetoGoogleStyle}" />
+        <f:variable name="cssClasses" value="{cssClasses} variant-{category.txGadgetoGoogleStyle}" />
     </f:for>
-    
     <template id="tx-gadgetogoogle-map-overlay-{gadgetoGoogle:objectTypeHash(object: location)}-{data.uid}" data-class="map-marker">
         <div class="map-marker-icon {cssClasses}" title="{location.label}">
-            <span class="map-marker-icon-label">{location.label}</span>
+            <span class="map-marker-icon-label {cssClasses}">{location.label}</span>
         </div>
-        <div class="map-marker-details">
+        <div class="map-marker-details {cssClasses}">
             <f:render partial="Location/Item" 
                       section="Pin" 
                       arguments="{location: location, settings: settings, data: data}" />

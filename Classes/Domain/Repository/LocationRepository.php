@@ -81,6 +81,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
     {
         return $this->findByConstraints(
             '',
+            '',
             $longitude,
             $latitude,
             null,
@@ -95,6 +96,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
      * Finds locations by a comma-separated list of UIDs.
      *
      * @param string $uidList Comma-separated list of UIDs
+     * @param string $pidList Optional comma-separated list of PIDs
      * @param int $limit Maximum number of results (0 = unlimited)
      * @param int $offset Result offset (for pagination)
      * @return \Madj2k\GadgetoGoogle\Domain\Model\Location[] Returns an array of Location objects in the given order
@@ -103,10 +105,13 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
      */
     public function findByUids(
         string $uidList = '',
+        string $pidList = '',
         int   $limit = 0,
         int   $offset = 0): array
     {
-        return $this->findByConstraints($uidList,
+        return $this->findByConstraints(
+            $uidList,
+            $pidList,
             0,
             0,
             null,
@@ -123,6 +128,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
      * - by category
      *
      * @param string $uidList Optional comma-separated list of UIDs
+     * @param string $pidList Optional comma-separated list of PIDs
      * @param float $longitude Longitude for distance calculation
      * @param float $latitude Latitude for distance calculation
      * @param \Madj2k\GadgetoGoogle\Domain\Model\Category|null $category Optional category filter
@@ -135,6 +141,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
      */
     public function findByConstraints(
         string $uidList = '',
+        string $pidList = '',
         float $longitude = 0.0,
         float $latitude = 0.0,
         Category $category = null,
@@ -146,6 +153,11 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
         $uidListArray = [];
         if ($uidList) {
             $uidListArray = GeneralUtility::trimExplode(',', $uidList);
+        }
+
+        $pidListArray = [];
+        if ($pidList) {
+            $pidListArray = GeneralUtility::trimExplode(',', $pidList);
         }
 
         /** @var \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool */
@@ -175,6 +187,16 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
                 $queryBuilder->expr()->in(
                     'l.uid',
                     $queryBuilder->createNamedParameter($uidListArray, ArrayParameterType::INTEGER)
+                )
+            );
+        }
+
+        // filter by pidList
+        if ($pidList) {
+            $query->andWhere(
+                $queryBuilder->expr()->in(
+                    'l.pid',
+                    $queryBuilder->createNamedParameter($pidListArray, ArrayParameterType::INTEGER)
                 )
             );
         }
@@ -295,16 +317,25 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
      * Retrieves all categories assigned to one or more location records.
      *
      * @param string $uidList Optional comma-separated list of location UIDs to limit the query
+     * @param string $pidList Optional comma-separated list of PIDs
      * @param int $languageUid Language UID for category localization
      * @return \Madj2k\GadgetoGoogle\Domain\Model\Category[] Returns an array of Category objects assigned to the locations
      * @throws \Doctrine\DBAL\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
-    public function findAssignedCategories(string $uidList = '', int $languageUid = 0): array
-    {
+    public function findAssignedCategories(
+        string $uidList = '',
+        string $pidList = '',
+        int $languageUid = 0
+    ): array {
         $uidListArray = [];
         if ($uidList) {
             $uidListArray = GeneralUtility::trimExplode(',', $uidList);
+        }
+
+        $pidListArray = [];
+        if ($pidList) {
+            $pidListArray = GeneralUtility::trimExplode(',', $pidList);
         }
 
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
@@ -366,6 +397,16 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
                 $queryBuilder->expr()->in(
                     'l.uid',
                     $queryBuilder->createNamedParameter($uidListArray, ArrayParameterType::INTEGER)
+                )
+            );
+        }
+
+        // filter by pidList if given!
+        if ($pidList) {
+            $query->andWhere(
+                $queryBuilder->expr()->in(
+                    'l.pid',
+                    $queryBuilder->createNamedParameter($pidListArray, ArrayParameterType::INTEGER)
                 )
             );
         }
