@@ -54,17 +54,15 @@ trait FilterableTrait
 
 
     /**
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\GadgetoGoogle\Domain\Model\FilterCategory>|\TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy|null
     */
-    protected ObjectStorage|LazyLoadingProxy|null $filterCategory = null;
+    protected ObjectStorage|null $filterCategory = null;
 
 
     /**
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\GadgetoGoogle\Domain\Model\Category>|\TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy|null
      */
-    protected ObjectStorage|LazyLoadingProxy|null $categories = null;
+    protected ObjectStorage|null $categories = null;
 
 
     /**

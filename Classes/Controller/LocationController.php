@@ -40,6 +40,8 @@ final class LocationController extends  AbstractController
      * @param int $currentPage // old version
      * @param Search|null $search
      * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Doctrine\DBAL\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
     public function listAction(int $currentPage = 1, ?Search $search = null): ResponseInterface
     {
@@ -60,7 +62,10 @@ final class LocationController extends  AbstractController
         }
 
         /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $locations */
-        $locations = $this->locationRepository->findAll();
+        $locations = $this->locationRepository->findByConstraints(
+            '',
+            $this->currentContentObject->data['pages'] ?? '',
+        );
 
         // Important: store session for detail view
         $this->setSessionStorage(
