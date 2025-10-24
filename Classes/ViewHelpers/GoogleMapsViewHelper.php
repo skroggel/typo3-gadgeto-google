@@ -67,7 +67,7 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         parent::initializeArguments();
         $this->registerArgument('locations', QueryResultInterface::class, 'The locations to display', true);
         $this->registerArgument('locationCenter', FilterableInterface::class, 'The location that builds the center of the map', false, null);
-        $this->registerArgument('mapConfig', 'array', 'The configuration for the Google Map', false, ['zoom' => 12, 'mapTypeControl' => false, 'streetViewControl' => false, 'scrollwheel' => true, 'options' => ['gestureHandling' => 'cooperative']]);
+        $this->registerArgument('mapConfig', 'array', 'The configuration for the Google Map', false, ['zoom' => 12, 'mapTypeControl' => false, 'streetViewControl' => false, 'scrollwheel' => false, 'options' => ['gestureHandling' => 'cooperative']]);
         $this->registerArgument('instanceContainerId', 'string', 'The id of the DIV around map and filters', false, 'tx-gadgetogoogle-map-instance');
         $this->registerArgument('mapContainerId', 'string', 'The id of the DIV for the map', false, 'tx-gadgetogoogle-map');
         $this->registerArgument('clusterMarkerContainerId', 'string', 'The id of the DIV for the cluster-marker', false, 'tx-gadgetogoogle-map-cluster-marker');
