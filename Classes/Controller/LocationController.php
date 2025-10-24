@@ -81,7 +81,10 @@ final class LocationController extends  AbstractController
             : $search->getPage();
 
         // if paginationStyle = more: since we only load more, we always start at the first page
-        if ($this->settings['paginationStyle'] == 'More') {
+        if (
+            (isset($this->settings['paginationStyle']))
+            && ($this->settings['paginationStyle'] == 'More')
+        ) {
             $maxItemsPerPage = $maxItemsPerPage * $page;
             $page = 1;
         }
