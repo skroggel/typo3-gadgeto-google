@@ -139,13 +139,14 @@ final class MapController extends AbstractController
             ]);
 
         // pagination basics
-        $maxItemsPerPage = (intval($this->settings['maxResultsPerPage']) > 0)
-            ? intval($this->settings['maxResultsPerPage'])
-            : 10;
+        $maxItemsPerPage = (int) $this->settings['maxResultsPerPage'] ?? 10;
 
         // if paginationStyle = more: since we only load more, we always start at the first page
         $page = $search->getPage();
-        if ($this->settings['paginationStyle'] == 'More') {
+        if (
+            (isset($this->settings['paginationStyle']))
+            && ($this->settings['paginationStyle'] == 'More')
+        ){
             $maxItemsPerPage = $maxItemsPerPage * $page;
             $page = 1;
         }
@@ -160,7 +161,7 @@ final class MapController extends AbstractController
             [
                 'search' => $search,
                 'locations' => $locations,
-                'locationCenter' => $this->locationRepository->findByUid($this->settings['locationCenter']),
+                'locationCenter' => $this->locationRepository->findByUid($this->settings['locationCenter'] ?? ''),
                 'paginator' => $paginator,
                 'pagination' => $pagination,
                 'lastPaginatedItem' => $locations[$paginator->getKeyOfLastPaginatedItem()] ?? null,
