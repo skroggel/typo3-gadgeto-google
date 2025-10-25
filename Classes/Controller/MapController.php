@@ -136,7 +136,8 @@ final class MapController extends AbstractController
             [
                 'search' => $search,
                 'locations' => $this->locationRepository->getUidListFromObjects($locations)
-            ]);
+            ]
+        );
 
         // pagination basics
         $maxItemsPerPage = (int) $this->settings['maxResultsPerPage'] ?? 10;
