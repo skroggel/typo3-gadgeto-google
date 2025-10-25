@@ -130,6 +130,12 @@ final class LocationController extends  AbstractController
             'locations' => $locations,
         ]);
 
+        $this->setSessionStorage(
+            [
+                'locations' => $this->locationRepository->getUidListFromObjects($locations)
+            ]
+        );
+
         return $this->htmlResponse();
     }
 
