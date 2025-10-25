@@ -41,7 +41,7 @@ call_user_func(
             [\Madj2k\GadgetoGoogle\Controller\LocationController::class => 'teaser'],
 
             // non-cacheable actions
-            [],
+            [\Madj2k\GadgetoGoogle\Controller\LocationController::class => 'teaser'],
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
         );
 
