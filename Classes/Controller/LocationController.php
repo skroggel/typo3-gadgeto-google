@@ -126,15 +126,15 @@ final class LocationController extends  AbstractController
         /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $locations */
         $locations = $this->locationRepository->findByConstraints($this->settings['locations'] ?? '');
 
-        $this->view->assignMultiple([
-            'locations' => $locations,
-        ]);
-
         $this->setSessionStorage(
             [
                 'locations' => $this->locationRepository->getUidListFromObjects($locations)
             ]
         );
+
+        $this->view->assignMultiple([
+            'locations' => $locations,
+        ]);
 
         return $this->htmlResponse();
     }
