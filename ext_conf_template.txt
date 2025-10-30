@@ -9,3 +9,15 @@ removeFields = filter_category
 
 # cat=Tca; type=string; label=LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:extConf.pluginsWithHeader
 pluginsWithHeader = Map, List
+
+# cat=Seo; type=string; label=LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:extConf.pageTitleFields
+pageTitleFields = seo_label, label, sub_label
+
+# cat=Seo; type=string; label=LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:extConf.pageTitleSeparator
+pageTitleSeparator = –
+
+# cat=Seo; type=boolean; label=LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:extConf.pageTitleIncludePageName
+pageTitleIncludePageName = 1
+
+# cat=Seo; type=boolean; label=LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:extConf.pageTitleCombineFields
+pageTitleCombineFields = 0
