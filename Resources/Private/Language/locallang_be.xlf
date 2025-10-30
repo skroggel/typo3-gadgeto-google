@@ -16,6 +16,18 @@
 			<trans-unit id="extConf.pluginsWithHeader">
 				<source>Comma-separated list of plugins with header-field in the backend.</source>
 			</trans-unit>
+			<trans-unit id="extConf.pageTitleFields">
+				<source>Comma-separated list of fields for generating the page title. First field with data is used.</source>
+			</trans-unit>
+			<trans-unit id="extConf.pageTitleSeparator">
+				<source>Separator for page title.</source>
+			</trans-unit>
+			<trans-unit id="extConf.pageTitleIncludePageName">
+				<source>Add name of website to page title (from site-configurationn, needs pageTitleSeparator set)</source>
+			</trans-unit>
+			<trans-unit id="extConf.pageTitleCombineFields">
+				<source>If set the defined fields in pageTitleFields are combined in the order of their appearence instead of being used as fallbacks-chain (needs pageTitleSeparator set).</source>
+			</trans-unit>
 
 
 			<!-- Plugins -->

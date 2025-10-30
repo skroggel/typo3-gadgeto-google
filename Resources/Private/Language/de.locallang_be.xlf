@@ -20,6 +20,22 @@
 				<source>Comma-separated list of plugins with header-field in the backend.</source>
 				<target>Komma-separarierte Liste von Plugins mit Überschrift-Feld im Backend.</target>
 			</trans-unit>
+			<trans-unit id="extConf.pageTitleFields">
+				<source>Comma-separated list of fields for generating the page title. First field with data is used.</source>
+				<target>Kommaseparierte Liste von Feldern für die Generierung des Seitentitels. Erstes Feld mit Daten wird verwendet.</target>
+			</trans-unit>
+			<trans-unit id="extConf.pageTitleSeparator">
+				<source>Separator for page title.</source>
+				<target>Trennzeichen für Seitentitel.</target>
+			</trans-unit>
+			<trans-unit id="extConf.pageTitleIncludePageName">
+				<source>Add name of website to page title (from site-configurationn, needs pageTitleSeparator set)</source>
+				<target>Namen der Website in Seiten-Titel ergänzen (aus site-configuration, benötigt gesetzten pageTitleSeparator)</target>
+			</trans-unit>
+			<trans-unit id="extConf.pageTitleCombineFields">
+				<source>If set the defined fields in pageTitleFields are combined in the order of their appearence instead of being used as fallbacks-chain (needs pageTitleSeparator set).</source>
+				<target>Wenn gesetzt, werden die in pageTitleFields in der gegebenen Reihenfolge miteinander kombiniert anstatt als Fallbacks-Kette verwendet zu werden (benötigt gesetzten pageTitleSeparator)</target>
+			</trans-unit>
 
 
 			<!-- Plugins -->

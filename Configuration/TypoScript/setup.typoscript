@@ -35,6 +35,10 @@ plugin.tx_gadgetogoogle {
 
 module.tx_gadgetogoogle < plugin.tx_gadgetogoogle
 
+# ================================================================================
+# Plugins
+# ================================================================================
+
 plugin.tx_gadgetogoogle_map < plugin.tx_gadgetogoogle
 plugin.tx_gadgetogoogle_map {
     view {
@@ -80,3 +84,16 @@ plugin.tx_gadgetogoogle_teaser {
     }
 }
 
+
+
+# ================================================================================
+# PageTitleProvider
+# ================================================================================
+config {
+    pageTitleProviders {
+        gadgetoGoogle {
+            provider = Madj2k\GadgetoGoogle\PageTitle\PageTitleProvider
+            before = record, seo, yoastRecord, drSerp
+        }
+    }
+}

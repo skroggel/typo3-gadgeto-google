@@ -25,7 +25,7 @@ return [
 	'types' => [
         '1' => ['showitem' =>
             TcaUtility::removeFieldsByExtConf(
-                'label, sub_label, company, slug, --palette--;;person, --palette--;;address, --palette--;;phone, --palette--;;contact, image, --palette--;;geo_position, --palette--;;filter,
+                'label, sub_label, seo_label, company, slug, --palette--;;person, --palette--;;address, --palette--;;phone, --palette--;;contact, image, --palette--;;geo_position, --palette--;;filter,
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource,
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden, starttime, endtime
                 '
@@ -110,6 +110,14 @@ return [
         'sub_label' => [
             'exclude' => false,
             'label' => $ll . 'tx_gadgetogoogle_domain_model_location.sub_label',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+            ],
+        ],
+        'seo_label' => [
+            'exclude' => false,
+            'label' => $ll . 'tx_gadgetogoogle_domain_model_location.seo_label',
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',

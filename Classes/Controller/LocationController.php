@@ -15,6 +15,7 @@ namespace Madj2k\GadgetoGoogle\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Madj2k\GadgetoGoogle\PageTitle\PageTitleProvider;
 use Madj2k\GadgetoGoogle\Domain\DTO\Search;
 use Madj2k\GadgetoGoogle\Domain\Model\Location;
 use Psr\Http\Message\ResponseInterface;
@@ -144,8 +145,10 @@ final class LocationController extends  AbstractController
      * action detail
      *
      * @param \Madj2k\GadgetoGoogle\Domain\Model\Location|null $location
-     * @return ResponseInterface
-     */
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException
+     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException
+     **/
     public function detailAction(?Location $location = null): ResponseInterface {
 
         if (! $location) {
@@ -167,6 +170,14 @@ final class LocationController extends  AbstractController
                 );
             }
         }
+
+        // set page title
+        $providerClass = $this->settings['pageTitleProvider'] ?? PageTitleProvider::class;
+
+        /** @var \Madj2k\GadgetoGoogle\PageTitle\PageTitleProviderInterface $provider */
+        $provider = GeneralUtility::makeInstance($providerClass);
+        $provider->setTitle($location);
+
 
         $this->view->assignMultiple(
             [

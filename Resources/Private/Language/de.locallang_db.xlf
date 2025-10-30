@@ -35,6 +35,10 @@
 				<source>Sub-Label</source>
 				<target>Untertitel</target>
 			</trans-unit>
+			<trans-unit id="tx_gadgetogoogle_domain_model_location.seo_label">
+				<source>SEO-Label</source>
+				<target>SEO-Titel</target>
+			</trans-unit>
 			<trans-unit id="tx_gadgetogoogle_domain_model_location.slug">
 				<source>Slug</source>
 				<target>Slug</target>
