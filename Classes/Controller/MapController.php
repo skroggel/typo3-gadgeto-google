@@ -84,8 +84,7 @@ final class MapController extends AbstractController
             $geolocationService = GeneralUtility::makeInstance(GeolocationService::class, $this->settings);
 
             // check if we search by lngLat or address and fetch coordinates accordingly
-            $longitude = 0.0;
-            $latitude = 0.0;
+            $currentLocation = null;
             if (($search->getLngLatQuery() ||$search->getAddressQuery())) {
 
                 if ($search->getLngLatQuery()) {
@@ -102,9 +101,6 @@ final class MapController extends AbstractController
                     /** @var \Madj2k\GadgetoGoogle\Domain\DTO\Location $currentLocation */
                     $currentLocation = $geolocationService->getLocation();
 
-                    $longitude = $currentLocation->getLongitude();
-                    $latitude = $currentLocation->getLatitude();
-
                     // delete lngLat-value from search - only used once!
                     $search->setLngLatQuery('');
 
@@ -112,22 +108,20 @@ final class MapController extends AbstractController
                     $search->setAddressQuery($currentLocation->getAddressAsString());
                 }
             }
-
-            $locations = $this->locationRepository->findByConstraints(
-                ($this->settings['locations'] ?? ''),
-                $this->currentContentObject->data['pages'] ?? '',
-                $longitude,
-                $latitude,
-                ($search->getCategory() ?? null),
-                $search->getRadius() ?? ($this->settings['maxSearchRadius'] ?? 0),
-
+            $locations = $this->locationRepository->findFiltered(
+                uidList: ($this->settings['locations'] ?? ''),
+                pidList: ($this->currentContentObject->data['pages'] ?? ''),
+                search: $search,
+                location: $currentLocation,
+                settings: $this->settings,
             );
 
         // normal results
         } else {
+
             $locations = $this->locationRepository->findByUids(
-                $this->settings['locations'] ?? '',
-                $this->currentContentObject->data['pages'] ?? '',
+                uidList: $this->settings['locations'] ?? '',
+                pidList: $this->currentContentObject->data['pages'] ?? '',
             );
         }
 
@@ -168,9 +162,8 @@ final class MapController extends AbstractController
                 'lastPaginatedItem' => $locations[$paginator->getKeyOfLastPaginatedItem()] ?? null,
                 'filterCategories' => $this->filterCategoryRepository->findAll(), // deprecated
                 'categories' => $this->locationRepository->findAssignedCategories(
-                    $this->settings['locations'] ?? '',
-                    $this->currentContentObject->data['pages'] ?? '',
-                    $this->siteLanguage->getLanguageId()
+                    uidList: $this->settings['locations'] ?? '',
+                    pidList: $this->currentContentObject->data['pages'] ?? '',
                 ),
             ]
         );
