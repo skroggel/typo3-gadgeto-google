@@ -63,9 +63,8 @@ final class LocationController extends  AbstractController
         }
 
         /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $locations */
-        $locations = $this->locationRepository->findByConstraints(
-            '',
-            $this->currentContentObject->data['pages'] ?? '',
+        $locations = $this->locationRepository->findFiltered(
+            pidList: $this->currentContentObject->data['pages'] ?? '',
         );
 
         // Important: store session for detail view
@@ -125,7 +124,9 @@ final class LocationController extends  AbstractController
     public function teaserAction(): ResponseInterface
     {
         /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $locations */
-        $locations = $this->locationRepository->findByConstraints($this->settings['locations'] ?? '');
+        $locations = $this->locationRepository->findFiltered(
+            uidList: ($this->settings['locations'] ?? ''),
+        );
 
         $this->setSessionStorage(
             [
@@ -165,8 +166,8 @@ final class LocationController extends  AbstractController
             $search = $sessionData['search'] ?? null;
             if (isset($sessionData['locations'])) {
                 $prevNextLocation = $this->locationRepository->findPrevAndNextObjectsByUidList(
-                    $location,
-                    $sessionData['locations']
+                    location: $location,
+                    uidList: $sessionData['locations']
                 );
             }
         }

@@ -15,6 +15,8 @@ namespace Madj2k\GadgetoGoogle\Domain\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Madj2k\GadgetoGoogle\Domain\DTO\Location as LocationDto;
+use Madj2k\GadgetoGoogle\Domain\DTO\Search;
 use Madj2k\GadgetoGoogle\Domain\Model\Category;
 
 /**
@@ -55,25 +57,23 @@ interface LocationRepositoryInterface
      *
      * @param string $uidList Optional comma-separated list of UIDs
      * @param string $pidList Optional comma-separated list of PIDs
-     * @param float $longitude Longitude for distance calculation
-     * @param float $latitude Latitude for distance calculation
-     * @param \Madj2k\GadgetoGoogle\Domain\Model\Category|null $category Optional category filter
-     * @param int $maxDistance Maximum distance in kilometers (0 = unlimited)
+     * @param \Madj2k\GadgetoGoogle\Domain\DTO\Search|null $search Search-object
+     * @param \Madj2k\GadgetoGoogle\Domain\DTO\Location|null $location Location-object from API
+     * @param array $settings settings-array
      * @param int $limit Maximum number of results (0 = unlimited)
      * @param int $offset Result offset (for pagination)
      * @return \Madj2k\GadgetoGoogle\Domain\Model\Location[] Returns an array of Location objects matching the constraints
      * @throws \Doctrine\DBAL\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
-    public function findByConstraints(
+    public function findFiltered(
         string $uidList = '',
         string $pidList = '',
-        float $longitude = 0.0,
-        float $latitude = 0.0,
-        ?Category $category = null,
-        int $maxDistance = 0,
+        ?Search $search = null,
+        ?LocationDto $location = null,
+        array $settings = [],
         int $limit = 0,
-        int $offset = 0
+        int $offset = 0,
     ): array;
 
 
@@ -82,7 +82,6 @@ interface LocationRepositoryInterface
      *
      * @param string $uidList Optional comma-separated list of location UIDs to limit the query
      * @param string $pidList Optional comma-separated list of PIDs
-     * @param int $languageUid Language UID for category localization
      * @return \Madj2k\GadgetoGoogle\Domain\Model\Category[] Returns an array of Category objects assigned to the locations
      * @throws \Doctrine\DBAL\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -90,6 +89,5 @@ interface LocationRepositoryInterface
     public function findAssignedCategories(
         string $uidList = '',
         string $pidList = '',
-        int $languageUid = 0
     ): array;
 }

@@ -344,6 +344,7 @@ return [
             ],
         ],
         'categories' => [
+            'l10n_mode' => 'exclude',
             'config' => [
                 'type' => 'category',
                 'foreign_table_where' => 'AND {#sys_category}.{#sys_language_uid} IN (-1, 0) AND {#sys_category}.{#pid} = ###CURRENT_PID###',

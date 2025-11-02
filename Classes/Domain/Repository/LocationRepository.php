@@ -18,13 +18,18 @@ namespace Madj2k\GadgetoGoogle\Domain\Repository;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Madj2k\GadgetoGoogle\Domain\DTO\Search;
+use Madj2k\GadgetoGoogle\Domain\DTO\Location as LocationDto;
 use Madj2k\GadgetoGoogle\Domain\Model\Category;
 use Madj2k\GadgetoGoogle\Domain\Model\Location;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class LocationRepository
@@ -69,7 +74,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
      * @return array
      * @throws \Doctrine\DBAL\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
-     * @deprecated use findByConstraints() instead
+     * @deprecated use findFiltered() instead
      */
     public function findByDistance(
         float $longitude,
@@ -79,15 +84,19 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
         int   $offset = 0,
     ): array
     {
-        return $this->findByConstraints(
-            '',
-            '',
-            $longitude,
-            $latitude,
-            null,
-            $maxDistance,
-            $limit,
-            $offset
+
+        /** @var \Madj2k\GadgetoGoogle\Domain\DTO\Location $location */
+        $location = new LocationDto();
+        $location->setLongitude($longitude);
+        $location->setLatitude($latitude);
+
+        $settings = ['maxSearchRadius' => $maxDistance];
+
+        return $this->findFiltered(
+            location: $location,
+            settings: $settings,
+            limit: $limit,
+            offset: $offset
         );
     }
 
@@ -107,17 +116,15 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
         string $uidList = '',
         string $pidList = '',
         int   $limit = 0,
-        int   $offset = 0): array
-    {
-        return $this->findByConstraints(
-            $uidList,
-            $pidList,
-            0,
-            0,
-            null,
-            0,
-            $limit,
-            $offset);
+        int   $offset = 0,
+    ): array {
+
+        return $this->findFiltered(
+            uidList: $uidList,
+            pidList: $pidList,
+            limit: $limit,
+            offset: $offset
+        );
     }
 
 
@@ -138,6 +145,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
      * @return \Madj2k\GadgetoGoogle\Domain\Model\Location[] Returns an array of Location objects matching the constraints
      * @throws \Doctrine\DBAL\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     * @deprecated use findFiltered() instead
      */
     public function findByConstraints(
         string $uidList = '',
@@ -149,6 +157,57 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
         int $limit = 0,
         int $offset = 0,
     ): array  {
+
+        /** @var \Madj2k\GadgetoGoogle\Domain\DTO\Location $location */
+        $location = new LocationDto();
+        $location->setLongitude($longitude);
+        $location->setLatitude($latitude);
+
+        /** @var \Madj2k\GadgetoGoogle\Domain\DTO\Search $search */
+        $search = new Search();
+        $search->setCategory($category);
+        $search->setRadius($maxDistance);
+
+        return $this->findFiltered(
+            uidList: $uidList,
+            pidList: $pidList,
+            search: $search,
+            location: $location,
+            limit: $limit,
+            offset: $offset
+        );
+    }
+
+
+    /**
+     * Finds locations based on multiple constraints:
+     * - by UID list
+     * - by distance (longitude/latitude)
+     * - by category
+     *
+     * @param string $uidList Optional comma-separated list of UIDs
+     * @param string $pidList Optional comma-separated list of PIDs
+     * @param \Madj2k\GadgetoGoogle\Domain\DTO\Search|null $search Search-object
+     * @param \Madj2k\GadgetoGoogle\Domain\DTO\Location|null $location Location-object from API
+     * @param array $settings settings-array
+     * @param int $limit Maximum number of results (0 = unlimited)
+     * @param int $offset Result offset (for pagination)
+     * @return \Madj2k\GadgetoGoogle\Domain\Model\Location[] Returns an array of Location objects matching the constraints
+     * @throws \Doctrine\DBAL\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     */
+    public function findFiltered(
+        string $uidList = '',
+        string $pidList = '',
+        ?Search $search = null,
+        ?LocationDto $location = null,
+        array $settings = [],
+        int $limit = 0,
+        int $offset = 0,
+    ): array  {
+
+        $languageField = $GLOBALS['TCA'][$this->getTableName()]['ctrl']['languageField'] ?? '';
+        $languageUid = $this->getSiteLanguage() ? $this->getSiteLanguage()->getLanguageId() : 0;
 
         $uidListArray = [];
         if ($uidList) {
@@ -169,16 +228,11 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
         $query = $queryBuilder->select('l.*')
             ->from($this->getTableName(), 'l');
 
-        // search by distance
-        if ($longitude && $latitude)  {
-            $this->addDistanceConstraints($query, $longitude, $latitude, $maxDistance);
-        } else {
-            $query->orderBy('label', QueryInterface::ORDER_ASCENDING);
-        }
-
-        // search by category
-        if ($category) {
-            $this->addCategoryConstraint($query, $category);
+        if ($languageField) {
+            $query->where('l.' . $languageField . ' = ' . $queryBuilder->createNamedParameter(
+                $languageUid, ParameterType::INTEGER
+                )
+            );
         }
 
         // filter by uidList
@@ -201,6 +255,29 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
             );
         }
 
+        // search by category
+        if ($search && $search->getCategory()) {
+            $this->addCategoryConstraint(
+                query: $query,
+                category: $search->getCategory(),
+            );
+        }
+
+        // search by distance
+        if ($location && $location->getLongitude() && $location->getLatitude())  {
+            $maxDistance = (int) (($search && $search->getRadius()) ? $search->getRadius() : ($settings['maxSearchRadius'] ?? 0));
+
+            $this->addDistanceConstraints(
+                query: $query,
+                longitude: $location->getLongitude(),
+                latitude: $location->getLatitude(),
+                maxDistance: $maxDistance
+            );
+
+        } else {
+            $query->orderBy('label', QueryInterface::ORDER_ASCENDING);
+        }
+
         if ($limit > 0) {
             $query->setMaxResults($limit);
         }
@@ -214,7 +291,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
 
             // if the results are to filtered by uidList AND we do not have a distance-search,
             // then we sort the result by the given uidList
-            if (!($longitude && $latitude) && $uidListArray) {
+            if ((!$location || !$location->getLongitude() || !$location->getLatitude()) && $uidListArray) {
 
                 // now sort by the given order.
                 $order = array_flip($uidListArray);
@@ -275,15 +352,14 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
     /**
      * Add constraints to fetch records based on category
      *
-     * QueryBuilder $query
      * @param QueryBuilder $query
      * @param Category $category
-     * @param int $languageUid
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
-    protected function addCategoryConstraint(QueryBuilder $query, Category $category, int $languageUid = 0): void
+    protected function addCategoryConstraint(QueryBuilder $query, Category $category): void
     {
+        // at this point TYPO3 has already mapped the translated category to the original record!
         $joinCondition = $query->expr()->and(
             $query->expr()->eq('cat_mm.uid_foreign', $query->quoteIdentifier('l.uid')),
             $query->expr()->eq('cat_mm.tablenames', $query->createNamedParameter($this->getTableName())),
@@ -304,11 +380,6 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
                     'c.uid',
                     $query->quoteIdentifier('cat_mm.uid_local')
                 )
-            )
-            ->andWhere(
-                $query->expr()->eq(
-                    'l.sys_language_uid',
-                    $query->createNamedParameter($languageUid, ParameterType::INTEGER))
             );
     }
 
@@ -318,7 +389,6 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
      *
      * @param string $uidList Optional comma-separated list of location UIDs to limit the query
      * @param string $pidList Optional comma-separated list of PIDs
-     * @param int $languageUid Language UID for category localization
      * @return \Madj2k\GadgetoGoogle\Domain\Model\Category[] Returns an array of Category objects assigned to the locations
      * @throws \Doctrine\DBAL\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -326,8 +396,9 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
     public function findAssignedCategories(
         string $uidList = '',
         string $pidList = '',
-        int $languageUid = 0
     ): array {
+
+        $languageUid = $this->getSiteLanguage() ? $this->getSiteLanguage()->getLanguageId() : 0;
         $uidListArray = [];
         if ($uidList) {
             $uidListArray = GeneralUtility::trimExplode(',', $uidList);
@@ -338,11 +409,17 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
             $pidListArray = GeneralUtility::trimExplode(',', $pidList);
         }
 
+        $languageField = $GLOBALS['TCA']['sys_category']['ctrl']['languageField'] ?? '';
+        $uidField = 'uid';
+        if ($languageUid > 0) {
+            $uidField = $GLOBALS['TCA']['sys_category']['ctrl']['transOrigPointerField'] ?? 'uid';
+        }
+
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
         $queryBuilder = $connectionPool->getQueryBuilderForTable('sys_category');
 
         $joinConditionLocal = $queryBuilder->expr()->and(
-            $queryBuilder->expr()->eq('cat_mm.uid_local', $queryBuilder->quoteIdentifier('c.uid')),
+            $queryBuilder->expr()->eq('cat_mm.uid_local', $queryBuilder->quoteIdentifier('c.' . $uidField)),
             $queryBuilder->expr()->eq('cat_mm.tablenames', $queryBuilder->createNamedParameter($this->getTableName())),
             $queryBuilder->expr()->eq('cat_mm.fieldname', $queryBuilder->createNamedParameter('categories'))
         );
@@ -353,8 +430,9 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
             $queryBuilder->expr()->eq('cat_mm.fieldname', $queryBuilder->createNamedParameter('categories')),
         );
 
-        $query = $queryBuilder
-            ->select('c.uid', 'c.title')
+        // map localized title to original uid if translated
+        $queryBuilder
+            ->select('c.' . $uidField . ' as uid', 'c.title')
             ->from('sys_category', 'c')
             ->innerJoin(
                 'c',
@@ -362,15 +440,12 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
                 'cat_mm',
                 (string)  $joinConditionLocal
             )
+            // make sure relations of hidden elements are not included
             ->innerJoin(
                 'cat_mm',
                 $this->getTableName(),
                 't',
-                $queryBuilder->expr()->eq(
-                    't.uid',
-                    $queryBuilder->quoteIdentifier('cat_mm.uid_foreign'
-                    )
-                )
+                $queryBuilder->expr()->eq('t.uid', $queryBuilder->quoteIdentifier('cat_mm.uid_foreign'))
             )
             ->innerJoin(
                 'cat_mm',
@@ -378,22 +453,26 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
                 'l',
                 (string) $joinConditionForeign
             )
-            ->where(
+            ->groupBy('c.uid', 'c.title')
+            ->orderBy('c.sorting', 'ASC')
+            ->addOrderBy('c.title', 'ASC');
+
+
+        if ($languageField) {
+            $queryBuilder->where(
                 $queryBuilder->expr()->eq(
-                    'c.sys_language_uid',
+                    'c.' . $languageField,
                     $queryBuilder->createNamedParameter(
                         $languageUid,
                         \Doctrine\DBAL\ParameterType::INTEGER
                     )
                 )
-            )
-            ->groupBy('c.uid', 'c.title')
-            ->orderBy('c.sorting', 'ASC')
-            ->addOrderBy('c.title', 'ASC');
+            );
+        }
 
         // filter by uidList if given!
         if ($uidListArray) {
-            $query->andWhere(
+            $queryBuilder->andWhere(
                 $queryBuilder->expr()->in(
                     'l.uid',
                     $queryBuilder->createNamedParameter($uidListArray, ArrayParameterType::INTEGER)
@@ -403,7 +482,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
 
         // filter by pidList if given!
         if ($pidList) {
-            $query->andWhere(
+            $queryBuilder->andWhere(
                 $queryBuilder->expr()->in(
                     'l.pid',
                     $queryBuilder->createNamedParameter($pidListArray, ArrayParameterType::INTEGER)
@@ -411,7 +490,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
             );
         }
 
-        return $this->dataMapperForCategories($query->executeQuery()->fetchAllAssociative());
+        return $this->dataMapperForCategories($queryBuilder->executeQuery()->fetchAllAssociative());
     }
 
 
@@ -506,7 +585,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
      * @return string
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
-    public function getTableName(): string
+    protected function getTableName(): string
     {
         if (!$this->tableName) {
 
@@ -520,4 +599,29 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
         return $this->tableName;
     }
 
+
+    /**
+     * Return the current SiteLanguage-object
+     *
+     * @return \TYPO3\CMS\Core\Site\Entity\SiteLanguage|null
+     */
+    protected function getSiteLanguage(): ?SiteLanguage
+    {
+        if ($request = $this->getRequest()) {
+            return $request->getAttribute('language');
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Get request object
+     *
+     * @return \Psr\Http\Message\ServerRequestInterface
+     */
+    protected function getRequest(): ServerRequestInterface
+    {
+        return $GLOBALS['TYPO3_REQUEST'];
+    }
 }
