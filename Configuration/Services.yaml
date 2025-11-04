@@ -15,3 +15,14 @@ services:
 
   Madj2k\GadgetoGoogle\Controller\AdminModuleController:
     tags: ['backend.controller']
+
+  cache.gadgetogoogle_filteroptions:
+    class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+    factory: [ '@TYPO3\CMS\Core\Cache\CacheManager', 'getCache' ]
+    arguments: [ 'gadgetogoogle_filteroptions' ]
+
+  Madj2k\GadgetoGoogle\Controller\MapController:
+    calls:
+      - method: 'injectCache'
+        arguments:
+          $cache: '@cache.gadgetogoogle_filteroptions'

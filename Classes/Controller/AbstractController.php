@@ -18,6 +18,7 @@ namespace Madj2k\GadgetoGoogle\Controller;
 
 use Madj2k\CatSearch\Domain\Model\FilterableInterface;
 use Madj2k\GadgetoGoogle\Domain\Repository\LocationRepository;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
