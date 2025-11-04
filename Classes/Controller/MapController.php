@@ -20,9 +20,11 @@ use Madj2k\GadgetoGoogle\Domain\DTO\Search;
 use Madj2k\GadgetoGoogle\Domain\Repository\FilterCategoryRepository;
 use Madj2k\GadgetoGoogle\Service\GeolocationService;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Exception;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
@@ -43,12 +45,28 @@ final class MapController extends AbstractController
 
 
     /**
+     * @var \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface|null
+     */
+    protected ?FrontendInterface $cache = null;
+
+
+    /**
      * @param \Madj2k\GadgetoGoogle\Domain\Repository\FilterCategoryRepository $filterCategoryRepository
      * @return void
      */
     public function injectFilterCategoryRepository(FilterCategoryRepository $filterCategoryRepository): void
     {
         $this->filterCategoryRepository = $filterCategoryRepository;
+    }
+
+
+    /**
+     * @param \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface $cache
+     * @return void
+     */
+    public function injectCache(FrontendInterface $cache): void
+    {
+        $this->cache = $cache;
     }
 
 
@@ -152,6 +170,7 @@ final class MapController extends AbstractController
         /**
          * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $currentContentObject
          */
+        $this->assignFilterOptions();
         $this->view->assignMultiple(
             [
                 'search' => $search,
@@ -160,15 +179,45 @@ final class MapController extends AbstractController
                 'paginator' => $paginator,
                 'pagination' => $pagination,
                 'lastPaginatedItem' => $locations[$paginator->getKeyOfLastPaginatedItem()] ?? null,
-                'filterCategories' => $this->filterCategoryRepository->findAll(), // deprecated
-                'categories' => $this->locationRepository->findAssignedCategories(
-                    uidList: $this->settings['locations'] ?? '',
-                    pidList: $this->currentContentObject->data['pages'] ?? '',
-                ),
             ]
         );
 
         return $this->htmlResponse();
     }
 
+
+    /**
+     * Separate method for available filter options with cache.
+     *
+     * @return void
+     * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
+     */
+    protected function assignFilterOptions (): void
+    {
+        $languageId = $this->siteLanguage->getLanguageId();
+        $uid = (int) $this->currentContentObject->data['uid'];
+        $cacheIdentifier = 'filteroptions_' . $uid . '_' . $languageId;
+
+        if (!$filterOptions = $this->cache->get($cacheIdentifier)) {
+
+            $filterOptions = [
+                'filterCategories' => $this->filterCategoryRepository->findAll()->toArray(), // deprecated
+                'categories' => $this->locationRepository->findAssignedCategories(
+                    uidList: $this->settings['locations'] ?? '',
+                    pidList: $this->currentContentObject->data['pages'] ?? '',
+                ),
+            ];
+
+            $this->cache->set(
+                $cacheIdentifier,
+                $filterOptions,
+                [
+                    'gadgetogoogle_filteroptions', 'gadgetogoogle_filteroptions_' . $uid . '_' . $languageId
+                ]
+            );
+        }
+
+        $this->view->assignMultiple($filterOptions);
+    }
 }
