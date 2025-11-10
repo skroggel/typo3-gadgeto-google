@@ -1,0 +1,19 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <div class="location-detail variant-{settings.layout}" id="c{data.uid}">
+        <f:if condition="{notFound}">
+            <f:then>
+                <f:render partial="AlertMessage"
+                          arguments="{message: '{f:translate(key: \'label.notFound\', extensionName: \'gadgetoGoogle\')}', severity: 'danger', 
+                                      data: data, settings: settings, settingsForLayout: settingsForLayout}" />
+            </f:then>
+            <f:else>
+                <f:render partial="Location/Detail"
+                          arguments="{location: location, data: data, settings: settings, 
+                              settingsForLayout: settingsForLayout}" />
+            </f:else>
+        </f:if>
+    </div>
+        
+</html>

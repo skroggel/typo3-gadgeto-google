@@ -48,7 +48,7 @@ class Category extends \TYPO3\CMS\Extbase\Domain\Model\Category
      * @param string $txGadgetogoogleStyle
      * @return void
      */
-    public function setTxGadgetoGoogleStyle(string $txGadgetogoogleStyle): void
+    public function setTxGadgetogoogleStyle(string $txGadgetogoogleStyle): void
     {
         $this->txGadgetogoogleStyle = $txGadgetogoogleStyle;
     }

@@ -35,6 +35,11 @@ class Location extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements
     use PersonTrait;
     use AddressTrait;
 
+    /**
+     * @var string
+     */
+    protected string $seoLabel = '';
+
 
     /**
      * @var string
@@ -95,6 +100,30 @@ class Location extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements
     {
         $this->filterCategory->detach($filterCategory);
     }
+
+
+    /**
+     * Returns the seoLabel
+     *
+     * @return string
+     */
+    public function getSeoLabel(): string
+    {
+        return $this->seoLabel;
+    }
+
+
+    /**
+     * Sets the seoLabel
+     *
+     * @param string $seoLabel
+     * @return void
+     */
+    public function setSeoLabel(string $seoLabel): void
+    {
+        $this->seoLabel = $seoLabel;
+    }
+
 
     /**
      * Returns the phone

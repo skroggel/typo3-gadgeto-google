@@ -15,6 +15,8 @@ namespace Madj2k\GadgetoGoogle\Domain\DTO;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Madj2k\GadgetoGoogle\Domain\Model\Category;
+
 
 /**
  * Class Search
@@ -26,6 +28,11 @@ namespace Madj2k\GadgetoGoogle\Domain\DTO;
  */
 final class Search
 {
+    /**
+     * @var int
+     */
+    protected int $identifier = 0;
+
 
 	/**
 	 * @var string
@@ -43,6 +50,41 @@ final class Search
 	 * @var int
 	 */
 	protected int $radius = 0;
+
+
+    /**
+     * @var int
+     */
+    protected int $page = 1;
+
+
+    /**
+     * @var \Madj2k\GadgetoGoogle\Domain\Model\Category|null
+     */
+    protected Category|null $category = null;
+
+
+    /**
+     * Get identifier
+     *
+     * @return int
+     */
+    public function getIdentifier(): int
+    {
+        return $this->identifier;
+    }
+
+
+    /**
+     * Set identifier
+     *
+     * @param int $identifier
+     * @return void
+     */
+    public function setIdentifier(int $identifier): void
+    {
+        $this->identifier = $identifier;
+    }
 
 
     /**
@@ -105,13 +147,59 @@ final class Search
 	/**
 	 * Set radius
 	 *
-	 * @param int|null $radius
+	 * @param int $radius
 	 * @return void
 	 */
-	public function setRadius(?int $radius): void
+	public function setRadius(int $radius): void
 	{
-		$this->radius = (int) $radius;
+		$this->radius = $radius;
 	}
+
+
+    /**
+     * Get page
+     *
+     * @return int
+     */
+    public function getPage(): int
+    {
+        return $this->page;
+    }
+
+
+    /**
+     * Set page
+     *
+     * @param int $page
+     * @return void
+     */
+    public function setPage(int $page): void
+    {
+        $this->page = $page;
+    }
+
+
+    /**
+     * Get category
+     *
+     * @return \Madj2k\GadgetoGoogle\Domain\Model\Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+
+    /**
+     * Set category
+     *
+     * @param \Madj2k\GadgetoGoogle\Domain\Model\Category|null $category
+     * @return void
+     */
+    public function setCategory(Category|null $category): void
+    {
+        $this->category = $category;
+    }
 
 
     /**
@@ -121,7 +209,7 @@ final class Search
      */
     public function getIsActive(): bool
     {
-        if ($this->getAddressQuery() || $this->getLngLatQuery()) {
+        if ($this->getAddressQuery() || $this->getLngLatQuery() || $this->getCategory()) {
             return true;
         }
 

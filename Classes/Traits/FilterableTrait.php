@@ -42,23 +42,27 @@ trait FilterableTrait
 
 
     /**
+     * @var string
+     */
+    protected string $subLabel = '';
+
+
+    /**
      * @var int
      */
     protected int $sorting = 0;
 
 
     /**
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\GadgetoGoogle\Domain\Model\FilterCategory>|\TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy|null
     */
-    protected ObjectStorage|LazyLoadingProxy|null $filterCategory = null;
+    protected ObjectStorage|null $filterCategory = null;
 
 
     /**
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\GadgetoGoogle\Domain\Model\Category>|\TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy|null
      */
-    protected ObjectStorage|LazyLoadingProxy|null $categories = null;
+    protected ObjectStorage|null $categories = null;
 
 
     /**
@@ -86,6 +90,29 @@ trait FilterableTrait
 
 
     /**
+     * Sets the subLabel
+     *
+     * @param string $subLabel
+     * @return void
+     */
+    public function setSubLabel(string $subLabel): void
+    {
+        $this->subLabel = $subLabel;
+    }
+
+
+    /**
+     * Returns the subLabel
+     *
+     * @return string
+     */
+    public function getSubLabel(): string
+    {
+        return $this->subLabel;
+    }
+
+
+    /**
      * Sets the label
      *
      * @param string $label
@@ -95,6 +122,7 @@ trait FilterableTrait
     {
         $this->label = $label;
     }
+
 
 
     /**

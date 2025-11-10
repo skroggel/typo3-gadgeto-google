@@ -1,32 +1,23 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
-      data-namespace-typo3-fluid="true"
->
-    <f:if condition="{locations}">
-        <section class="location-list variant-{settings.layout}" id="c{data.uid}">>
+      data-namespace-typo3-fluid="true">
 
-            <div class="container-xxl">
-                <div class="row">
-                    <div class="col-12">
-                        <f:variable name="categories" value="{gadgetoGoogle:groupByCategory(items:'{paginator.paginatedItems}')}" />
-                        <f:render partial="CategoryList/Level1"
-                                  arguments="{categories: categories, data: data, settings: settings, 
-                                              settingsForLayout: settingsForLayout}" />
-                                            
-                    </div>
-                </div>
-    
-                <f:if condition="!{settings.hidePagination}">
-                    <div class="row">
-                        <div class="col-12">
-                            <f:render partial="Pagination"
-                                      arguments="{pagination: pagination, data: data, settings: settings, 
-                                                  settingsForLayout: settingsForLayout}" />
-                        </div>
-                    </div>
-                </f:if>
-            </div>
-        </section>
+    <f:if condition="{locations}">
+        <div class="location-list variant-{settings.layout}" id="c{data.uid}">
+
+            <f:variable name="listStyle" value="{f:if(condition: settings.listStyle, then: settings.listStyle, else: 'Category')}" />
+            <f:render partial="List/{listStyle}"
+                      arguments="{locations: paginator.paginatedItems, data: data, settings: settings, 
+                                  settingsForLayout: settingsForLayout}" />
+        
+            <f:if condition="!{settings.hidePagination}">
+                <f:variable name="paginationStyle" value="{f:if(condition: settings.paginationStyle, then: settings.paginationStyle, else: 'Default')}" />
+                <f:render partial="Pagination/{paginationStyle}"
+                          arguments="{pagination: pagination, paginator: paginator, 
+                                      search: search, data: data, settings: settings, 
+                                      settingsForLayout: settingsForLayout}" />
+            </f:if>
+        </div>
     </f:if>
 
 </html>

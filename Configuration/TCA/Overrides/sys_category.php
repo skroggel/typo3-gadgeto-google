@@ -11,14 +11,17 @@ call_user_func(
 		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('sys_category',
 			[
 				'tx_gadgetogoogle_style' => [
-					'exclude' => 0,
+					'exclude' => true,
 					'label' => $ll . 'sys_category.tx_gadgetogoogle_style',
 					'config' => [
                         'type' => 'select',
                         'renderType' => 'selectSingle',
                         'default' => 'default',
                         'items' => [
-                            ['Default', 'default'],
+                            [
+                                'label' => 'Default',
+                                'value' => 'default',
+                            ],
                         ],
 					],
 				],

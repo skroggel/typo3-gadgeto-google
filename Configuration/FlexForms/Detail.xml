@@ -1,0 +1,53 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+        <list>
+            <ROOT>
+                <sheetTitle>
+                    LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.tab.list
+                </sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.listPage>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.listPage
+                        </label>
+                        <config>
+                            <type>link</type>
+                            <allowedTypes>page</allowedTypes>
+                        </config>
+                    </settings.listPage>
+                </el>
+            </ROOT>
+        </list>
+        <view>
+            <ROOT>
+                <sheetTitle>
+                    LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.tab.view
+                </sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.layout>
+                        <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.default</label>
+                                    <value>default</value>
+                                </numIndex>
+                                <numIndex index="1" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.big</label>
+                                    <value>big</value>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </settings.layout>
+                </el>
+            </ROOT>
+        </view>
+	</sheets>
+</T3DataStructure>

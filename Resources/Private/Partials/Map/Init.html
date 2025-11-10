@@ -1,0 +1,64 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <f:if condition="{locations}">
+        <f:then>
+
+            <f:comment><!-- Now add some HTML for the overlays --></f:comment>
+            <f:for each="{locations}" as="location">
+                <f:render partial="Map/Marker"
+                          arguments="{location: location, data: data, settings: settings, settingsForLayout: settingsForLayout}" />
+            </f:for>
+    
+            <f:comment><!--
+                Init the map. Optionally you can add a "locationCenter" to explicitl define the center of the map.
+                Otherwise the first place is used. Don't forget to add an overlay-element for it!
+                
+                Example for an additional canvas-config with a raw red mask around Germany
+                <f:variable name="canvas" value="{
+                  enabled: true,
+                  jsonFile: 'EXT:gadgeto_google/Resources/Private/Partials/Map/CanvasExample.json',
+                  fillStyle: 'rgba(255, 0, 0, 0.5)'
+                }" />     
+            --></f:comment>
+            <f:variable name="canvas" value="" />
+            <f:if condition="{locationCenter}">
+                <f:then>
+                    <f:render partial="Map/Marker" 
+                              arguments="{location: locationCenter, data: data, settings: settings, settingsForLayout: settingsForLayout}" />
+                    
+                    <f:render partial="Map/MarkerCluster" 
+                              arguments="{data: data, settings: settings, settingsForLayout: settingsForLayout}" />
+                    <gadgetoGoogle:googleMaps locations="{locations}" 
+                                              locationCenter="{locationCenter}" 
+                                              settings="{settings}" 
+                                              data="{data}"
+                                              canvas="{canvas}"
+                    />
+                </f:then>
+                <f:else>
+                    <f:render partial="Map/MarkerCluster" 
+                              arguments="{data: data, settings: settings, settingsForLayout: settingsForLayout}" />
+                    <gadgetoGoogle:googleMaps locations="{locations}" 
+                                              settings="{settings}"
+                                              data="{data}"
+                                              canvas="{canvas}"
+                    />
+                </f:else>
+            </f:if>
+    
+            <f:comment><!-- Set container of the map. --></f:comment>
+            <f:render partial="Map/Container" 
+                      arguments="{data: data, settings: settings, settingsForLayout: settingsForLayout}" />
+        </f:then>
+        <f:else>
+            <f:if condition="{search.isActive}">
+                <f:render partial="AlertMessage"
+                          arguments="{message: '{f:translate(key: \'label.noResults\', extensionName: \'gadgetoGoogle\')}', severity: 'warning', 
+                                      data: data, settings: settings, settingsForLayout: settingsForLayout}" />
+            </f:if>
+        </f:else>
+    </f:if>
+
+</html>

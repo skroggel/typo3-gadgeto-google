@@ -1,0 +1,16 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:gadgetoGoogle="http://typo3.org/ns/Madj2k/GadgetoGoogle/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <f:if condition="{locations}">
+        <div class="location-teaser variant-{settings.layout}" id="c{data.uid}">
+
+            <f:variable name="listStyle" value="{f:if(condition: settings.listStyle, then: settings.listStyle, else: 'Teaser')}" />
+            <f:render partial="List/{listStyle}"
+                      arguments="{locations: locations, data: data, settings: settings, 
+                                  settingsForLayout: settingsForLayout}" />
+
+        </div>
+    </f:if>
+
+</html>

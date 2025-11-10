@@ -7,15 +7,15 @@
         This is the container of the map. Per default it contains the consent-screen.
         -->
     </f:comment>
-    <div class="map-container" id="tx-gadgetogoogle-map">
+    <div class="map-container" id="tx-gadgetogoogle-map-{data.uid}" style="position: relative;">
         <div class="map-consent">
             <div class="map-consent-inner">
                 <p class="map-consent-text">
-                    <f:format.raw><f:translate key="label.consentMap" extensionName="gadgeto_google" /></f:format.raw>
+                    <f:format.raw><f:translate key="label.consentMap" extensionName="gadgetoGoogle" /></f:format.raw>
                 </p>
                 <button class="map-consent-button js-gadgetogoogle-map-consent-btn" 
-                        title="{f:translate(key:'label.loadMap', extensionName:'gadgeto_google')}">
-                    <f:translate key="label.loadMap" extensionName="gadgeto_google" />
+                        title="{f:translate(key:'label.loadMap', extensionName:'gadgetoGoogle')}">
+                    <f:translate key="label.loadMap" extensionName="gadgetoGoogle" />
                 </button>
             </div>
         </div>

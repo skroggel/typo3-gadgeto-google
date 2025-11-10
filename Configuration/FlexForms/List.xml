@@ -3,13 +3,27 @@
 		<langDisable>1</langDisable>
 	</meta>
 	<sheets>
-        <view>
+        <list>
             <ROOT>
                 <sheetTitle>
-                    LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.tab.view
+                    LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.tab.list
                 </sheetTitle>
                 <type>array</type>
                 <el>
+                    <settings.detailPage>
+                        <label>
+                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.detailPage
+                        </label>
+                        <config>
+                            <type>group</type>
+                            <internal_type>db</internal_type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                            <minitems>0</minitems>
+                            <show_thumbs>1</show_thumbs>
+                        </config>
+                    </settings.detailPage>
                     <settings.maxResultsPerPage>
                         <label>
                             LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.maxResultsPerPage
@@ -33,34 +47,79 @@
                         </config>
                     </settings.maxPages>
                     <settings.hidePagination>
-                        <label>
-                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.hidePagination
-                        </label>
+                        <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.hidePagination</label>
                         <config>
                             <type>check</type>
                             <items type="array">
                                 <numIndex index="0" type="array">
-                                    <numIndex index="0"></numIndex>
-                                    <numIndex index="1"></numIndex>
+                                    <label></label>
+                                    <value></value>
                                 </numIndex>
                             </items>
                         </config>
                     </settings.hidePagination>
-                    <settings.layout>
-                        <label>
-                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout
-                        </label>
+                    <settings.paginationStyle>
+                        <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.paginationStyle</label>
                         <config>
                             <type>select</type>
                             <renderType>selectSingle</renderType>
                             <items type="array">
                                 <numIndex index="0" type="array">
-                                    <numIndex index="0">LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.default</numIndex>
-                                    <numIndex index="1">default</numIndex>
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.paginationStyle.default</label>
+                                    <value>Default</value>
                                 </numIndex>
                                 <numIndex index="1" type="array">
-                                    <numIndex index="0">LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.big</numIndex>
-                                    <numIndex index="1">big</numIndex>
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.paginationStyle.more</label>
+                                    <value>More</value>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </settings.paginationStyle>
+                    <settings.listStyle>
+                        <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.listStyle</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <default>Category</default>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.listStyle.default</label>
+                                    <value>Default</value>
+                                </numIndex>
+                                <numIndex index="1" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.listStyle.teaser</label>
+                                    <value>Teaser</value>
+                                </numIndex>
+                                <numIndex index="2" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.listStyle.category</label>
+                                    <value>Category</value>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </settings.listStyle>
+                </el>
+            </ROOT>
+        </list>
+        <view>
+            <ROOT>
+                <sheetTitle>
+                    LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.tab.view
+                </sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.layout>
+                        <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.default</label>
+                                    <value>default</value>
+                                </numIndex>
+                                <numIndex index="1" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.layout.big</label>
+                                    <value>big</value>
                                 </numIndex>
                             </items>
                         </config>

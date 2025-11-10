@@ -18,6 +18,12 @@ namespace Madj2k\GadgetoGoogle\Controller;
 
 use Madj2k\CatSearch\Domain\Model\FilterableInterface;
 use Madj2k\GadgetoGoogle\Domain\Repository\LocationRepository;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * Class AbstractController
@@ -31,9 +37,27 @@ abstract class AbstractController extends  \TYPO3\CMS\Extbase\Mvc\Controller\Act
 {
 
     /**
+     * @const string
+     */
+    protected const string SESSION_STORAGE = 'gadgetoGoogle';
+
+
+    /**
      * @var \Madj2k\GadgetoGoogle\Domain\Repository\LocationRepository|null
      */
     protected ?LocationRepository $locationRepository;
+
+
+    /**
+     * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer|null $currentContentObject
+     */
+    protected ?ContentObjectRenderer $currentContentObject = null;
+
+
+    /**
+     * @var \TYPO3\CMS\Core\Site\Entity\SiteLanguage|null
+     */
+    protected ?SiteLanguage $siteLanguage = null;
 
 
     /**
@@ -47,11 +71,26 @@ abstract class AbstractController extends  \TYPO3\CMS\Extbase\Mvc\Controller\Act
 
 
     /**
+     * Set globally used objects
+     */
+    protected function initializeAction(): void
+    {
+        $this->currentContentObject = $this->request->getAttribute('currentContentObject');
+        $this->siteLanguage = $this->request->getAttribute('language');
+
+        if ($this->arguments->hasArgument('search')) {
+            $propertyMappingConfiguration = $this->arguments->getArgument('search')->getPropertyMappingConfiguration();
+            $propertyMappingConfiguration->allowAllProperties();
+        }
+    }
+
+
+    /**
      * Assign default variables to view
      */
     protected function initializeView(): void
     {
-        $this->view->assign('data', $this->request->getAttribute('currentContentObject')->data);
+        $this->view->assign('data', $this->currentContentObject->data);
 
         // check for layout - and for layout of item for detail view!
         $layout = $this->settings['layout'] ?? 'default';
@@ -73,6 +112,55 @@ abstract class AbstractController extends  \TYPO3\CMS\Extbase\Mvc\Controller\Act
             unset($settings['layoutOverride']);
             $this->view->assign('settingsForLayout', array_merge($settings, $layoutSettings));
         }
+    }
+
+
+    /**
+     * @return \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication
+     */
+    protected function getFrontendUser(): FrontendUserAuthentication
+    {
+        // This will create an anonymous frontend user if none is logged in
+        return $this->request->getAttribute('frontend.user');
+    }
+
+
+    /**
+     * Retrieves the session storage data.
+     *
+     * @return array The session storage data.
+     */
+    protected function getSessionStorage(): array
+    {
+        if ($data = $this->getFrontendUser()->getKey('ses', $this->getSessionStorageKey())) {
+            return unserialize($data);
+        }
+
+        return [];
+    }
+
+
+    /**
+     * Stores the session storage data.
+     *
+     * @param mixed $data The session storage data.
+     * @return void
+     */
+    protected function setSessionStorage(mixed $data): void
+    {
+        $this->getFrontendUser()->setKey('ses', $this->getSessionStorageKey(), serialize($data));
+        $this->getFrontendUser()->storeSessionData();
+    }
+
+
+    /**
+     * Constructs and returns a unique session storage key based on a constant prefix
+     * and the unique identifier (UID) of the current content object.
+     *
+     * @return string
+     */
+    protected function getSessionStorageKey(): string {
+        return self::SESSION_STORAGE;
     }
 
 }

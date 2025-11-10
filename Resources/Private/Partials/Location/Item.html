@@ -1,11 +1,95 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-    <div class="location-detail">
-        {location.label}<br>
-        {location.street} {location.streetNumber}<br>
-        {location.zip} {location.city}<br>
-        {location.country}
-    </div>
+    <f:section name="DefaultList">
+        <li class="location-item">
+            <div class="location-detail">
+                
+                <f:if condition="{settings.detailPage}">
+                    <f:then>
+                        <f:link.action controller="Location"
+                                       action="detail"
+                                       arguments="{location: location}"
+                                       pageUid="{settings.detailPage}"
+                        >{location.label}</f:link.action><br>
+                    </f:then>
+                    <f:else>
+                        {location.label}<br>
+                    </f:else>
+                </f:if>
+                
+                {location.street} {location.streetNumber}<br>
+                {location.zip} {location.city}<br>
+                {location.country}
+            </div>
+        </li>
+    </f:section>
+
+    <!-- ======================================================== -->
+
+    <f:section name="TeaserList">
+        <li class="location-item">
+            <div class="location-detail">
+
+                <f:if condition="{settings.detailPage}">
+                    <f:then>
+                        <f:link.action controller="Location"
+                                       action="detail"
+                                       arguments="{location: location}"
+                                       pageUid="{settings.detailPage}"
+                        >{location.label}</f:link.action><br>
+                    </f:then>
+                    <f:else>
+                        {location.label}<br>
+                    </f:else>
+                </f:if>
+
+                {location.street} {location.streetNumber}<br>
+                {location.zip} {location.city}<br>
+                {location.country}
+            </div>
+        </li>
+    </f:section>
+
+
+    <!-- ======================================================== -->
+
+    <f:section name="CategoryList">
+
+        <li class="location-item">
+            <div class="location-detail">
+                <f:if condition="{settings.detailPage}">
+                    <f:then>
+                        <f:link.action controller="Location"
+                                       action="detail"
+                                       arguments="{location: location}"
+                                       pageUid="{settings.detailPage}"
+                        >{location.label}</f:link.action><br>
+                    </f:then>
+                    <f:else>
+                        {location.label}<br>
+                    </f:else>
+                </f:if>
+                
+                {location.street} {location.streetNumber}<br>
+                {location.zip} {location.city}<br>
+                {location.country}
+            </div>
+        </li>
+        
+    </f:section>
+
+    <!-- ======================================================== -->
+
+    <f:section name="Pin">
+
+        <div class="location-detail">
+            {location.label}<br>
+            {location.street} {location.streetNumber}<br>
+            {location.zip} {location.city}<br>
+            {location.country}
+        </div>
+
+    </f:section>
 
 </html>

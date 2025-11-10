@@ -1,39 +1,57 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      data-namespace-typo3-fluid="true">
+      data-namespace-typo3-fluid="true"
+>
 
-    <section class="map variant-{settings.layout}" id="c{data.uid}">
-
-        <f:render partial="Header" arguments="{data: data, settings: settings}" />
-
-        <div class="container-xxl">
-            <div class="row">
-                <div class="col-12">
-                    
-                    <f:comment><!-- Add search for your map --></f:comment>
-                    <f:if condition="{settings.showSearch}">
-                        <f:render partial="Top/Search" arguments="{search: search, data: data, settings: settings, 
-                                                                   settingsForLayout: settingsForLayout}" />
-                    </f:if>
-                
-                    <f:comment><!-- Add filters for your map --></f:comment>
-                    <f:if condition="!{settings.hideFilter}">
-                        <f:render partial="Top/Filters" arguments="{filterCategories: filterCategories, data: data, 
-                                                                    settings: settings, settingsForLayout: settingsForLayout}" />
-                    </f:if>
-                
-                    <f:comment><!-- Show map --></f:comment>
-                    <f:render partial="Map" arguments="{locations: locations, locationCenter: locationCenter, search: search, 
-                                                        data: data, settings: settings, settingsForLayout: settingsForLayout}" />
-                
-                    <f:comment><!-- CSS and JS --></f:comment>
-                    <f:asset.css identifier="gadgeto-google" href="EXT:gadgeto_google/Resources/Public/Css/map.css" />
-                    <f:asset.script identifier="gadgeto-google" src="EXT:gadgeto_google/Resources/Public/JavaScript/GeoPosition.js" />
-                    <f:asset.script identifier="gadgeto-google">
-                        const GadgetoGoogleGeoPosition = new GeoPosition();
-                    </f:asset.script>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="map variant-{settings.layout}" id="c{data.uid}">
+    
+        <div id="tx-gadgetogoogle-map-instance-{data.uid}">
+            
+            <f:comment><!-- Add search for your map --></f:comment>
+            <f:if condition="{settings.showSearch}">
+                <f:render partial="Controls/Search" arguments="{search: search, categories: categories, 
+                                                                        data: data, settings: settings, 
+                                                                        settingsForLayout: settingsForLayout}" />
+            </f:if>
+    
+            <f:comment><!-- Add JS-filters for your map --></f:comment>
+            <f:if condition="!{settings.hideFilter}">
+                <f:render partial="Controls/Filters" arguments="{filterCategories: filterCategories, categories: categories,
+                                                                 search: search, data: data, settings: settings, 
+                                                                 settingsForLayout: settingsForLayout}" />
+            </f:if>    
         
+            <f:comment><!-- Show map --></f:comment>
+            <f:render partial="Map/Init" arguments="{locations: locations, locationCenter: locationCenter, search: search, 
+                                                    data: data, settings: settings, settingsForLayout: settingsForLayout}" />
+            
+        </div>
+        
+        <f:if condition="{settings.showList}">
+
+            <f:variable name="listStyle" value="{f:if(condition: settings.listStyle, then: settings.listStyle, else: 'Default')}" />
+            <f:render partial="List/{listStyle}"
+                      arguments="{locations: paginator.paginatedItems, data: data, settings: settings, 
+                                      settingsForLayout: settingsForLayout}" />
+
+            <f:if condition="!{settings.hidePagination}">
+
+                <f:variable name="paginationStyle" value="{f:if(condition: settings.paginationStyle, then: settings.paginationStyle, else: 'Default')}" />
+                <f:render partial="Pagination/{paginationStyle}"
+                          arguments="{pagination: pagination, paginator: paginator, 
+                                      search: search, data: data, settings: settings, 
+                                      settingsForLayout: settingsForLayout}" />
+
+            </f:if>
+        </f:if>
+    </div>
+    
+    <f:comment><!-- CSS and JS --></f:comment>
+    <f:asset.css identifier="gadgeto-google" href="EXT:gadgeto_google/Resources/Public/Css/map.css" />
+    <f:if condition="{settings.showSearch}">
+        <f:asset.script identifier="gadgeto-google" src="EXT:gadgeto_google/Resources/Public/JavaScript/GeoPosition.js" />
+        <f:asset.script identifier="gadgeto-google">
+            const GadgetoGoogleGeoPosition = new GeoPosition();
+        </f:asset.script>
+    </f:if>
+
 </html>

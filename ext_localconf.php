@@ -21,7 +21,27 @@ call_user_func(
             [\Madj2k\GadgetoGoogle\Controller\LocationController::class => 'list'],
 
             // non-cacheable actions
-            [\Madj2k\GadgetoGoogle\Controller\LocationController::class => ''],
+            [\Madj2k\GadgetoGoogle\Controller\LocationController::class => 'list'],
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            $extKey,
+            'Detail',
+            [\Madj2k\GadgetoGoogle\Controller\LocationController::class => 'detail'],
+
+            // non-cacheable actions
+            [\Madj2k\GadgetoGoogle\Controller\LocationController::class => 'detail'],
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            $extKey,
+            'Teaser',
+            [\Madj2k\GadgetoGoogle\Controller\LocationController::class => 'teaser'],
+
+            // non-cacheable actions
+            [\Madj2k\GadgetoGoogle\Controller\LocationController::class => 'teaser'],
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
         );
 
@@ -32,9 +52,21 @@ call_user_func(
             \Madj2k\GadgetoGoogle\Hooks\TceMainHooks::class;
 
         //=================================================================
+        // Cache
+        //=================================================================
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['gadgetogoogle_filteroptions'] ??= [];
+
+        //=================================================================
         // cHash
         //=================================================================
-        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = '^tx_gadgetogoogle_map[search]';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = '^gadgetogoogle_map[search]';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'gadgetogoogle_map[location]';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'gadgetogoogle_detail[location]';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'gadgetogoogle_detail[prevLocation]';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'gadgetogoogle_detail[nextLocation]';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_gadgetogoogle_detail[location]';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_gadgetogoogle_detail[prevLocation]';
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_gadgetogoogle_detail[nextLocation]';
 
         //=================================================================
         // Register Logger

@@ -1,0 +1,39 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <section class="map variant-{settings.layout}" id="c{data.uid}">
+
+        <f:render partial="Header" arguments="{data: data, settings: settings}" />
+
+        <div class="container-xxl">
+            <div class="row">
+                <div class="col-12">
+                    
+                    <f:comment><!-- Add search for your map --></f:comment>
+                    <f:if condition="{settings.showSearch}">
+                        <f:render partial="Top/Search" arguments="{search: search, data: data, settings: settings, 
+                                                                   settingsForLayout: settingsForLayout}" />
+                    </f:if>
+                
+                    <f:comment><!-- Add filters for your map --></f:comment>
+                    <f:if condition="!{settings.hideFilter}">
+                        <f:render partial="Top/Filters" arguments="{filterCategories: filterCategories, data: data, 
+                                                                    settings: settings, settingsForLayout: settingsForLayout}" />
+                    </f:if>
+                
+                    <f:comment><!-- Show map --></f:comment>
+                    <f:render partial="Map" arguments="{locations: locations, locationCenter: locationCenter, search: search, 
+                                                        data: data, settings: settings, settingsForLayout: settingsForLayout}" />
+                
+                    <f:comment><!-- CSS and JS --></f:comment>
+                    <f:asset.css identifier="gadgeto-google" href="EXT:gadgeto_google/Resources/Public/Css/map.css" />
+                    <f:asset.script identifier="gadgeto-google" src="EXT:gadgeto_google/Resources/Public/JavaScript/GeoPosition.js" />
+                    <f:asset.script identifier="gadgeto-google">
+                        const GadgetoGoogleGeoPosition = new GeoPosition();
+                    </f:asset.script>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+</html>

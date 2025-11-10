@@ -1,0 +1,17 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <div class="location-detail">
+        {location.label}<br>
+        {location.street} {location.streetNumber}<br>
+        {location.zip} {location.city}<br>
+        {location.country}
+
+        <f:link.typolink
+            parameter="{settings.listPage}"
+            class="location-detail-cta"
+            title="{f:translate(key:'label.back', extensionName:'gadgetoGoogle')}"
+        ><f:translate key="label.back" extensionName="gadgetoGoogle" /></f:link.typolink>
+    </div>
+
+</html>

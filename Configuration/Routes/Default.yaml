@@ -1,16 +1,32 @@
 routeEnhancers:
   GadgetoGoogleMap:
     type: Extbase
-    namespace: 'tx_gadgetogoogle_map'
+    namespace: 'tx_gadgetogoogle_map' # tx-prefix needed - whatever!
     routes:
-      - routePath: '/map-search'
+      - routePath: '/map'
         _controller: 'Map::show'
     defaultController: 'Map::show'
 
   GadgetoGoogleList:
     type: Extbase
-    namespace: 'tx_gadgetogoogle_list'
+    namespace: 'tx_gadgetogoogle_list' # tx-prefix needed - whatever!
     routes:
       - routePath: '/location-list'
-        _controller: 'Map::list'
-    defaultController: 'Map::list'
+        _controller: 'Location::list'
+    defaultController: 'Location::list'
+
+  GadgetoGoogleDetail:
+    type: Extbase
+    namespace: 'tx_gadgetogoogle_detail'  # tx-prefix needed - whatever!
+    routes:
+      - routePath: '/location-detail/{location}'
+        _controller: 'Location::detail'
+    defaultController: 'Location::detail'
+    requirements:
+      location: '^[a-z0-9\-]+$'
+    aspects:
+      location:
+        type: PersistedAliasMapper
+        tableName: tx_gadgetogoogle_domain_model_location
+        routeFieldName: slug
+

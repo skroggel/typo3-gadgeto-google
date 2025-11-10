@@ -17,6 +17,7 @@ namespace Madj2k\GadgetoGoogle\ViewHelpers;
 
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Resource\Exception\InvalidFileException;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
@@ -67,12 +68,17 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         $this->registerArgument('locations', QueryResultInterface::class, 'The locations to display', true);
         $this->registerArgument('locationCenter', FilterableInterface::class, 'The location that builds the center of the map', false, null);
         $this->registerArgument('mapConfig', 'array', 'The configuration for the Google Map', false, ['zoom' => 12, 'mapTypeControl' => false, 'streetViewControl' => false, 'scrollwheel' => false, 'options' => ['gestureHandling' => 'cooperative']]);
+        $this->registerArgument('instanceContainerId', 'string', 'The id of the DIV around map and filters', false, 'tx-gadgetogoogle-map-instance');
         $this->registerArgument('mapContainerId', 'string', 'The id of the DIV for the map', false, 'tx-gadgetogoogle-map');
         $this->registerArgument('clusterMarkerContainerId', 'string', 'The id of the DIV for the cluster-marker', false, 'tx-gadgetogoogle-map-cluster-marker');
         $this->registerArgument('overlayContainerIdPrefix', 'string', 'The prefix for the DIVs which contain the content for the overlay', false, 'tx-gadgetogoogle-map-overlay');
-        $this->registerArgument('filterButtonClass', 'string', 'The class of the buttons for filtering the map', false, 'map-filter-button');
-        $this->registerArgument('consentButtonClass', 'string', 'The class of the consent button', false, 'map-consent-button');
+        $this->registerArgument('filterButtonClass', 'string', 'The class of the buttons for filtering the map', false, 'js-gadgetogoogle-map-filter-btn');
+        $this->registerArgument('consentButtonClass', 'string', 'The class of the consent button', false, 'js-gadgetogoogle-map-consent-btn');
+        $this->registerArgument('cookieName', 'string', 'The name of the consent cookie', false, 'gadgetogoogle-consent');
+        $this->registerArgument('canvas', 'array', 'Configuration array for an canvas-overlay on the map', false,);
+        $this->registerArgument('data', 'array', 'The data array', false, []);
         $this->registerArgument('settings', 'array', 'The settings array', false, []);
+
     }
 
 
@@ -85,7 +91,7 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
      */
     public function render(): string
     {
-        /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface<\Madj2k\GadgetoGoogle\Domain\Model\FilterableInterface> $locations */
+        /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface<\Madj2k\GadgetoGoogle\Domain\Model\FilterableInterface>|array<\Madj2k\GadgetoGoogle\Domain\Model\FilterableInterface> $locations */
         $locations = $this->arguments['locations'];
 
         /** @var \Madj2k\GadgetoGoogle\Domain\Model\FilterableInterface $locationCenter */
@@ -93,6 +99,9 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
 
         /** @var array $mapConfig */
         $mapConfig = $this->arguments['mapConfig'];
+
+        /** @var string $instanceContainerId*/
+        $instanceContainerId = $this->arguments['instanceContainerId'];
 
         /** @var string $mapContainerId */
         $mapContainerId = $this->arguments['mapContainerId'];
@@ -106,20 +115,60 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         /** @var string $consentButtonClass */
         $consentButtonClass = $this->arguments['consentButtonClass'];
 
+        /** @var string $cookieName */
+        $cookieName = $this->arguments['cookieName'];
+
+        /** @var array $canvas */
+        $canvas = $this->arguments['canvas'];
+
+        /** @var array $data */
+        $data = $this->arguments['data'];
+
         /** @var array $settings */
         $settings = $this->arguments['settings'];
 
+
         $jsFile = PathUtility::getPublicResourceWebPath('EXT:gadgeto_google/Resources/Public/JavaScript/Map.js');
 
-        $centerLongitude = $locations[0]->getLongitude();
-        $centerLatitude = $locations[0]->getLatitude();
-        if (
-            ($locationCenter)
-            && ($locationCenter->getLatitude())
-            && ($locationCenter->getLongitude())
-        ) {
-            $centerLatitude = $locationCenter->getLatitude();
-            $centerLongitude = $locationCenter->getLongitude();
+        $centerConfig = [];
+        if ($locations) {
+            $centerLongitude = array_values($locations)[0]->getLongitude();
+            $centerLatitude = array_values($locations)[0]->getLatitude();
+
+            if (
+                ($locationCenter)
+                && ($locationCenter->getLatitude())
+                && ($locationCenter->getLongitude())
+            ) {
+                $centerLatitude = $locationCenter->getLatitude();
+                $centerLongitude = $locationCenter->getLongitude();
+            }
+
+            $centerConfig =[
+                'lat' => (float) $centerLatitude,
+                'lng' => (float) $centerLongitude,
+            ];
+        }
+
+        // check for canvas file!
+        $canvasConfig = [];
+        if ($canvas) {
+            if (isset($canvas['jsonFile'])) {
+
+                $absolutePath = GeneralUtility::getFileAbsFileName($canvas['jsonFile']);
+                if (
+                    (is_file($absolutePath))
+                    && (is_readable($absolutePath))
+                    && ($content = file_get_contents($absolutePath))
+                    && ($coordinates = json_decode($content, true))
+                ){
+                    $canvasConfig = [
+                        'enabled' => $canvas['enabled'] ?? false,
+                        'jsonCoordinates' => $coordinates,
+                        'fillStyle' => $canvas['fillStyle'] ?? 'rgba(255, 255, 255, 0.5)',
+                    ];
+                }
+            }
         }
 
         $googleMapsConfig = $this->registry->get(
@@ -129,21 +178,21 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
 
         $configuration = [
             'apiKey' => $googleMapsConfig['apiKeyMap'],
-            'mapContainerId' => $mapContainerId,
-            'clusterMarkerContainerId' => $clusterMarkerContainerId,
+            'instanceContainerId' => $instanceContainerId . (isset($data['uid']) ? '-' . $data['uid'] : ''),
+            'mapContainerId' => $mapContainerId . (isset($data['uid']) ? '-' . $data['uid'] : ''),
+            'clusterMarkerContainerId' => $clusterMarkerContainerId . (isset($data['uid']) ? '-' . $data['uid'] : ''),
             'filterButtonClass' => $filterButtonClass,
             'consentButtonClass' => $consentButtonClass,
+            'cookieName' => $cookieName,
             'mapConfig' => array_merge(
                 $mapConfig, [
                     'mapId' => $googleMapsConfig['mapId'],
-                    'center' => [
-                        'lat' => (float) $centerLatitude,
-                        'lng' => (float) $centerLongitude,
-                    ],
+                    'center' => $centerConfig
                 ]
             ),
             'data' => [],
-            'boundaryPositions' => []
+            'boundaryPositions' => [],
+            'canvas' => $canvasConfig
         ];
 
         /*
@@ -162,6 +211,8 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
                 let Map = new GadgetoGoogleMaps(' . json_encode($configuration) . ');
             </script>
         ';
+
+
     }
 
 
@@ -173,8 +224,12 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
      */
     protected function buildItemDataArray (FilterableInterface $item, array &$configuration, array $settings = []): bool
     {
+
         if (
-            ($item->getFilterCategory())
+            (
+                ($item->getFilterCategory())
+                || ($item->getCategories())
+            )
             && (
                 $item->getLatitude()
                 && $item->getLongitude()
@@ -187,11 +242,23 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
             /** @var bool $boundariesByMarkers */
             $boundariesByMarkers = !$this->arguments['locationCenter'];
 
+            /** @var array $data */
+            $data = $this->arguments['data'];
+
             // build string of selected searchTypes
             $categories = [];
-            /** @var \TYPO3\CMS\Extbase\DomainObject\AbstractEntity $type */
-            foreach ($item->getFilterCategory() as $type) {
-                $categories[] = $type->getUid();
+            if ($item->getCategories()) {
+                /** @var \Madj2k\GadgetoGoogle\Domain\Model\Category $type */
+                foreach ($item->getCategories() as $category) {
+                    $categories[] = $category->getUid();
+                }
+
+                // deprecated version
+            } else {
+                /** @var \TYPO3\CMS\Extbase\DomainObject\AbstractEntity $type */
+                foreach ($item->getFilterCategory() as $type) {
+                    $categories[] = $type->getUid();
+                }
             }
 
             if (! is_array($configuration['data'])) {
@@ -202,7 +269,7 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
                 'id' => $item->getUid(),
                 'label' => $item->getLabel(),
                 'categories' => implode(',', $categories),
-                'overlayContainerId' => $overlayContainerIdPrefix . '-' . md5(spl_object_hash($item)),
+                'overlayContainerId' => $overlayContainerIdPrefix . '-' . md5(spl_object_hash($item)) . (isset($data['uid']) ? '-' . $data['uid'] : ''),
                 'position' => [
                     'lat' => $item->getLatitude(),
                     'lng' => $item->getLongitude(),
