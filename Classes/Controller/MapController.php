@@ -45,28 +45,12 @@ final class MapController extends AbstractController
 
 
     /**
-     * @var \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface|null
-     */
-    protected ?FrontendInterface $cache = null;
-
-
-    /**
      * @param \Madj2k\GadgetoGoogle\Domain\Repository\FilterCategoryRepository $filterCategoryRepository
      * @return void
      */
     public function injectFilterCategoryRepository(FilterCategoryRepository $filterCategoryRepository): void
     {
         $this->filterCategoryRepository = $filterCategoryRepository;
-    }
-
-
-    /**
-     * @param \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface $cache
-     * @return void
-     */
-    public function injectCache(FrontendInterface $cache): void
-    {
-        $this->cache = $cache;
     }
 
 

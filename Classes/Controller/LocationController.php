@@ -15,6 +15,7 @@ namespace Madj2k\GadgetoGoogle\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Doctrine\DBAL\Exception;
 use Madj2k\GadgetoGoogle\PageTitle\PageTitleProvider;
 use Madj2k\GadgetoGoogle\Domain\DTO\Search;
 use Madj2k\GadgetoGoogle\Domain\Model\Location;
@@ -159,17 +160,13 @@ final class LocationController extends  AbstractController
             return $response->withStatus(404);
         }
 
-        // get previous and next location if we find one in the session
-        $prevNextLocation = [];
+        // get navigation-objects if we find one in the session
+        $navigationObjects= $this->getNavigationObjects($location);
+
+        // set search from session if set
         $search = null;
         if ($sessionData = $this->getSessionStorage()) {
             $search = $sessionData['search'] ?? null;
-            if (isset($sessionData['locations'])) {
-                $prevNextLocation = $this->locationRepository->findPrevAndNextObjectsByUidList(
-                    location: $location,
-                    uidList: $sessionData['locations']
-                );
-            }
         }
 
         // set page title
@@ -184,12 +181,58 @@ final class LocationController extends  AbstractController
             [
                 'location' => $location,
                 'search' => $search,
-                'prevLocation' => $prevNextLocation['prev'] ?? null,
-                'nextLocation' => $prevNextLocation['next'] ?? null,
+                'prevLocation' => $navigationObjects['prev'] ?? null,
+                'nextLocation' => $navigationObjects['next'] ?? null,
+                'firstLocation' => $navigationObjects['first'] ?? null,
+                'lastLocation' => $navigationObjects['last'] ?? null,
             ]
         );
 
         return $this->htmlResponse();
 
+    }
+
+
+    /**
+     * Get the navigation objects for the given location
+     *
+     * @param Location $location
+     * @param string $locationList
+     * @return array
+     */
+    protected function getNavigationObjects (Location $location, string $locationList = ''): array
+    {
+
+        if ($sessionData = $this->getSessionStorage()) {
+            if (isset($sessionData['locations'])) {
+                $locationList = $sessionData['locations'];
+            }
+        }
+
+        if ($locationList) {
+
+            $languageId = $this->siteLanguage->getLanguageId();
+            $uid = (int) $this->currentContentObject->data['uid'];
+            $cacheIdentifier = 'navigationobjects_' . $uid . '_' . $languageId . '_' . md5($locationList . $location);
+            if (!$navigationObjects = $this->cache->get($cacheIdentifier)) {
+
+                $navigationObjects = $this->locationRepository->findNavigationObjectsByUidList(
+                    location: $location,
+                    uidList: $locationList
+                );
+
+                $this->cache->set(
+                    $cacheIdentifier,
+                    $navigationObjects,
+                    [
+                        'gadgetogoogle_navigationobjects', 'gadgetogoogle_navigationobjects_' . $uid . '_' . $languageId
+                    ]
+                );
+            }
+
+            return $navigationObjects;
+        }
+
+        return [];
     }
 }

@@ -26,3 +26,14 @@ services:
       - method: 'injectCache'
         arguments:
           $cache: '@cache.gadgetogoogle_filteroptions'
+
+  cache.gadgetogoogle_navigationobjects:
+    class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+    factory: [ '@TYPO3\CMS\Core\Cache\CacheManager', 'getCache' ]
+    arguments: [ 'gadgetogoogle_navigationobjects' ]
+
+  Madj2k\GadgetoGoogle\Controller\LocationController:
+    calls:
+      - method: 'injectCache'
+        arguments:
+          $cache: '@cache.gadgetogoogle_navigationobjects'
