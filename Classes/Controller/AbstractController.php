@@ -61,12 +61,28 @@ abstract class AbstractController extends  \TYPO3\CMS\Extbase\Mvc\Controller\Act
 
 
     /**
+     * @var \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface|null
+     */
+    protected ?FrontendInterface $cache = null;
+
+
+    /**
      * @param \Madj2k\GadgetoGoogle\Domain\Repository\LocationRepository $locationRepository
      * @return void
      */
     public function injectLocationRepository(LocationRepository $locationRepository): void
     {
         $this->locationRepository = $locationRepository;
+    }
+
+
+    /**
+     * @param \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface $cache
+     * @return void
+     */
+    public function injectCache(FrontendInterface $cache): void
+    {
+        $this->cache = $cache;
     }
 
 

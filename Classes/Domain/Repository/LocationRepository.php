@@ -522,31 +522,58 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
      * @param string $uidList A comma-separated list of UIDs representing the sequence to search within.
      * @return array An associative array with keys 'prev' and 'next', containing the previous and next objects respectively.
      *               If there is no previous or next object, the respective value will be null.
+     * @deprecated Use $this->findNavigationObjectsByUidList() instead
      */
     public function findPrevAndNextObjectsByUidList(Location $location, string $uidList = ''): array
     {
+        return $this->findNavigationObjectsByUidList($location, $uidList);
+    }
+
+
+    /**
+     * Finds the previous and next objects relative to a provided location object based on a UID list.
+     *
+     * @param \Madj2k\GadgetoGoogle\Domain\Model\Location $location The reference location object.
+     * @param string $uidList A comma-separated list of UIDs representing the sequence to search within.
+     * @return array An associative array with keys 'prev' and 'next', containing the previous and next objects respectively.
+     *               If there is no previous or next object, the respective value will be null.
+     */
+    public function findNavigationObjectsByUidList(Location $location, string $uidList = ''): array
+    {
         /** @var int[] $uids */
-        $prev = $next = null;
+        $prev = $next = $first = $last = null;
         if ($uidList) {
             $uids = array_map('intval', explode(',', $uidList));
-
             $index = array_search($location->getUid(), $uids, true);
 
             if ($index === false) {
-                return ['prev' => null, 'next' => null];
+                return ['prev' => null, 'next' => null, 'first' => null, 'last' => null];
             }
 
             $prevUid = $uids[$index - 1] ?? null;
             $nextUid = $uids[$index + 1] ?? null;
+            $firstUid = $uids[0] ?? null;
+            $lastUid = $uids[count($uids) - 1] ?? null;
 
             /** @var \TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface|null $prev */
             $prev = $prevUid !== null ? $this->findByUid($prevUid) : null;
 
             /** @var \TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface|null $next */
             $next = $nextUid !== null ? $this->findByUid($nextUid) : null;
+
+            /** @var \TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface|null $first */
+            $first = $firstUid !== null ? $this->findByUid($firstUid) : null;
+
+            /** @var \TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface|null $last */
+            $last = $lastUid !== null ? $this->findByUid($lastUid) : null;
         }
 
-        return ['prev' => $prev, 'next' => $next];
+        return [
+            'prev' => $prev,
+            'next' => $next,
+            'first' => $first,
+            'last' => $last,
+        ];
 
     }
 
