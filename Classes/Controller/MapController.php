@@ -157,6 +157,7 @@ final class MapController extends AbstractController
         $this->assignFilterOptions();
         $this->view->assignMultiple(
             [
+                'time' => time(),
                 'search' => $search,
                 'locations' => $locations,
                 'locationCenter' => $this->locationRepository->findByUid($this->settings['locationCenter'] ?? ''),
