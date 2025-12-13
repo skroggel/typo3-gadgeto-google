@@ -256,6 +256,22 @@ See the example in `Classes/Hooks/TceMainHooks.php`.
 To comply with GDPR (DSGVO), a consent dialog must be shown before loading Google Maps.
 This overlay is part of the extension.
 
+There is a config-file for klaro-consent-manager included. You can use it with `ext:klarokartie` by adding the following lines to your site-config (yaml):
+```
+klarokratie:
+  klaro:
+    config: EXT:klarokratie/Resources/Public/Config/KlaroConfigMinimal.js
+    includes:
+      - EXT:gadgeto_google/Resources/Public/Klarokratie/Includes/GoogleMaps.js
+```
+
+If you want to use a different consent manager, you can use the following JavaScript-Events depending on a given or revoked consent:
+```
+document.dispatchEvent(new CustomEvent('gadgetoGoogle:consent:given'));
+```
+```
+document.dispatchEvent(new CustomEvent('gadgetoGoogle:consent:revoked'));
+```
 ---
 
 ## 📚 Resources

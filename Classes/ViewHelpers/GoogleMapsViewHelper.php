@@ -208,7 +208,7 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
         return '
             <script type="module">
                 import GadgetoGoogleMaps from "' . $jsFile . '";
-                let Map = new GadgetoGoogleMaps(' . json_encode($configuration) . ');
+                const GadgetoGoogleMap = new GadgetoGoogleMaps(' . json_encode($configuration) . ');
             </script>
         ';
 

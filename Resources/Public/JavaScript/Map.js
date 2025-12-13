@@ -1,8 +1,8 @@
 /*!
  * Author: Steffen Kroggel <developer@steffenkroggel.de>
  *
- * Last updated: 01.12.2024
- * v1.0.2
+ * Last updated: 13.12.2025
+ * v1.0.3
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -96,7 +96,6 @@
  * </script>
  *
  */
-import { MarkerClusterer } from "https://cdn.skypack.dev/@googlemaps/markerclusterer@2.3.1";
 
 export default class GadgetoGoogleMaps {
 
@@ -140,6 +139,20 @@ export default class GadgetoGoogleMaps {
       ? this.instance.querySelectorAll(`.${this.settings.consentButtonClass}`)
       : document.querySelectorAll(`.${this.settings.consentButtonClass}`);
 
+    document.addEventListener('gadgetoGoogle:consent:given', (event) => {
+      if (document.cookie.indexOf(this.settings.cookieName + '=1') === -1) {
+        this.initApi();
+        this.initMap();
+        document.cookie = this.settings.cookieName + '=1';
+      }
+    });
+
+    document.addEventListener('gadgetoGoogle:consent:revoked', (event) => {
+      if (document.cookie.indexOf(this.settings.cookieName + '=1') > -1) {
+        document.cookie = this.settings.cookieName + '=0';
+      }
+    });
+
     if ((this.consent.length === 0)  || (document.cookie.indexOf(this.settings.cookieName + '=1') > -1)) {
       this.initApi();
       this.initMap();
@@ -173,6 +186,7 @@ export default class GadgetoGoogleMaps {
    */
   async initMap() {
     // Request needed libraries.
+    const {MarkerClusterer} = await import('https://cdn.skypack.dev/@googlemaps/markerclusterer@2.3.1');
     const {Map} = await google.maps.importLibrary('maps');
     const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
 
