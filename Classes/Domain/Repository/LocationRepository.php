@@ -26,6 +26,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Exception;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
@@ -108,6 +109,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
      * @param string $pidList Optional comma-separated list of PIDs
      * @param int $limit Maximum number of results (0 = unlimited)
      * @param int $offset Result offset (for pagination)
+     * @param array $orderBy Order-array
      * @return \Madj2k\GadgetoGoogle\Domain\Model\Location[] Returns an array of Location objects in the given order
      * @throws \Doctrine\DBAL\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -117,13 +119,15 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
         string $pidList = '',
         int   $limit = 0,
         int   $offset = 0,
+        array $orderBy = ['label' => QueryInterface::ORDER_ASCENDING]
     ): array {
 
         return $this->findFiltered(
             uidList: $uidList,
             pidList: $pidList,
             limit: $limit,
-            offset: $offset
+            offset: $offset,
+            orderBy: $orderBy
         );
     }
 
@@ -192,6 +196,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
      * @param array $settings settings-array
      * @param int $limit Maximum number of results (0 = unlimited)
      * @param int $offset Result offset (for pagination)
+     * @param array $orderBy Order-array
      * @return \Madj2k\GadgetoGoogle\Domain\Model\Location[] Returns an array of Location objects matching the constraints
      * @throws \Doctrine\DBAL\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -204,6 +209,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
         array $settings = [],
         int $limit = 0,
         int $offset = 0,
+        array $orderBy = ['label' => QueryInterface::ORDER_ASCENDING]
     ): array  {
 
         $languageField = $GLOBALS['TCA'][$this->getTableName()]['ctrl']['languageField'] ?? '';
@@ -275,7 +281,9 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
             );
 
         } else {
-            $query->orderBy('label', QueryInterface::ORDER_ASCENDING);
+            foreach($orderBy as $field => $order) {
+                $query->addOrderBy('l.' . $field, $order);
+            }
         }
 
         if ($limit > 0) {
@@ -603,6 +611,33 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
             return $this->dataMapper->map(\Madj2k\GadgetoGoogle\Domain\Model\Location::class, $queryResult);
         }
         return $queryResult;
+    }
+
+
+    /**
+     * Build an order array from a given string
+     *
+     * @param string $ordering
+     * @return array
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     */
+    public function buildOrderBy (string $ordering): array {
+
+        $split = GeneralUtility::trimExplode(';', $ordering);
+        $field = strtolower($split[0] ?? 'label');
+        $direction = strtoupper($split[1] ?? 'ASC');
+
+        if ($direction == 'DESC') {
+            $direction = QueryInterface::ORDER_DESCENDING;
+        } else {
+            $direction = QueryInterface::ORDER_ASCENDING;
+        }
+
+        if (isset($GLOBALS['TCA'][$this->getTableName()]['columns'][$field])) {
+            return [$field => $direction];
+        }
+
+        return [];
     }
 
 

@@ -97,6 +97,74 @@
                             </items>
                         </config>
                     </settings.listStyle>
+                    <settings.orderByFirst>
+                        <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderByFirst</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <default>label;ASC</default>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBy.labelAsc</label>
+                                    <value>label;ASC</value>
+                                </numIndex>
+                                <numIndex index="1" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBy.labelDesc</label>
+                                    <value>label;DESC</value>
+                                </numIndex>
+                                <numIndex index="2" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBy.cityAsc</label>
+                                    <value>city;ASC</value>
+                                </numIndex>
+                                <numIndex index="3" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBy.cityDesc</label>
+                                    <value>city;DESC</value>
+                                </numIndex>
+                                <numIndex index="4" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBy.streetAsc</label>
+                                    <value>street;ASC</value>
+                                </numIndex>
+                                <numIndex index="5" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBy.streetDesc</label>
+                                    <value>street;DESC</value>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </settings.orderByFirst>
+                    <settings.orderBySecond>
+                        <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBySecond</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <default>city;ASC</default>
+                            <items type="array">
+                                <numIndex index="0" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBy.labelAsc</label>
+                                    <value>label;ASC</value>
+                                </numIndex>
+                                <numIndex index="1" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBy.labelDesc</label>
+                                    <value>label;DESC</value>
+                                </numIndex>
+                                <numIndex index="2" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBy.cityAsc</label>
+                                    <value>city;ASC</value>
+                                </numIndex>
+                                <numIndex index="3" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBy.cityDesc</label>
+                                    <value>city;DESC</value>
+                                </numIndex>
+                                <numIndex index="4" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBy.streetAsc</label>
+                                    <value>street;ASC</value>
+                                </numIndex>
+                                <numIndex index="5" type="array">
+                                    <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.orderBy.streetDesc</label>
+                                    <value>street;DESC</value>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </settings.orderBySecond>
                 </el>
             </ROOT>
         </list>

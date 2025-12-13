@@ -145,6 +145,30 @@
 			<trans-unit id="flexform.settings.layout.big">
 				<source>Big</source>
 			</trans-unit>
+			<trans-unit id="flexform.settings.orderByFirst">
+				<source>Order by (First)</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBySecond">
+				<source>Order by (Second)</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBy.labelAsc">
+				<source>Label, ascending</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBy.labelDesc">
+				<source>Label, descending</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBy.streetAsc">
+				<source>Street, ascending</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBy.streetDesc">
+				<source>Street, descending</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBy.cityAsc">
+				<source>City, ascending</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBy.cityDesc">
+				<source>City, descending</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

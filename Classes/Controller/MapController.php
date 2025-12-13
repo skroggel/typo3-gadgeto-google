@@ -80,6 +80,11 @@ final class MapController extends AbstractController
             $search = GeneralUtility::makeInstance(\Madj2k\GadgetoGoogle\Domain\DTO\Search::class);
         }
 
+        $orderBy = array_merge(
+            $this->locationRepository->buildOrderBy($this->settings['orderByFirst']),
+            $this->locationRepository->buildOrderBy($this->settings['orderBySecond'])
+        );
+
         if ($search && $search->getIsActive()) {
 
             /** @var \Madj2k\GadgetoGoogle\Service\GeolocationService $geolocationService */
@@ -110,12 +115,14 @@ final class MapController extends AbstractController
                     $search->setAddressQuery($currentLocation->getAddressAsString());
                 }
             }
+
             $locations = $this->locationRepository->findFiltered(
                 uidList: ($this->settings['locations'] ?? ''),
                 pidList: ($this->currentContentObject->data['pages'] ?? ''),
                 search: $search,
                 location: $currentLocation,
                 settings: $this->settings,
+                orderBy: $orderBy
             );
 
         // normal results
@@ -124,6 +131,7 @@ final class MapController extends AbstractController
             $locations = $this->locationRepository->findByUids(
                 uidList: $this->settings['locations'] ?? '',
                 pidList: $this->currentContentObject->data['pages'] ?? '',
+                orderBy: $orderBy
             );
         }
 
