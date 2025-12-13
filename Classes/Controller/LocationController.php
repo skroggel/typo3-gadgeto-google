@@ -63,9 +63,15 @@ final class LocationController extends  AbstractController
             $search = GeneralUtility::makeInstance(\Madj2k\GadgetoGoogle\Domain\DTO\Search::class);
         }
 
+        $orderBy = array_merge(
+            $this->locationRepository->buildOrderBy($this->settings['orderByFirst']),
+            $this->locationRepository->buildOrderBy($this->settings['orderBySecond'])
+        );
+
         /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $locations */
         $locations = $this->locationRepository->findFiltered(
             pidList: $this->currentContentObject->data['pages'] ?? '',
+            orderBy: $orderBy,
         );
 
         // Important: store session for detail view

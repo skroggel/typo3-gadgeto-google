@@ -189,6 +189,39 @@
 				<source>Big</source>
 				<target>Groß</target>
 			</trans-unit>
+			<trans-unit id="flexform.settings.orderByFirst">
+				<source>Order by (First)</source>
+				<target>Sortieren nach (zuerst)</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBySecond">
+				<source>Order by (Second)</source>
+				<target>Sortieren nach (danach)</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBy.labelAsc">
+				<source>Label, ascending</source>
+				<target>Bezeichnung, aufsteigend</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBy.labelDesc">
+				<source>Label, descending</source>
+				<target>Bezeichnung, absteigend</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBy.streetAsc">
+				<source>Street, ascending</source>
+				<target>Straße, aufsteigend</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBy.streetDesc">
+				<source>Street, descending</source>
+				<target>Straße, absteigend</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBy.cityAsc">
+				<source>City, ascending</source>
+				<target>Stadt, aufsteigend</target>
+			</trans-unit>
+			<trans-unit id="flexform.settings.orderBy.cityDesc">
+				<source>City, descending</source>
+				<target>Stadt, absteigend</target>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>

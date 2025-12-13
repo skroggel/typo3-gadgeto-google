@@ -18,6 +18,7 @@ namespace Madj2k\GadgetoGoogle\Domain\Repository;
 use Madj2k\GadgetoGoogle\Domain\DTO\Location as LocationDto;
 use Madj2k\GadgetoGoogle\Domain\DTO\Search;
 use Madj2k\GadgetoGoogle\Domain\Model\Category;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
  * Class LocationRepositoryInterface
@@ -37,6 +38,7 @@ interface LocationRepositoryInterface
      * @param string $pidList Optional comma-separated list of PIDs
      * @param int $limit Maximum number of results (0 = unlimited)
      * @param int $offset Result offset (for pagination)
+     * @param array $orderBy Order-array
      * @return \Madj2k\GadgetoGoogle\Domain\Model\Location[] Returns an array of Location objects in the given order
      * @throws \Doctrine\DBAL\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -45,7 +47,8 @@ interface LocationRepositoryInterface
         string $uidList = '',
         string $pidList = '',
         int $limit = 0,
-        int $offset = 0
+        int $offset = 0,
+        array $orderBy = ['label' => QueryInterface::ORDER_ASCENDING]
     ): array;
 
 
@@ -62,6 +65,7 @@ interface LocationRepositoryInterface
      * @param array $settings settings-array
      * @param int $limit Maximum number of results (0 = unlimited)
      * @param int $offset Result offset (for pagination)
+     * @param array $orderBy Order-array
      * @return \Madj2k\GadgetoGoogle\Domain\Model\Location[] Returns an array of Location objects matching the constraints
      * @throws \Doctrine\DBAL\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -74,6 +78,7 @@ interface LocationRepositoryInterface
         array $settings = [],
         int $limit = 0,
         int $offset = 0,
+        array $orderBy = ['label' => QueryInterface::ORDER_ASCENDING]
     ): array;
 
 
