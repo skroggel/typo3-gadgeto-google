@@ -53,10 +53,18 @@
       },
       onInit: ``,
       onAccept: `
-        document.dispatchEvent(new CustomEvent('gadgetoGoogle:consent:given'));
+        document.addEventListener('DOMContentLoaded', () => {
+          document.dispatchEvent(
+            new CustomEvent('gadgetoGoogle:consent:given')
+          );
+        });
       `,
       onDecline: `
-        document.dispatchEvent(new CustomEvent('gadgetoGoogle:consent:revoked'));
+        document.addEventListener('DOMContentLoaded', () => {
+          document.dispatchEvent(
+            document.dispatchEvent(new CustomEvent('gadgetoGoogle:consent:revoked'));
+          );
+        });
       `
     };
 

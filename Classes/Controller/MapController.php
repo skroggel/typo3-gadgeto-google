@@ -81,8 +81,8 @@ final class MapController extends AbstractController
         }
 
         $orderBy = array_merge(
-            $this->locationRepository->buildOrderBy($this->settings['orderByFirst']),
-            $this->locationRepository->buildOrderBy($this->settings['orderBySecond'])
+            $this->locationRepository->buildOrderBy($this->settings['orderByFirst'] ?? ''),
+            $this->locationRepository->buildOrderBy($this->settings['orderBySecond'] ?? '')
         );
 
         if ($search && $search->getIsActive()) {
