@@ -55,14 +55,14 @@
       onAccept: `
         document.addEventListener('DOMContentLoaded', () => {
           document.dispatchEvent(
-            new CustomEvent('gadgetoGoogle:consent:given')
+            new CustomEvent('gadgetoGoogle:consent:given');
           );
         });
       `,
       onDecline: `
         document.addEventListener('DOMContentLoaded', () => {
           document.dispatchEvent(
-            document.dispatchEvent(new CustomEvent('gadgetoGoogle:consent:revoked'));
+            document.dispatchEvent(new CustomEvent('gadgetoGoogle:consent:revoked');
           );
         });
       `
