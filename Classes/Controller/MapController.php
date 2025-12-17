@@ -78,6 +78,7 @@ final class MapController extends AbstractController
             || ($search->getIdentifier() != $this->currentContentObject->data['uid'])
         ){
             $search = GeneralUtility::makeInstance(\Madj2k\GadgetoGoogle\Domain\DTO\Search::class);
+            $search->setIdentifier($this->currentContentObject->data['uid']);
         }
 
         $orderBy = array_merge(
