@@ -141,10 +141,7 @@
 				<source>Maximum number of results per Page</source>
 				<target>Maximale Anzahl an Ergebnissen je Seite</target>
 			</trans-unit>
-			<trans-unit id="flexform.settings.maxPages">
-				<source>Maximum number of pages shown</source>
-				<target>Maximale Anzahl an Seiten</target>
-			</trans-unit>
+
 			<trans-unit id="flexform.settings.hidePagination">
 				<source>Hide pagination</source>
 				<target>Pagination ausblenden</target>

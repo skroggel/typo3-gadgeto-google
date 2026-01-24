@@ -66,7 +66,6 @@ plugin.tx_gadgetogoogle_list {
     }
     settings {
         maxResultsPerPage = {$plugin.tx_gadgetogoogle_list.settings.maxResultsPerPage}
-        maxPages = {$plugin.tx_gadgetogoogle_list.settings.maxPages}
         hidePagination = {$plugin.tx_gadgetogoogle_list.settings.hidePagination}
         listStyle = {$plugin.tx_gadgetogoogle_list.settings.listStyle}
         layout = {$plugin.tx_gadgetogoogle_list.settings.layout}
