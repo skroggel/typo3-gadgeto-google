@@ -145,7 +145,8 @@ final class MapController extends AbstractController
         );
 
         // pagination basics
-        $maxItemsPerPage = (int) $this->settings['maxResultsPerPage'] ?? 10;
+        $maxItemsPerPage = (int)($this->settings['maxResultsPerPage'] ?? 0);
+        $maxItemsPerPage = $maxItemsPerPage > 0 ? $maxItemsPerPage : 10;
 
         // if paginationStyle = more: since we only load more, we always start at the first page
         $page = $search->getPage();

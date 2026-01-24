@@ -109,9 +109,6 @@
 			<trans-unit id="flexform.settings.maxResultsPerPage">
 				<source>Maximum number of results per Page</source>
 			</trans-unit>
-			<trans-unit id="flexform.settings.maxPages">
-				<source>Maximum number of pages shown</source>
-			</trans-unit>
 			<trans-unit id="flexform.settings.listStyle">
 				<source>List style</source>
 			</trans-unit>

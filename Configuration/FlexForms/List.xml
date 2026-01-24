@@ -35,17 +35,6 @@
                             <eval>num,trim</eval>
                         </config>
                     </settings.maxResultsPerPage>
-                    <settings.maxPages>
-                        <label>
-                            LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.maxPages
-                        </label>
-                        <config>
-                            <type>input</type>
-                            <size>30</size>
-                            <default>10</default>
-                            <eval>num,trim</eval>
-                        </config>
-                    </settings.maxPages>
                     <settings.hidePagination>
                         <label>LLL:EXT:gadgeto_google/Resources/Private/Language/locallang_be.xlf:flexform.settings.hidePagination</label>
                         <config>

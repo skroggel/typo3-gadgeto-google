@@ -20,6 +20,8 @@ use Madj2k\GadgetoGoogle\PageTitle\PageTitleProvider;
 use Madj2k\GadgetoGoogle\Domain\DTO\Search;
 use Madj2k\GadgetoGoogle\Domain\Model\Location;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
@@ -69,7 +71,7 @@ final class LocationController extends  AbstractController
             $this->locationRepository->buildOrderBy($this->settings['orderBySecond'] ?? '')
         );
 
-        /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $locations */
+        /** @var array $locations */
         $locations = $this->locationRepository->findFiltered(
             pidList: $this->currentContentObject->data['pages'] ?? '',
             orderBy: $orderBy,
@@ -80,10 +82,12 @@ final class LocationController extends  AbstractController
             [
                 'search' => $search,
                 'locations' => $this->locationRepository->getUidListFromObjects($locations)
-            ]);
+            ]
+        );
 
-        $maxItemsPerPage = (int) $this->settings['maxResultsPerPage'] ?? 10;
-        $maxPages = (int) $this->settings['maxPages'] ?? 3;
+        $maxItemsPerPage = (int)($this->settings['maxResultsPerPage'] ?? 0);
+        $maxItemsPerPage = $maxItemsPerPage > 0 ? $maxItemsPerPage : 10;
+
         $page = $this->request->hasArgument('currentPage')
             ? $currentPage
             : $search->getPage();
@@ -97,18 +101,8 @@ final class LocationController extends  AbstractController
             $page = 1;
         }
 
-        /** @var \TYPO3\CMS\Extbase\Pagination\QueryResultPaginator $paginator */
-        $paginator = new QueryResultPaginator(
-            $locations,
-            $page,
-            $maxItemsPerPage
-        );
-
-        /** @var \TYPO3\CMS\Core\Pagination\SlidingWindowPagination $pagination */
-        $pagination = new SlidingWindowPagination(
-            $paginator,
-            $maxPages,
-        );
+        $paginator = new ArrayPaginator($locations, $page, $maxItemsPerPage);
+        $pagination = new SimplePagination($paginator);
 
         $this->view->assignMultiple([
             'search' => $search,

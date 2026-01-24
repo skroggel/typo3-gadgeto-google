@@ -105,9 +105,6 @@ plugin.tx_gadgetogoogle_list {
         # cat=plugin.tx_gadgetogoogle_list//a; type=integer; label=Maximum number of results per page
         maxResultsPerPage = 10
 
-        # cat=plugin.tx_gadgetogoogle_list//a; type=integer; label=Maximum number of visible pagination links
-        maxPages = 3
-
         # cat=plugin.tx_gadgetogoogle_list//a; type=boolean; label=Hide pagination
         hidePagination = 0
 

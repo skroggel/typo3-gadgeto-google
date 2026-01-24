@@ -156,7 +156,7 @@ class LocationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository imple
         string $pidList = '',
         float $longitude = 0.0,
         float $latitude = 0.0,
-        Category $category = null,
+        ?Category $category = null,
         int $maxDistance = 0,
         int $limit = 0,
         int $offset = 0,
