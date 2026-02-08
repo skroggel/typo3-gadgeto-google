@@ -3,8 +3,9 @@
       data-namespace-typo3-fluid="true"
 >
     <gadgetoGoogle:searchForm action="show" class="map-search" name="search" object="{search}" section="c{data.uid}" method="POST">
+        <f:form.hidden property="identifier" value="{data.uid}" />
+
         <div class="map-search-location form-element">
-        
             <label for="tx-gadgetogoogle-search-location-{data.uid}" class="form-label">
                 <f:translate key="label.findLocation" extensionName="gadgeto_google" />
             </label>

@@ -85,7 +85,6 @@ final class MapController extends AbstractController
             $this->locationRepository->buildOrderBy($this->settings['orderByFirst'] ?? ''),
             $this->locationRepository->buildOrderBy($this->settings['orderBySecond'] ?? '')
         );
-
         if ($search && $search->getIsActive()) {
 
             /** @var \Madj2k\GadgetoGoogle\Service\GeolocationService $geolocationService */
