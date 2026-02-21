@@ -247,17 +247,16 @@ class GoogleMapsViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVie
 
             // build string of selected searchTypes
             $categories = [];
-            if ($item->getCategories()) {
-                /** @var \Madj2k\GadgetoGoogle\Domain\Model\Category $type */
-                foreach ($item->getCategories() as $category) {
-                    $categories[] = $category->getUid();
-                }
-
-                // deprecated version
-            } else {
+            // deprecated version
+            if ($item->getFilterCategory() && count($item->getFilterCategory()) > 0) {
                 /** @var \TYPO3\CMS\Extbase\DomainObject\AbstractEntity $type */
                 foreach ($item->getFilterCategory() as $type) {
                     $categories[] = $type->getUid();
+                }
+            } else {
+                /** @var \Madj2k\GadgetoGoogle\Domain\Model\Category $type */
+                foreach ($item->getCategories() as $category) {
+                    $categories[] = $category->getUid();
                 }
             }
 
