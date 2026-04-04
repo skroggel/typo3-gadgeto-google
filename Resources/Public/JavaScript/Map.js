@@ -186,7 +186,7 @@ export default class GadgetoGoogleMaps {
    */
   async initMap() {
     // Request needed libraries.
-    const {MarkerClusterer} = await import('https://cdn.skypack.dev/@googlemaps/markerclusterer@2.3.1');
+    const {MarkerClusterer} = await import('https://cdn.skypack.dev/@googlemaps/markerclusterer@v2.3.1');
     const {Map} = await google.maps.importLibrary('maps');
     const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
 
