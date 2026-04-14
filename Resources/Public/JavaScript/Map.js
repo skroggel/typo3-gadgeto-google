@@ -102,8 +102,8 @@ export default class GadgetoGoogleMaps {
   settings = {
     apiKey: '',
     instanceContainerId: '#tx-gadgetogoogle-map-instance',
-    mapContainerId: '#tx-gadgetogoogle-map',
-    clusterMarkerContainerId: '#tx-gadgetogoogle-map-cluster',
+    mapContainerId: 'tx-gadgetogoogle-map',
+    clusterMarkerContainerId: 'tx-gadgetogoogle-map-cluster',
     filterButtonClass: 'js-gadgetogoogle-map-filter-btn',
     consentButtonClass: 'js-gadgetogoogle-map-consent-btn',
     cookieName: 'gadgetogoogle-consent',
@@ -193,6 +193,11 @@ export default class GadgetoGoogleMaps {
     if (this.settings.mapContainerId.length) {
       this.map = new Map(document.getElementById(this.settings.mapContainerId), this.settings.mapConfig);
 
+      // click on free map closes all markers
+      this.map.addListener('click', () => {
+        this.closeAllMarkers();
+      });
+
       // close all markers if zoomed
       this.map.addListener('zoom_changed', () => {
         this.closeAllMarkers();
@@ -240,7 +245,10 @@ export default class GadgetoGoogleMaps {
           // close all markers and open current marker
           AdvancedMarkerElement.addListener('click', () => {
             this.closeAllMarkers(AdvancedMarkerElement);
-            this.toggleMarker(AdvancedMarkerElement);
+            if (!AdvancedMarkerElement.content.classList.contains('open')) {
+              this.closeAllMarkers(AdvancedMarkerElement);
+              this.openMarker(AdvancedMarkerElement);
+            }
           });
         }
 
@@ -393,6 +401,33 @@ export default class GadgetoGoogleMaps {
     }
   }
 
+  /**
+   * Opens the specified marker on the map by adding an 'open' class to its content,
+   * bringing it to the forefront by setting its z-index, and centering the map to its position.
+   *
+   * @param {Object} callingMarker - The marker to be opened. Must contain `content`, `zIndex`, and `position` properties.
+   * @return {void} This method does not return a value.
+   */
+  openMarker(callingMarker) {
+    callingMarker.content.classList.add('open');
+    callingMarker.zIndex = 1;
+    this.map.panTo(callingMarker.position);
+  }
+
+  /**
+   * Closes a marker by removing the 'open' class from its content
+   * element and resetting its zIndex to null.
+   *
+   * @param {Object} callingMarker - The marker object to be closed.
+   * @param {HTMLElement} callingMarker.content - The content element of the marker.
+   * @param {number|null} callingMarker.zIndex - The zIndex property of the marker.
+   * @return {void} No return value.
+   */
+  closeMarker(callingMarker) {
+    callingMarker.content.classList.remove('open');
+    callingMarker.zIndex = null;
+  }
+
 
   /**
    * Closes all markers
@@ -403,6 +438,7 @@ export default class GadgetoGoogleMaps {
       let marker = this.markers[i];
       if (callingMarker !== marker) {
         marker.content.classList.remove('open');
+        marker.zIndex = null;
       }
     }
   }
@@ -541,10 +577,5 @@ export default class GadgetoGoogleMaps {
     map.addListener("zoom_changed", () => overlay.draw());
     map.addListener("resize", () => overlay.draw());
   }
-
-
-
-
-
 
 }
